@@ -31,6 +31,41 @@
     <h3 class="usage-title">script</h3>
     <pre class="code"><code>&lt;script src="/path/to/delegate.js"&gt;&lt;/script&gt;</code></pre>
   </section>
+  <h2 class="section-title">Demo</h2>
+  <section class="demo">
+    <section class="demo-col">
+      <pre class="code"><code>&lt;ul id="list" class="list"&gt;
+  &lt;li id="item-1" class="item"&gt;Item 1&lt;/li&gt;
+  &lt;li id="item-2" class="item"&gt;Item 2&lt;/li&gt;
+  &lt;li id="item-3" class="item"&gt;Item 3&lt;/li&gt;
+  &lt;li id="item-4" class="item"&gt;Item 4&lt;/li&gt;
+  &lt;li id="item-5" class="item"&gt;Item 5&lt;/li&gt;
+  &lt;li id="item-6" class="item"&gt;Item 6&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+const $list = document.querySelector('#list')
+
+delegate.on($list, '.item', 'click', function(evt) {
+    const $li = evt.delegateTarget
+    console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+})
+&lt;/script&gt;</code></pre>
+    </section>
+    <section class="demo-col">
+      <ul id="list" class="list">
+        <li id="item-1" class="item">Item 1</li>
+        <li id="item-2" class="item">Item 2</li>
+        <li id="item-3" class="item">Item 3</li>
+        <li id="item-4" class="item">Item 4</li>
+        <li id="item-5" class="item">Item 5</li>
+        <li id="item-6" class="item">Item 6</li>
+      </ul>
+      <div class="demo-log">
+        <textarea id="log-textarea" class="log-textarea"></textarea>
+      </div>
+    </section>
+  </section>
   <h2 class="section-title">Usage</h2>
   <section class="usage">
     <h3 class="usage-title">基本用法 - 事件冒泡</h3>
@@ -125,41 +160,6 @@ delegate.once($list, '.item', 'click', callback)
 // 取消事件委托
 delegate.off($list, 'click', callback)
 </code></pre>
-  </section>
-  <h2 class="section-title">Demo</h2>
-  <section class="demo">
-    <section class="demo-col">
-      <pre class="code"><code>&lt;ul id="list" class="list"&gt;
-  &lt;li id="item-1" class="item"&gt;Item 1&lt;/li&gt;
-  &lt;li id="item-2" class="item"&gt;Item 2&lt;/li&gt;
-  &lt;li id="item-3" class="item"&gt;Item 3&lt;/li&gt;
-  &lt;li id="item-4" class="item"&gt;Item 4&lt;/li&gt;
-  &lt;li id="item-5" class="item"&gt;Item 5&lt;/li&gt;
-  &lt;li id="item-6" class="item"&gt;Item 6&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;script&gt;
-const $list = document.querySelector('#list')
-
-delegate.on($list, '.item', 'click', function(evt) {
-    const $li = evt.delegateTarget
-    console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
-})
-&lt;/script&gt;</code></pre>
-    </section>
-    <section class="demo-col">
-      <ul id="list" class="list">
-        <li id="item-1" class="item">Item 1</li>
-        <li id="item-2" class="item">Item 2</li>
-        <li id="item-3" class="item">Item 3</li>
-        <li id="item-4" class="item">Item 4</li>
-        <li id="item-5" class="item">Item 5</li>
-        <li id="item-6" class="item">Item 6</li>
-      </ul>
-      <div class="demo-log">
-        <textarea id="log-textarea" class="log-textarea"></textarea>
-      </div>
-    </section>
   </section>
   <h2 class="section-title">License</h2>
   <section class="usage">

@@ -1,5 +1,4 @@
 # delegate.js
-----
 
 delegate.js 是一个轻量级的事件委托库，封装了：on()、once()、off()、stop() 事件侦听相关的方法，使用起来方便灵活。
 

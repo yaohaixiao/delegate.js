@@ -11,7 +11,7 @@ import on from './on'
  * @param {Object} [context] - callback 回调函数的 this 上下文（默认值：el）
  * @returns {Function}
  */
-const once = (el, type, selector, callback, useCapture, context) => {
+const once = (el, type, selector, callback, useCapture = false, context) => {
   return on(el, type, selector, callback, useCapture, true, context)
 }
 

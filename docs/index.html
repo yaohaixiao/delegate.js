@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="keywords" content="delegate.js,JavaScript,Event,Delegate">
-  <meta name="description" content="delegate.js 是一个轻量级的事件委托库">
+  <meta name="description" content="delegate.js 是一个轻量级的事件委托库，delegate.js 中封装了：on()、once()、off()、stop() 等事件侦听相关的方法。delegate.js 库对浏览器的兼容性问题也处理的算是不错了，主流的浏览器都可以正常使用。并且 delegate.js 的 API 借鉴了 github 上其它类似的库，使得 delegate.js 的 API 使用起来非常灵活和方便。">
   <title>delegate.js</title>
   <link href="css/style.css" type="text/css" rel="stylesheet">
 </head>
@@ -22,7 +22,7 @@
 </section>
 <section class="container">
   <h2 class="section-title">delegate.js</h2>
-  <section class="usage">delegate.js 是一个轻量级的事件委托库，封装了：on()、once()、off()、stop() 事件侦听相关的方法，使用起来方便灵活。</section>
+  <section class="usage">delegate.js 是一个轻量级的事件委托库，delegate.js 中封装了：on()、once()、off()、stop() 等事件侦听相关的方法。delegate.js 库对浏览器的兼容性问题也处理的算是不错了，主流的浏览器都可以正常使用。并且 delegate.js 的 API 借鉴了 github 上其它类似的库，使得 delegate.js 的 API 使用起来非常灵活和方便。</section>
   <h2 class="section-title">Install</h2>
   <section class="usage">
     <p>delegate.js 支持 AMD 和 CommonJS 规范的模块调用方式，可以直接使用 npm 安装，也可以使用 script 标签引入到页面。</p>
@@ -44,12 +44,13 @@
 &lt;/ul&gt;
 
 &lt;script&gt;
-const $list = document.querySelector('#list')
+const callback = function(evt) {
+  const $li = evt.delegateTarget
+  const $textarea = document.querySelector('#log-textarea')
+  $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
+}
 
-delegate.on($list, '.item', 'click', function(evt) {
-    const $li = evt.delegateTarget
-    console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
-})
+delegate('#list').on('.item', 'click', callback)
 &lt;/script&gt;</code></pre>
     </section>
     <section class="demo-col">
@@ -69,96 +70,83 @@ delegate.on($list, '.item', 'click', function(evt) {
   <h2 class="section-title">Usage</h2>
   <section class="usage">
     <h3 class="usage-title">基本用法 - 事件冒泡</h3>
-<pre class="code"><code>import delegate from 'delegate.js'
-const $list = document.querySelector('#list')
+<pre class="code"><code>const handler = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+}
 
 // 默认使用事件冒泡
-delegate.on($list, '.item', 'click', function(evt) {
-    const $li = evt.delegateTarget
-    console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
-})
+delegate('#list').on('.item', 'click', handler)
 </code></pre>
   </section>
   <section class="usage">
     <h3 class="usage-title">基本用法 - 事件捕获</h3>
-    <pre class="code"><code>const $list = document.querySelector('#list')
+    <pre class="code"><code>const handler = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+}
 
-// mouseenter 和 mouseleave 事件，默认使用事件捕获
-delegate.on($list, '.item', 'mouseenter', function(evt) {
-    const $li = evt.delegateTarget
-    console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
-})
+// 默认使用事件捕获
+delegate('#list').on('.item', 'mouseenter', handler)
 </code></pre>
   </section>
   <section class="usage">
     <h3 class="usage-title">强制使用事件捕获</h3>
-    <pre class="code"><code>const $list = document.querySelector('#list')
+    <pre class="code"><code>const handler = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+}
 
-// 对 click 事件强制使用事件捕获
-delegate.on($list, '.item', 'click', function(evt) {
-    const $li = evt.delegateTarget
-    console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
-}, true)
+// 默认使用事件冒泡
+delegate('#list').on('.item', 'click', handler, true)
 </code></pre>
   </section>
   <section class="usage">
     <h3 class="usage-title">使用不同的类型的选择器</h3>
-    <pre class="code"><code>const $list = document.querySelector('#list')
+    <pre class="code"><code>const handler = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+}
 
 // 类选择器
-delegate.on($list, '.item', 'click', function(evt) {
-    const $li = evt.delegateTarget
-    console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
-})
+delegate('.list').on('.item', 'click', handler)
 
 // 标签选择择器
-delegate.on($list, 'li', 'click', function(evt) {
-    const $li = evt.delegateTarget
-    console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
-})
+delegate('ul').on('li', 'click', handler)
 
 // 以数组/类似数组的元素为基础
-delegate.on($list, document.querySelector('.item'), 'click', function(evt) {
-    const $li = evt.delegateTarget
-    console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
-})
+delegate('#list').on(document.querySelectorAll('.item'), 'click', handler)
 </code></pre>
   </section>
   <section class="usage">
     <h3 class="usage-title">事件只触发一次 - delegate.on()</h3>
-    <pre class="code"><code>const $list = document.querySelector('#list')
+    <pre class="code"><code>const handler = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+}
 
 // 设置 delegate.on() 方法的 once 属性为 true
-delegate.on($list, '.item', 'click', function(evt) {
-    const $li = evt.delegateTarget
-    console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
-}, false, true)
-</code></pre>
-  </section>
-  <section class="usage">
-    <h3 class="usage-title">事件只触发一次 - delegate.once()</h3>
-    <pre class="code"><code>const $list = document.querySelector('#list')
+delegate('#list').on('.item', 'click', handler, true)
 
-// 使用 delegate.once() 方法
-delegate.once($list, '.item', 'click', function(evt) {
-    const $li = evt.delegateTarget
-    console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
-})
+// 使用 once 方法只触发一次
+delegate('#list').once('.item', 'click', handler)
 </code></pre>
   </section>
   <section class="usage">
     <h3 class="usage-title">取消事件委托</h3>
     <pre class="code"><code>const $list = document.querySelector('#list')
-const callback = function(evt) {
-    const $li = evt.delegateTarget
-    console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+const handler = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
 }
 
-// 对 click 事件强制使用事件捕获
-delegate.once($list, '.item', 'click', callback)
+// 使用 off() 方法取消事件委托
+delegate('#list').once('.item', 'click', handler)
+                 .off($list, 'click', callback)
 
-// 取消事件委托
-delegate.off($list, 'click', callback)
+// 使用 destroy() 方法取消事件委托
+delegate('#list').once('.item', 'click', handler)
+                 .destroy()
 </code></pre>
   </section>
   <h2 class="section-title">License</h2>
@@ -172,14 +160,13 @@ delegate.off($list, 'click', callback)
 </footer>
 <script src="js/delegate.js"></script>
 <script>
-const $list = document.querySelector('#list')
-const $textarea = document.querySelector('#log-textarea')
 const callback = function(evt) {
   const $li = evt.delegateTarget
+  const $textarea = document.querySelector('#log-textarea')
   $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
 }
 
-delegate.on($list, '.item', 'click', callback)
+delegate('#list').on('.item', 'click', callback)
 </script>
 </body>
 </html>

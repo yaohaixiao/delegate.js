@@ -9,6 +9,12 @@
 }(this, function() {
 "use strict";
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 /**
  * A polyfill for Element.matches()
  * ========================================================================
@@ -23,6 +29,45 @@ if (!Element.prototype.matches) {
 
     return i > -1;
   };
+}
+/**
+ * A polyfill for Object.assign()
+ * ========================================================================
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#polyfill
+ */
+
+
+if (typeof Object.assign !== 'function') {
+  // Must be writable: true, enumerable: false, configurable: true
+  Object.defineProperty(Object, 'assign', {
+    value: function assign(target, varArgs) {
+      // .length of function is 2
+      'use strict';
+
+      if (target === null || target === undefined) {
+        throw new TypeError('Cannot convert undefined or null to object');
+      }
+
+      var to = Object(target);
+
+      for (var index = 1; index < arguments.length; index++) {
+        var nextSource = arguments[index];
+
+        if (nextSource !== null && nextSource !== undefined) {
+          for (var nextKey in nextSource) {
+            // Avoid bugs when hasOwnProperty is shadowed
+            if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+              to[nextKey] = nextSource[nextKey];
+            }
+          }
+        }
+      }
+
+      return to;
+    },
+    writable: true,
+    configurable: true
+  });
 }
 /**
  * 获得与选择器匹配的元素
@@ -63,7 +108,7 @@ var closest = function closest(el, selector) {
  */
 
 
-var off = function off(el, type, callback, useCapture) {
+var _off = function off(el, type, callback, useCapture) {
   if (callback._delegateListener) {
     callback = callback._delegateListener;
     delete callback._delegateListener;
@@ -82,14 +127,18 @@ var off = function off(el, type, callback, useCapture) {
  * @param {String} selector - 触发 el 代理事件的 DOM 节点的选择器
  * @param {String} type - 事件类型
  * @param {Function} callback - 绑定事件的回调函数
- * @param {Object} [context] - callback 回调函数的 this 上下文（默认值：el）
  * @param {Boolean} [useCapture] - 是否采用事件捕获（默认值：false - 事件冒泡）
  * @param {Boolean} [once] - 是否只触发一次（默认值：false - 事件冒泡）
+ * @param {Object} [context] - callback 回调函数的 this 上下文（默认值：el）
  * @returns {Function}
  */
 
 
-var on = function on(el, selector, type, callback, useCapture, once, context) {
+var _on = function on(el, selector, type, callback) {
+  var useCapture = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
+  var once = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
+  var context = arguments.length > 6 ? arguments[6] : undefined;
+
   var listener = function listener(e) {
     var target = e.target || event.srcElement; // 通过 Element.matches 方法获得点击的目标元素
 
@@ -98,21 +147,19 @@ var on = function on(el, selector, type, callback, useCapture, once, context) {
 
     if (delegateTarget) {
       if (once === true) {
-        off(el, type, listener);
+        _off(el, type, listener);
       }
 
       callback.call(context || el, e);
     }
-  }; // mouseenter 和 mouseleave 不适合使用冒泡
-
+  };
 
   if (type === 'mouseenter' || type === 'mouseleave') {
     useCapture = true;
   }
 
   callback._delegateListener = callback;
-  el.addEventListener(type, listener, useCapture || false);
-  return callback;
+  el.addEventListener(type, listener, useCapture);
 };
 /**
  * 绑定只触发一次的事件
@@ -127,8 +174,10 @@ var on = function on(el, selector, type, callback, useCapture, once, context) {
  */
 
 
-var once = function once(el, type, selector, callback, useCapture, context) {
-  return on(el, type, selector, callback, useCapture, true, context);
+var _once = function once(el, type, selector, callback) {
+  var useCapture = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
+  var context = arguments.length > 5 ? arguments[5] : undefined;
+  return _on(el, type, selector, callback, useCapture, true, context);
 };
 /**
  * 阻止事件的默认行为
@@ -137,7 +186,7 @@ var once = function once(el, type, selector, callback, useCapture, context) {
  */
 
 
-var preventDefault = function preventDefault(evt) {
+var _preventDefault = function preventDefault(evt) {
   var event = window.event;
 
   if (evt.preventDefault) {
@@ -153,7 +202,7 @@ var preventDefault = function preventDefault(evt) {
  */
 
 
-var stopPropagation = function stopPropagation(evt) {
+var _stopPropagation = function stopPropagation(evt) {
   var event = window.event;
 
   if (evt.stopPropagation) {
@@ -169,19 +218,150 @@ var stopPropagation = function stopPropagation(evt) {
  */
 
 
-var stop = function stop(evt) {
-  stopPropagation(evt);
-  preventDefault(evt);
+var _stop = function stop(evt) {
+  _stopPropagation(evt);
+
+  _preventDefault(evt);
 };
 
-var delegate = {
-  closest: closest,
-  on: on,
-  once: once,
-  off: off,
-  stop: stop,
-  stopPropagation: stopPropagation,
-  preventDefault: preventDefault
+var Delegate = /*#__PURE__*/function () {
+  function Delegate(el) {
+    _classCallCheck(this, Delegate);
+
+    this._attrs = {
+      type: '',
+      selector: '',
+      handler: null,
+      useCapture: false,
+      once: false
+    };
+
+    if (el.tagName && el.nodeType === 1) {
+      this.$el = el;
+    } else {
+      if (typeof el === 'string') {
+        this.$el = document.querySelector(el);
+      }
+    }
+
+    return this;
+  }
+
+  _createClass(Delegate, [{
+    key: "attr",
+    value: function attr() {
+      var attrs = this._attrs;
+      var args = arguments;
+      var prop = args[0];
+
+      switch (args.length) {
+        // 1 个参数
+        case 1:
+          var type = Object.prototype.toString.apply(prop).toLowerCase();
+
+          switch (type) {
+            // 参数是字符串，则返回 _attrs 中对应的属性值
+            case '[object string]':
+              return attrs[prop];
+            // 参数是对象，则扩展 _attrs 属性的多个值
+
+            case '[object object]':
+              Object.assign(attrs, prop);
+              break;
+          }
+
+          break;
+        // 2 个参数
+
+        case 2:
+          // 扩展 _attrs 的某个值
+          if (typeof prop === 'string') {
+            attrs[args] = args[1];
+          }
+
+          break;
+        // 不传参数，返回整个 _attrs 属性
+
+        default:
+          return attrs;
+      }
+
+      return this;
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      var attrs = this.attr();
+
+      _off(this.$el, attrs.type, attrs.handler, attrs.useCapture);
+
+      return this;
+    }
+  }, {
+    key: "off",
+    value: function off(el, type, handler, useCapture) {
+      _off(el, type, handler, useCapture);
+
+      return this;
+    }
+  }, {
+    key: "on",
+    value: function on(type, selector, handler, useCapture, once) {
+      this.attr({
+        type: type,
+        selector: selector,
+        handler: handler,
+        useCapture: useCapture,
+        once: once
+      });
+
+      _on(this.$el, type, selector, handler, useCapture, once, this);
+
+      return this;
+    }
+  }, {
+    key: "once",
+    value: function once(type, selector, handler, useCapture) {
+      this.attr({
+        type: type,
+        selector: selector,
+        handler: handler,
+        useCapture: useCapture,
+        once: true
+      });
+
+      _once(this.$el, type, selector, handler, useCapture, this);
+
+      return this;
+    }
+  }, {
+    key: "preventDefault",
+    value: function preventDefault(evt) {
+      _preventDefault(evt);
+
+      return this;
+    }
+  }, {
+    key: "stop",
+    value: function stop(evt) {
+      _stop(evt);
+
+      return this;
+    }
+  }, {
+    key: "stopPropagation",
+    value: function stopPropagation(evt) {
+      _stopPropagation(evt);
+
+      return this;
+    }
+  }]);
+
+  return Delegate;
+}();
+
+var delegate = function delegate(el) {
+  return new Delegate(el);
 };
 return delegate;
 }));

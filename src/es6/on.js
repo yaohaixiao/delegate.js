@@ -13,7 +13,7 @@ import off from './off'
  * @param {Object} [context] - callback 回调函数的 this 上下文（默认值：el）
  * @returns {Function}
  */
-const on = (el, selector, type, callback, useCapture, once, context) => {
+const on = (el, selector, type, callback, useCapture = false, once = false, context) => {
   const listener = function (e) {
     const target = e.target || event.srcElement
     // 通过 Element.matches 方法获得点击的目标元素
@@ -29,15 +29,12 @@ const on = (el, selector, type, callback, useCapture, once, context) => {
     }
   }
 
-  // mouseenter 和 mouseleave 不适合使用冒泡
-  if (type === 'mouseenter' || type === 'mouseleave') {
+  if(type === 'mouseenter' || type === 'mouseleave') {
     useCapture = true
   }
 
   callback._delegateListener = callback
-  el.addEventListener(type, listener, useCapture || false)
-
-  return callback
+  el.addEventListener(type, listener, useCapture)
 }
 
 export default on

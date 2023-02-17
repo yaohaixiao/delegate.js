@@ -2,7 +2,7 @@
   "name": "@yaohaixiao/delegate.js",
   "version": "0.3.0",
   "description": "delegate.js 是一个轻量级的 JavaScript 事件委托库，封装了：on()、once()、off() 事件侦听相关的常用方法，使用起来方便灵活。",
-  "main": "delegate.js",
+  "main": "dist/delegate.js",
   "scripts": {
     "clean": "gulp clean",
     "copy": "gulp copy",

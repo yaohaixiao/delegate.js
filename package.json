@@ -1,0 +1,47 @@
+{
+  "name": "@yaohaixiao/delegate.js",
+  "version": "0.3.0",
+  "description": "delegate.js 是一个轻量级的 JavaScript 事件委托库，封装了：on()、once()、off() 事件侦听相关的常用方法，使用起来方便灵活。",
+  "main": "delegate.js",
+  "scripts": {
+    "clean": "gulp clean",
+    "copy": "gulp copy",
+    "connect": "gulp server",
+    "watch": "gulp watch",
+    "dev": "gulp dev",
+    "lint": "gulp lint",
+    "transpile": "gulp transpile",
+    "build": "gulp build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yaohaixiao/delegate.js.git"
+  },
+  "keywords": [
+    "JavaScript",
+    "Event",
+    "Delegate"
+  ],
+  "author": "Robert Yao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yaohaixiao/delegate.js/issues"
+  },
+  "homepage": "https://github.com/yaohaixiao/delegate.js#readme",
+  "devDependencies": {
+    "@babel/preset-env": "^7.14.8",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-clean": "^0.4.0",
+    "gulp-connect": "^5.7.0",
+    "gulp-eslint": "^6.0.0",
+    "gulp-livereload": "^4.0.2",
+    "gulp-open": "^3.0.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-uglify": "^3.0.2",
+    "gulp-umd": "^2.0.0",
+    "gulp-watch": "^5.0.1",
+    "os": "^0.1.2"
+  }
+}

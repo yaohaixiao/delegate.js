@@ -3,6 +3,11 @@ import on from './on'
 import once from './once'
 import './polyfill'
 
+/**
+ * Emitter 类 - JavaScript 事件代理对象
+ * ========================================================================
+ * @constructor
+ */
 class Emitter {
   constructor(el) {
     this._attrs = {

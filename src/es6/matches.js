@@ -1,6 +1,7 @@
 /**
  * 获取 el 节点下匹配 selector 选择器的 HTMLElement
  * =============================================================
+ * @method matches
  * @param {HTMLElement} el
  * @param {String} selector
  * @returns {Boolean|NodeList}

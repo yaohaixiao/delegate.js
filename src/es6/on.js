@@ -4,6 +4,7 @@ import off from './off'
 /**
  * 绑定代理事件
  * ========================================================================
+ * @method on
  * @param {HTMLElement} el - 绑定代理事件的 DOM 节点
  * @param {String} selector - 触发 el 代理事件的 DOM 节点的选择器
  * @param {String} type - 事件类型

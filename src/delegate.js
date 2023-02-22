@@ -2,9 +2,24 @@
  * 返回检测数据调用 toString() 方法后的字符串，用以判断数据类型。
  * ========================================================================
  * @method _typeof
- * @param val
+ * @param {*} val
  * @returns {String}
- * @private
+ *
+ * @example
+ * _typeof({})
+ * // => '[object Object]'
+ *
+ * _typeof(function(){})
+ * // => '[object Function]'
+ *
+ * _typeof([])
+ * // => '[object Array]'
+ *
+ * _typeof('')
+ * // => '[object String]'
+ *
+ * _typeof(2)
+ * // => '[object Number]'
  */
 const _typeof = (val) => {
   return Object.prototype.toString.apply(val)
@@ -13,7 +28,8 @@ const _typeof = (val) => {
 /**
  * 判断是否为 String 类型值
  * ========================================================================
- * @param {String} val - 待检测的字符串
+ * @method isString
+ * @param {*} val - 待检测的字符串
  * @returns {Boolean}
  */
 const isString = (val) => {
@@ -21,19 +37,9 @@ const isString = (val) => {
 }
 
 /**
- * 检测是否为 HTMLElement 元素节点
- * ========================================================================
- * @param {*} el - 要测试的数据
- * @returns {Boolean}
- */
-const isElement = (el) => {
-  return el && el.nodeName && el.tagName && el.nodeType === 1
-}
-
-/**
  * 检测测试数据是否为 Object 类型
  * ========================================================================
- * @method isFunction
+ * @method isObject
  * @param {*} val - 要检测的数据
  * @returns {Boolean} 'val' 是 Function 类型返回 true，否则返回 false
  */
@@ -47,7 +53,8 @@ const isObject = (val) => {
 /**
  * 检测测试数据是否为 null
  * ========================================================================
- * @param val
+ * @method isNull
+ * @param {*} val
  * @returns {boolean}
  */
 const isNull = (val) => {
@@ -55,8 +62,43 @@ const isNull = (val) => {
 }
 
 /**
+ * 检测测试数据是否为 Function 类型
+ * ========================================================================
+ * @method isFunction
+ * @param {*} val - 要检测的数据
+ * @returns {boolean} 'val' 是 Function 类型返回 true，否则返回 false
+ */
+const isFunction = (val) => {
+  return typeof val === 'function' || _typeof(val) === '[object Function]'
+}
+
+/**
+ * 检测是否为 HTMLElement 元素节点
+ * ========================================================================
+ * @method isElement
+ * @param {*} el - 要测试的数据
+ * @returns {Boolean}
+ */
+const isElement = (el) => {
+  return el && el.nodeName && el.tagName && el.nodeType === 1
+}
+
+/**
+ * 检测对象自身属性中是否具有指定的属性。
+ * ========================================================================
+ * @method hasOwn
+ * @param {Object} obj
+ * @param {String} prop
+ * @returns {boolean}
+ */
+const hasOwn = (obj, prop) => {
+  return Object.prototype.hasOwnProperty.call(obj, prop)
+}
+
+/**
  * 获取元素的父节点
  * =============================================================
+ * @method getParentOrHost
  * @param {HTMLElement} el
  * @returns {*}
  */
@@ -69,6 +111,7 @@ const getParentOrHost = (el) => {
 /**
  * 获取 el 节点下匹配 selector 选择器的 HTMLElement
  * =============================================================
+ * @method matches
  * @param {HTMLElement} el
  * @param {String} selector
  * @returns {Boolean|NodeList}
@@ -100,6 +143,7 @@ const matches = (el, selector) => {
 /**
  * 获取 el 元素父元素最近的包含 selector 选择器的元素
  * =============================================================
+ * @method closest
  * @param {HTMLElement} el
  * @param {String} selector
  * @param {HTMLElement} [ctx]
@@ -134,6 +178,7 @@ const closest = (el, selector, ctx, includeCTX) => {
 /**
  * 取消事件绑定
  * ========================================================================
+ * @method off
  * @param {HTMLElement} el - 取消绑定（代理）事件的 DOM 节点
  * @param {String} type - 事件类型
  * @param {Function} fn - 绑定事件的回调函数
@@ -160,6 +205,7 @@ const off = (el, type, fn, capture = false) => {
 /**
  * 绑定代理事件
  * ========================================================================
+ * @method on
  * @param {HTMLElement} el - 绑定代理事件的 DOM 节点
  * @param {String} selector - 触发 el 代理事件的 DOM 节点的选择器
  * @param {String} type - 事件类型
@@ -220,7 +266,7 @@ const on = (
 /**
  * 绑定只触发一次的事件
  * ========================================================================
- * @method delegateOnce
+ * @method once
  * @param {HTMLElement} el - 绑定代理事件的 DOM 节点
  * @param {String} selector - 触发 el 代理事件的 DOM 节点的选择器
  * @param {String} type - 事件类型
@@ -238,7 +284,7 @@ const once = (el, selector, type, fn, data, context, capture = false) => {
  * ========================================================================
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#polyfill
  */
-if (typeof Object.assign !== 'function') {
+if (!isFunction(Object.assign)) {
   // Must be writable: true, enumerable: false, configurable: true
   Object.defineProperty(Object, 'assign', {
     value: function assign (target, varArgs) { // .length of function is 2
@@ -255,7 +301,7 @@ if (typeof Object.assign !== 'function') {
         if (nextSource !== null && nextSource !== undefined) {
           for (let nextKey in nextSource) {
             // Avoid bugs when hasOwnProperty is shadowed
-            if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+            if (hasOwn(nextSource, nextKey)) {
               to[nextKey] = nextSource[nextKey]
             }
           }
@@ -268,6 +314,11 @@ if (typeof Object.assign !== 'function') {
   })
 }
 
+/**
+ * Emitter 类 - JavaScript 事件代理对象
+ * ========================================================================
+ * @constructor
+ */
 class Emitter {
   constructor(el) {
     this._attrs = {

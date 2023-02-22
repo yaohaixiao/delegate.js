@@ -1,7 +1,8 @@
 /**
  * 判断是否为 String 类型值
  * ========================================================================
- * @param {String} val - 待检测的字符串
+ * @method isString
+ * @param {*} val - 待检测的字符串
  * @returns {Boolean}
  */
 const isString = (val) => {

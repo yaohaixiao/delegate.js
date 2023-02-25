@@ -1,6 +1,13 @@
-{
+/**
+ * .eslintrc.js - eslint 配置
+ * =============================================================
+ * Created By: Yaohaixiao
+ * Update: 2023.02.25
+ */
+module.exports = {
+  root: true,
   // 环境定义了预定义的全局变量。
-  "env": {
+  env: {
     //环境定义了预定义的全局变量。更多在官网查看
     "browser": true,
     "node": true,
@@ -10,20 +17,20 @@
     "mocha": true
   },
   // JavaScript 语言选项
-  "parserOptions": {
+  parserOptions: {
     // ECMAScript 版本
-    "ecmaVersion": 6,
+    ecmaVersion: 6,
     // 设置为 "script" (默认) 或 "module"（如果你的代码是 ECMAScript 模块)。
-    "sourceType": "module",
+    sourceType: "module",
     // 想使用的额外的语言特性:
-    "ecmaFeatures": {
+    ecmaFeatures: {
       // 允许在全局作用域下使用 return 语句
-      "globalReturn": true,
+      globalReturn: true,
       // impliedStric
-      "impliedStrict": true,
+      impliedStrict: true,
       // 启用 JSX
-      "jsx": false,
-      "modules": true
+      jsx: false,
+      modules: true
     }
   }
 }

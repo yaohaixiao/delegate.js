@@ -1,6 +1,9 @@
 import off from './off'
 import on from './on'
 import once from './once'
+import isElement from '@/es6/isElement'
+import isString from '@/es6/isString'
+import isObject from '@/es6/isObject'
 import './polyfill'
 
 /**

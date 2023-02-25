@@ -1,8 +1,16 @@
 import off from './off'
 import on from './on'
 import once from './once'
+import isElement from '@/es6/isElement'
+import isString from '@/es6/isString'
+import isObject from '@/es6/isObject'
 import './polyfill'
 
+/**
+ * Emitter 类 - JavaScript 事件代理对象
+ * ========================================================================
+ * @constructor
+ */
 class Emitter {
   constructor(el) {
     this._attrs = {

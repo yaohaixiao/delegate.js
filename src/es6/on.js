@@ -24,10 +24,7 @@ const on = (
   once = false,
   capture = false
 ) => {
-  const MOUSE_EVENTS = [
-    'mouseenter',
-    'mouseleave'
-  ]
+  const MOUSE_EVENTS = ['mouseenter', 'mouseleave']
 
   const listener = function (evt) {
     const target = evt.target

@@ -3,7 +3,7 @@ import on from './on'
 /**
  * 绑定只触发一次的事件
  * ========================================================================
- * @method delegateOnce
+ * @method once
  * @param {HTMLElement} el - 绑定代理事件的 DOM 节点
  * @param {String} selector - 触发 el 代理事件的 DOM 节点的选择器
  * @param {String} type - 事件类型

@@ -37,6 +37,17 @@ const isString = (val) => {
 }
 
 /**
+ * 检测测试数据是否为 null
+ * ========================================================================
+ * @method isNull
+ * @param {*} val
+ * @returns {boolean}
+ */
+const isNull = (val) => {
+  return val === null
+}
+
+/**
  * 检测测试数据是否为 Object 类型
  * ========================================================================
  * @method isObject
@@ -48,17 +59,6 @@ const isObject = (val) => {
     (typeof val === 'object' || _typeof(val) === '[object Object]') &&
     !isNull(val)
   )
-}
-
-/**
- * 检测测试数据是否为 null
- * ========================================================================
- * @method isNull
- * @param {*} val
- * @returns {boolean}
- */
-const isNull = (val) => {
-  return val === null
 }
 
 /**
@@ -185,10 +185,7 @@ const closest = (el, selector, ctx, includeCTX) => {
  * @param {Boolean} [capture] - 是否采用事件捕获（默认值：false - 事件冒泡）
  */
 const off = (el, type, fn, capture = false) => {
-  const MOUSE_EVENTS = [
-    'mouseenter',
-    'mouseleave'
-  ]
+  const MOUSE_EVENTS = ['mouseenter', 'mouseleave']
 
   if (fn._delegateListener) {
     fn = fn._delegateListener
@@ -225,10 +222,7 @@ const on = (
   once = false,
   capture = false
 ) => {
-  const MOUSE_EVENTS = [
-    'mouseenter',
-    'mouseleave'
-  ]
+  const MOUSE_EVENTS = ['mouseenter', 'mouseleave']
 
   const listener = function (evt) {
     const target = evt.target
@@ -287,7 +281,8 @@ const once = (el, selector, type, fn, data, context, capture = false) => {
 if (!isFunction(Object.assign)) {
   // Must be writable: true, enumerable: false, configurable: true
   Object.defineProperty(Object, 'assign', {
-    value: function assign (target, varArgs) { // .length of function is 2
+    // .length of function is 2
+    value: function assign(target) {
       'use strict'
       if (target === null || target === undefined) {
         throw new TypeError('Cannot convert undefined or null to object')
@@ -444,6 +439,8 @@ class Emitter {
   }
 }
 
+/* eslint-disable no-unused-vars */
 const delegate = (el) => {
   return new Emitter(el)
 }
+/* eslint-enable no-unused-vars */

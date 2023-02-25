@@ -4,6 +4,7 @@ import getParentOrHost from './getParentOrHost'
 /**
  * 获取 el 元素父元素最近的包含 selector 选择器的元素
  * =============================================================
+ * @method closest
  * @param {HTMLElement} el
  * @param {String} selector
  * @param {HTMLElement} [ctx]

@@ -1,12 +1,15 @@
+import isFunction from './isFunction'
+import hasOwn from './hasOwn'
+
 /**
  * A polyfill for Object.assign()
  * ========================================================================
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#polyfill
  */
-if (typeof Object.assign !== 'function') {
+if (!isFunction(Object.assign)) {
   // Must be writable: true, enumerable: false, configurable: true
   Object.defineProperty(Object, 'assign', {
-    value: function assign (target, varArgs) { // .length of function is 2
+    value: function assign(target) {
       'use strict'
       if (target === null || target === undefined) {
         throw new TypeError('Cannot convert undefined or null to object')
@@ -20,7 +23,7 @@ if (typeof Object.assign !== 'function') {
         if (nextSource !== null && nextSource !== undefined) {
           for (let nextKey in nextSource) {
             // Avoid bugs when hasOwnProperty is shadowed
-            if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+            if (hasOwn(nextSource, nextKey)) {
               to[nextKey] = nextSource[nextKey]
             }
           }

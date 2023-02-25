@@ -1,6 +1,6 @@
 {
   "name": "@yaohaixiao/delegate.js",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "delegate.js 是一个轻量级的 JavaScript 事件委托库，封装了：on()、once()、off() 事件侦听相关的常用方法，使用起来方便灵活。",
   "main": "dist/delegate.js",
   "scripts": {
@@ -10,8 +10,12 @@
     "connect": "gulp server",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "dev": "gulp dev",
-    "lint": "gulp lint",
+    "lint": "eslint",
     "lint:fix": "npm run lint --cache --fix",
+    "prettier:check": "npx prettier --check \"**/*.js\"",
+    "prettier:write": "npx prettier --write \"**/*.js\"",
+    "prepare": "husky install",
+    "prepublish": "npm run lint && npm run build",
     "transpile": "gulp transpile",
     "watch": "gulp watch"
   },
@@ -32,8 +36,13 @@
   "homepage": "https://github.com/yaohaixiao/delegate.js#readme",
   "devDependencies": {
     "@babel/preset-env": "^7.14.8",
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
     "commitlint": "^17.4.4",
     "conventional-changelog-cli": "^2.2.2",
+    "eslint": "^8.34.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-clean": "^0.4.0",
@@ -48,7 +57,8 @@
     "gulp-watch": "^5.0.1",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.2",
-    "os": "^0.1.2"
+    "os": "^0.1.2",
+    "prettier": "^2.8.4"
   },
   "gitHooks": {
     "pre-commit": "lint-staged",
@@ -56,7 +66,8 @@
   },
   "lint-staged": {
     "src/**/*.js": [
-      "npm run lint:fix"
+      "npm run lint:fix",
+      "prettier --write"
     ]
   }
 }

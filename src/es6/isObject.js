@@ -1,4 +1,5 @@
 import _typeof from './_typeof'
+import isNull from '@/es6/isNull'
 
 /**
  * 检测测试数据是否为 Object 类型

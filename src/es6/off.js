@@ -8,10 +8,7 @@
  * @param {Boolean} [capture] - 是否采用事件捕获（默认值：false - 事件冒泡）
  */
 const off = (el, type, fn, capture = false) => {
-  const MOUSE_EVENTS = [
-    'mouseenter',
-    'mouseleave'
-  ]
+  const MOUSE_EVENTS = ['mouseenter', 'mouseleave']
 
   if (fn._delegateListener) {
     fn = fn._delegateListener

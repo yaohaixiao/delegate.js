@@ -12,19 +12,18 @@ const uglify = require('gulp-uglify')
 const watch = require('gulp-watch')
 
 const cleanDist = () => {
-  return gulp.src('./dist/**/*.*')
-    .pipe(clean())
+  return gulp.src('./dist/**/*.*').pipe(clean())
 }
 
 const cleanDocs = () => {
-  return gulp.src('./docs/js/*.js')
-    .pipe(clean())
+  return gulp.src('./docs/js/*.js').pipe(clean())
 }
 
 const cleanAll = gulp.parallel(cleanDist, cleanDocs)
 
 const copy = () => {
-  return gulp.src('./src/es6/*.js')
+  return gulp
+    .src('./src/es6/*.js')
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failOnError())
@@ -32,12 +31,28 @@ const copy = () => {
 }
 
 const openDocs = () => {
-  const browser = os.platform() === 'linux' ? 'google-chrome' : (os.platform() === 'darwin' ? 'google chrome' : (os.platform() === 'win32' ? 'chrome' : 'firefox'))
-  return gulp.src('docs/index.html')
-    .pipe(open({
+  let browser
+  if (os.platform() === 'darwin') {
+    browser = os.platform() === 'linux'
+      ? 'google-chrome'
+      : 'google chrome'
+  } else {
+    if (os.platform() === 'win32') {
+      browser = os.platform() === 'linux'
+        ? 'google-chrome'
+        : 'chrome'
+    } else {
+      browser = os.platform() === 'linux'
+        ? 'google-chrome'
+        : 'firefox'
+    }
+  }
+  return gulp.src('docs/index.html').pipe(
+    open({
       app: browser,
       uri: 'http://localhost:8090'
-    }))
+    })
+  )
 }
 
 const connectDocs = () => {
@@ -53,46 +68,56 @@ const reload = () => {
 }
 
 const lint = () => {
-  return gulp.src('./src/**/*.js')
+  return gulp
+    .src('./src/**/*.js')
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failOnError())
 }
 
 const transpile = () => {
-  return gulp.src('./src/delegate.js')
+  return gulp
+    .src('./src/delegate.js')
     .pipe(babel())
-    .pipe(umd({
-      exports: function () {
-        return 'delegate'
-      },
-      namespace: function () {
-        return 'delegate'
-      }
-    }))
+    .pipe(
+      umd({
+        exports: function () {
+          return 'delegate'
+        },
+        namespace: function () {
+          return 'delegate'
+        }
+      })
+    )
     .pipe(gulp.dest('dist'))
     .pipe(gulp.dest('docs/js'))
     .pipe(uglify())
-    .pipe(sourcemaps.init({
-      loadMaps: true
-    }))
-    .pipe(rename({
-      suffix: '.min'
-    }))
+    .pipe(
+      sourcemaps.init({
+        loadMaps: true
+      })
+    )
+    .pipe(
+      rename({
+        suffix: '.min'
+      })
+    )
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('dist'))
 }
 
 const watchSourceCode = () => {
-  return watch('src/**/*.js', {
-    ignoreInitial: false
-  }, gulp.series(lint, transpile, copy))
-    .pipe(reload())
+  return watch(
+    'src/**/*.js',
+    {
+      ignoreInitial: false
+    },
+    gulp.series(lint, transpile, copy)
+  ).pipe(reload())
 }
 
 const watchDocs = () => {
-  return watch('docs/**/*.*')
-    .pipe(reload())
+  return watch('docs/**/*.*').pipe(reload())
 }
 
 const watchAll = gulp.parallel(watchSourceCode, watchDocs)
@@ -100,17 +125,17 @@ const watchAll = gulp.parallel(watchSourceCode, watchDocs)
 const dev = gulp.parallel(lint, transpile, connectDocs, watchAll, openDocs)
 const build = gulp.series(cleanAll, lint, transpile, copy)
 
-exports.cleanDist = cleanDist
-exports.cleanDocs = cleanDocs
-exports.clean = cleanAll
-exports.copy = copy
-exports.lint = lint
-exports.transpile = transpile
-exports.conect = connectDocs
-exports.reload = reload
-exports.watchSourceCode = watchSourceCode
-exports.watchDocs = watchDocs
-exports.watch = watchAll
-exports.start = dev
-exports.dev = dev
-exports.build = build
+module.exports.cleanDist = cleanDist
+module.exports.cleanDocs = cleanDocs
+module.exports.clean = cleanAll
+module.exports.copy = copy
+module.exports.lint = lint
+module.exports.transpile = transpile
+module.exports.conect = connectDocs
+module.exports.reload = reload
+module.exports.watchSourceCode = watchSourceCode
+module.exports.watchDocs = watchDocs
+module.exports.watch = watchAll
+module.exports.start = dev
+module.exports.dev = dev
+module.exports.build = build

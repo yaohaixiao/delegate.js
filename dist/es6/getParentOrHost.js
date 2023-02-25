@@ -1,6 +1,7 @@
 /**
  * 获取元素的父节点
  * =============================================================
+ * @method getParentOrHost
  * @param {HTMLElement} el
  * @returns {*}
  */

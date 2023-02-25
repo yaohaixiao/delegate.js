@@ -19,7 +19,7 @@ npm i -S @yaohaixiao/delegate.js
 ### script
 
 ```html
-&lt;script src="/path/to/delegate.js"&gt;&lt;/script&gt;
+<script src="/path/to/delegate.js"></script>
 ```
 
 ## Usage

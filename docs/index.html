@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="keywords" content="delegate.js,JavaScript,Event,Delegate">
-  <meta name="description" content="delegate.js 是一个轻量级的 JavaScript 事件委托库，delegate.js 中封装了：on()、once()、off() 等事件侦听相关的方法。delegate.js 库对浏览器的兼容性问题也处理的算是不错了，主流的浏览器都可以正常使用。并且 delegate.js 的 API 借鉴了 github 上其它类似的库，使得 delegate.js 的 API 使用起来非常灵活和方便。">
+  <meta name="description" content="delegate.js 是一个轻量级的 JavaScript 事件委托库。delegate.js 中封装了：on()、once()、off() 等事件侦听相关的常用方法。delegate.js 的 API 借鉴了 jQuery 的链式调用模式，使得 delegate.js 的 API 使用起来非常灵活和方便。">
   <title>delegate.js</title>
   <link href="css/style.css" type="text/css" rel="stylesheet">
 </head>
@@ -22,14 +22,20 @@
 </section>
 <section class="container">
   <h2 class="section-title">delegate.js</h2>
-  <section class="usage">delegate.js 是一个轻量级的 JavaScript 事件委托库。delegate.js 中封装了：on()、once()、off() 等事件侦听相关的常用方法。delegate.js 库代码采用最新的ES6的语法，所以不支持IE，其他主流的浏览器都可以正常使用。并且 delegate.js 的 API 借鉴了 jQuery 的链式调用模式，使得 delegate.js 的 API 使用起来非常灵活和方便。</section>
+  <section class="usage">delegate.js 是一个轻量级的 JavaScript 事件委托库。delegate.js 中封装了：on()、once()、off() 等事件侦听相关的常用方法。delegate.js 的 API 借鉴了 jQuery 的链式调用模式，使得 delegate.js 的 API 使用起来非常灵活和方便。</section>
   <h2 class="section-title">Install</h2>
   <section class="usage">
     <p>delegate.js 支持 AMD 和 CommonJS 规范的模块调用方式，可以直接使用 npm 安装，也可以使用 script 标签引入到页面。</p>
+    <p>&nbsp;</p>
     <h3 class="usage-title">npm install</h3>
     <pre class="code"><code>npm i -S @yaohaixiao/delegate.js</code></pre>
     <h3 class="usage-title">script</h3>
-    <pre class="code"><code>&lt;script src="/path/to/delegate.js"&gt;&lt;/script&gt;</code></pre>
+    <pre class="code"><code>&lt;!-- local .js file --&gt;
+&lt;script src="/path/to/delegate.js"&gt;&lt;/script&gt;
+
+&lt;!-- CDN .js file --&gt;
+&lt;script src="https://cdn.jsdelivr.net/gh/yaohaixiao/delegate.js/dist/delegate.min.js"&gt;&lt;/script&gt;
+</code></pre>
   </section>
   <h2 class="section-title">Demo</h2>
   <section class="demo">
@@ -158,7 +164,7 @@ delegate('#list').once('.item', 'click', handler)
   <p>Copyright &copy; 2008-2023 <a href="http://www.yaohaixiao.com/">Yaohaixiao</a>, all right reserved.
   </p>
 </footer>
-<script src="js/delegate.js"></script>
+<script src="js/delegate.min.js"></script>
 <script>
 const callback = function(evt) {
   const $li = evt.delegateTarget

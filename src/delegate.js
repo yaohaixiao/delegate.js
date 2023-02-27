@@ -37,31 +37,6 @@ const isString = (val) => {
 }
 
 /**
- * 检测测试数据是否为 null
- * ========================================================================
- * @method isNull
- * @param {*} val
- * @returns {boolean}
- */
-const isNull = (val) => {
-  return val === null
-}
-
-/**
- * 检测测试数据是否为 Object 类型
- * ========================================================================
- * @method isObject
- * @param {*} val - 要检测的数据
- * @returns {Boolean} 'val' 是 Function 类型返回 true，否则返回 false
- */
-const isObject = (val) => {
-  return (
-    (typeof val === 'object' || _typeof(val) === '[object Object]') &&
-    !isNull(val)
-  )
-}
-
-/**
  * 检测测试数据是否为 Function 类型
  * ========================================================================
  * @method isFunction
@@ -176,16 +151,70 @@ const closest = (el, selector, ctx, includeCTX) => {
 }
 
 /**
+ * 获取 DOM 元素绑定的所有事件处理器
+ * ========================================================================
+ * @methods getListeners
+ * @param {HTMLElement} el
+ * @param {String} type
+ * @returns {*|[]}
+ */
+const getListeners = (el, type) => {
+  let listeners = el._listeners
+
+  if (type) {
+    listeners = listeners.filter((listener) => {
+      return listener.type === type
+    })
+  }
+
+  return listeners
+}
+
+/**
+ * 销毁 DOM 元素绑定的事件处理器
+ * ========================================================================
+ * @method purgeElement
+ * @param {HTMLElement|String} el the element to purge
+ * @param {String} [type]
+ * @param {Boolean} [recurse]
+ */
+const purgeElement = function (el, type = '', recurse = false) {
+  const $element = isString(el) ? document.querySelector(el) : el
+  const $childNodes = $element.childNodes
+  const listeners = getListeners(el, type)
+  let i
+
+  if (listeners) {
+    for (i = listeners.length - 1; i > -1; i -= 1) {
+      let listener = listeners[i]
+
+      off($element, listener.type, listener.fn)
+    }
+  }
+
+  if (recurse && $element && $childNodes) {
+    $childNodes.forEach(($child) => {
+      purgeElement($child, type, recurse)
+    })
+  }
+}
+
+/**
  * 取消事件绑定
  * ========================================================================
  * @method off
  * @param {HTMLElement} el - 取消绑定（代理）事件的 DOM 节点
  * @param {String} type - 事件类型
- * @param {Function} fn - 绑定事件的回调函数
+ * @param {Function} [fn] - 绑定事件的回调函数
  * @param {Boolean} [capture] - 是否采用事件捕获（默认值：false - 事件冒泡）
  */
 const off = (el, type, fn, capture = false) => {
   const MOUSE_EVENTS = ['mouseenter', 'mouseleave']
+
+  // 如果不设置 fn 参数，默认清除 el 元素上绑定的所有事件处理器
+  if (!isFunction(fn)) {
+    return purgeElement(el, type)
+  }
 
   if (fn._delegateListener) {
     fn = fn._delegateListener
@@ -253,6 +282,21 @@ const on = (
     capture = true
   }
 
+  if (!el._listeners) {
+    el._listeners = []
+  }
+
+  // 缓存 el 元素绑定的事件处理器
+  el._listeners.push({
+    el,
+    selector,
+    type,
+    fn: listener,
+    data,
+    context,
+    capture
+  })
+
   fn._delegateListener = fn
   el.addEventListener(type, listener, capture)
 }
@@ -316,16 +360,6 @@ if (!isFunction(Object.assign)) {
  */
 class Emitter {
   constructor(el) {
-    this._attrs = {
-      selector: '',
-      type: '',
-      handler: null,
-      data: null,
-      context: null,
-      once: false,
-      capture: false
-    }
-
     if (isElement(el)) {
       this.$el = el
     } else {
@@ -337,83 +371,41 @@ class Emitter {
     return this
   }
 
-  attr() {
-    const attrs = this._attrs
-    const args = arguments
-    const prop = args[0]
+  getListeners(type) {
+    return getListeners(this.$el, type)
+  }
 
-    switch (args.length) {
-      // 1 个参数
-      case 1:
-        if (isString(prop)) {
-          return attrs[prop]
-        } else {
-          if (isObject(prop)) {
-            Object.assign(attrs, prop)
-          }
-        }
+  purge(type, recurse = false) {
+    purgeElement(this.$el, type, recurse)
 
-        break
-      // 2 个参数
-      case 2:
-        // 扩展 _attrs 的某个值
-        if (isString(prop)) {
-          attrs[args] = args[1]
-        }
+    return this
+  }
 
-        break
-      // 不传参数，返回整个 _attrs 属性
-      default:
-        return attrs
+  destroy(type) {
+    const $el = this.$el
+
+    this.purge(type, true)
+
+    if ($el && $el._listeners) {
+      $el._listeners = []
     }
 
     return this
   }
 
-  off() {
-    const { type, handler, capture } = this.attr()
-
+  off(type, handler, capture) {
     off(this.$el, type, handler, capture)
-    this.attr({
-      selector: '',
-      type: '',
-      handler: null,
-      data: null,
-      context: null,
-      once: false,
-      capture: false
-    })
 
     return this
   }
 
   on(selector, type, handler, data, context, once = false, capture = false) {
-    this.attr({
-      selector,
-      type,
-      handler,
-      data,
-      context,
-      once,
-      capture
-    })
-
     on(this.$el, selector, type, handler, data, this, once, capture)
 
     return this
   }
 
   once(selector, type, handler, data, context, capture = false) {
-    this.attr({
-      selector,
-      type,
-      handler,
-      data,
-      context,
-      once: true,
-      capture
-    })
-
     once(this.$el, selector, type, handler, this, true, capture)
 
     return this

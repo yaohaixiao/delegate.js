@@ -55,6 +55,21 @@ const on = (
     capture = true
   }
 
+  if (!el._listeners) {
+    el._listeners = []
+  }
+
+  // 缓存 el 元素绑定的事件处理器
+  el._listeners.push({
+    el,
+    selector,
+    type,
+    fn: listener,
+    data,
+    context,
+    capture
+  })
+
   fn._delegateListener = fn
   el.addEventListener(type, listener, capture)
 }

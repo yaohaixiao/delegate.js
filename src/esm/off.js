@@ -1,3 +1,6 @@
+import purgeElement from './purgeElement'
+import isFunction from './isFunction'
+
 /**
  * 取消事件绑定
  * ========================================================================
@@ -9,6 +12,11 @@
  */
 const off = (el, type, fn, capture = false) => {
   const MOUSE_EVENTS = ['mouseenter', 'mouseleave']
+
+  // 如果不设置 fn 参数，默认清除 el 元素上绑定的所有事件处理器
+  if (!isFunction(fn)) {
+    return purgeElement(el, type)
+  }
 
   if (fn._delegateListener) {
     fn = fn._delegateListener

@@ -1,5 +1,6 @@
 const gulp = require('gulp')
 const babel = require('gulp-babel')
+const plumber = require('gulp-plumber')
 const clean = require('gulp-clean')
 const connect = require('gulp-connect')
 const eslint = require('gulp-eslint')
@@ -23,28 +24,22 @@ const cleanAll = gulp.parallel(cleanDist, cleanDocs)
 
 const copy = () => {
   return gulp
-    .src('./src/es6/*.js')
+    .src('./src/esm/*.js')
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failOnError())
-    .pipe(gulp.dest('dist/es6'))
+    .pipe(gulp.dest('dist/esm'))
 }
 
 const openDocs = () => {
   let browser
   if (os.platform() === 'darwin') {
-    browser = os.platform() === 'linux'
-      ? 'google-chrome'
-      : 'google chrome'
+    browser = os.platform() === 'linux' ? 'google-chrome' : 'google chrome'
   } else {
     if (os.platform() === 'win32') {
-      browser = os.platform() === 'linux'
-        ? 'google-chrome'
-        : 'chrome'
+      browser = os.platform() === 'linux' ? 'google-chrome' : 'chrome'
     } else {
-      browser = os.platform() === 'linux'
-        ? 'google-chrome'
-        : 'firefox'
+      browser = os.platform() === 'linux' ? 'google-chrome' : 'firefox'
     }
   }
   return gulp.src('docs/index.html').pipe(
@@ -78,6 +73,7 @@ const lint = () => {
 const transpile = () => {
   return gulp
     .src('./src/delegate.js')
+    .pipe(plumber())
     .pipe(babel())
     .pipe(
       umd({
@@ -104,9 +100,10 @@ const transpile = () => {
     )
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('docs/js'))
 }
 
-const watchSourceCode = () => {
+const watchSource = () => {
   return watch(
     'src/**/*.js',
     {
@@ -120,7 +117,7 @@ const watchDocs = () => {
   return watch('docs/**/*.*').pipe(reload())
 }
 
-const watchAll = gulp.parallel(watchSourceCode, watchDocs)
+const watchAll = gulp.parallel(watchSource, watchDocs)
 
 const dev = gulp.parallel(lint, transpile, connectDocs, watchAll, openDocs)
 const build = gulp.series(cleanAll, lint, transpile, copy)
@@ -133,7 +130,7 @@ module.exports.lint = lint
 module.exports.transpile = transpile
 module.exports.conect = connectDocs
 module.exports.reload = reload
-module.exports.watchSourceCode = watchSourceCode
+module.exports.watchSource = watchSource
 module.exports.watchDocs = watchDocs
 module.exports.watch = watchAll
 module.exports.start = dev

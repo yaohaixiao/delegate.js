@@ -9,12 +9,12 @@
 }(this, function() {
 "use strict";
 
+function _typeof2(obj) { "@babel/helpers - typeof"; return _typeof2 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof2(obj); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof2(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof2(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof2(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-function _typeof2(obj) { "@babel/helpers - typeof"; return _typeof2 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof2(obj); }
 /**
  * 返回检测数据调用 toString() 方法后的字符串，用以判断数据类型。
  * ========================================================================
@@ -51,28 +51,6 @@ var _typeof = function _typeof(val) {
  */
 var isString = function isString(val) {
   return typeof val === 'string';
-};
-
-/**
- * 检测测试数据是否为 null
- * ========================================================================
- * @method isNull
- * @param {*} val
- * @returns {boolean}
- */
-var isNull = function isNull(val) {
-  return val === null;
-};
-
-/**
- * 检测测试数据是否为 Object 类型
- * ========================================================================
- * @method isObject
- * @param {*} val - 要检测的数据
- * @returns {Boolean} 'val' 是 Function 类型返回 true，否则返回 false
- */
-var isObject = function isObject(val) {
-  return (_typeof2(val) === 'object' || _typeof(val) === '[object Object]') && !isNull(val);
 };
 
 /**
@@ -176,17 +154,68 @@ var closest = function closest(el, selector, ctx, includeCTX) {
 };
 
 /**
+ * 获取 DOM 元素绑定的所有事件处理器
+ * ========================================================================
+ * @methods getListeners
+ * @param {HTMLElement} el
+ * @param {String} type
+ * @returns {*|[]}
+ */
+var _getListeners = function getListeners(el, type) {
+  var listeners = el._listeners;
+  if (type) {
+    listeners = listeners.filter(function (listener) {
+      return listener.type === type;
+    });
+  }
+  return listeners;
+};
+
+/**
+ * 销毁 DOM 元素绑定的事件处理器
+ * ========================================================================
+ * @method purgeElement
+ * @param {HTMLElement|String} el the element to purge
+ * @param {String} [type]
+ * @param {Boolean} [recurse]
+ */
+var purgeElement = function purgeElement(el) {
+  var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  var recurse = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  var $element = isString(el) ? document.querySelector(el) : el;
+  var $childNodes = $element.childNodes;
+  var listeners = _getListeners(el, type);
+  var i;
+  if (listeners) {
+    for (i = listeners.length - 1; i > -1; i -= 1) {
+      var listener = listeners[i];
+      _off($element, listener.type, listener.fn);
+    }
+  }
+  if (recurse && $element && $childNodes) {
+    $childNodes.forEach(function ($child) {
+      purgeElement($child, type, recurse);
+    });
+  }
+};
+
+/**
  * 取消事件绑定
  * ========================================================================
  * @method off
  * @param {HTMLElement} el - 取消绑定（代理）事件的 DOM 节点
  * @param {String} type - 事件类型
- * @param {Function} fn - 绑定事件的回调函数
+ * @param {Function} [fn] - 绑定事件的回调函数
  * @param {Boolean} [capture] - 是否采用事件捕获（默认值：false - 事件冒泡）
  */
 var _off = function off(el, type, fn) {
   var capture = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
   var MOUSE_EVENTS = ['mouseenter', 'mouseleave'];
+
+  // 如果不设置 fn 参数，默认清除 el 元素上绑定的所有事件处理器
+  if (!isFunction(fn)) {
+    return purgeElement(el, type);
+  }
   if (fn._delegateListener) {
     fn = fn._delegateListener;
     delete fn._delegateListener;
@@ -237,6 +266,20 @@ var _on = function on(el, selector, type, fn, data, context) {
   if (MOUSE_EVENTS.includes(type)) {
     capture = true;
   }
+  if (!el._listeners) {
+    el._listeners = [];
+  }
+
+  // 缓存 el 元素绑定的事件处理器
+  el._listeners.push({
+    el: el,
+    selector: selector,
+    type: type,
+    fn: listener,
+    data: data,
+    context: context,
+    capture: capture
+  });
   fn._delegateListener = fn;
   el.addEventListener(type, listener, capture);
 };
@@ -300,15 +343,6 @@ if (!isFunction(Object.assign)) {
 var Emitter = /*#__PURE__*/function () {
   function Emitter(el) {
     _classCallCheck(this, Emitter);
-    this._attrs = {
-      selector: '',
-      type: '',
-      handler: null,
-      data: null,
-      context: null,
-      once: false,
-      capture: false
-    };
     if (isElement(el)) {
       this.$el = el;
     } else {
@@ -319,52 +353,31 @@ var Emitter = /*#__PURE__*/function () {
     return this;
   }
   _createClass(Emitter, [{
-    key: "attr",
-    value: function attr() {
-      var attrs = this._attrs;
-      var args = arguments;
-      var prop = args[0];
-      switch (args.length) {
-        // 1 个参数
-        case 1:
-          if (isString(prop)) {
-            return attrs[prop];
-          } else {
-            if (isObject(prop)) {
-              Object.assign(attrs, prop);
-            }
-          }
-          break;
-        // 2 个参数
-        case 2:
-          // 扩展 _attrs 的某个值
-          if (isString(prop)) {
-            attrs[args] = args[1];
-          }
-          break;
-        // 不传参数，返回整个 _attrs 属性
-        default:
-          return attrs;
+    key: "getListeners",
+    value: function getListeners(type) {
+      return _getListeners(this.$el, type);
+    }
+  }, {
+    key: "purge",
+    value: function purge(type) {
+      var recurse = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      purgeElement(this.$el, type, recurse);
+      return this;
+    }
+  }, {
+    key: "destroy",
+    value: function destroy(type) {
+      var $el = this.$el;
+      this.purge(type, true);
+      if ($el && $el._listeners) {
+        $el._listeners = [];
       }
       return this;
     }
   }, {
     key: "off",
-    value: function off() {
-      var _this$attr = this.attr(),
-        type = _this$attr.type,
-        handler = _this$attr.handler,
-        capture = _this$attr.capture;
+    value: function off(type, handler, capture) {
       _off(this.$el, type, handler, capture);
-      this.attr({
-        selector: '',
-        type: '',
-        handler: null,
-        data: null,
-        context: null,
-        once: false,
-        capture: false
-      });
       return this;
     }
   }, {
@@ -372,15 +385,6 @@ var Emitter = /*#__PURE__*/function () {
     value: function on(selector, type, handler, data, context) {
       var once = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
       var capture = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : false;
-      this.attr({
-        selector: selector,
-        type: type,
-        handler: handler,
-        data: data,
-        context: context,
-        once: once,
-        capture: capture
-      });
       _on(this.$el, selector, type, handler, data, this, once, capture);
       return this;
     }
@@ -388,15 +392,6 @@ var Emitter = /*#__PURE__*/function () {
     key: "once",
     value: function once(selector, type, handler, data, context) {
       var capture = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
-      this.attr({
-        selector: selector,
-        type: type,
-        handler: handler,
-        data: data,
-        context: context,
-        once: true,
-        capture: capture
-      });
       _once(this.$el, selector, type, handler, this, true, capture);
       return this;
     }

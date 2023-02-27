@@ -17,19 +17,19 @@ delegate.js 是一个轻量级的 JavaScript 事件委托库。delegate.js 中�
 
 delegate.js 支持 AMD 和 CommonJS 规范的模块调用方式，可以直接使用 npm 安装，也可以使用 script 标签引入到页面。
 
-### npm install
+### npm 安装
 
 ```sh
 npm i -S @yaohaixiao/delegate.js
 ```
 
-### CDN 调用
+### CDN 调用 JS 文件
 
 ```js
 &lt;script src="https://cdn.jsdelivr.net/gh/yaohaixiao/delegate.js/dist/delegate.min.js"&gt;&lt;/script&gt;
 ```
 
-### 调用本地JS文件
+### 本地调用 JS 文件
 
 ```js
 &lt;script src="/path/to/delegate.min.js"&gt;&lt;/script&gt;

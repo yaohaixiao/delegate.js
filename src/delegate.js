@@ -318,6 +318,116 @@ const once = (el, selector, type, fn, data, context, capture = false) => {
 }
 
 /**
+ * 终止事件在传播过程的捕获或冒泡的事件流
+ * ========================================================================
+ * @method stopPropagation
+ * @param {Event} evt - 事件对象
+ *
+ * @example
+ * <div id="nav" class="nav">
+ *   <a id="service" class="anchor" href="https://www.yaohaixiao.com/serivce">Service</a>
+ *   <a id="help" class="anchor" href="https://www.yaohaixiao.com/help">Help</a>
+ * </div>
+ *
+ * const $nav = document.querySelector('#nav')
+ * const $service = document.querySelector('.anchor')
+ *
+ * on($nav, 'click', function(evt) {
+ *   console.log('你点击了导航栏')
+ * })
+ *
+ * on($anchor, 'click', function(evt) {
+ *   console.log('tagName', this.tagName)
+ *
+ *   // 工作台输出：'a'
+ *   // 然后跳转到 href 的地址
+ *   // 但不会触发事件冒泡，输出：'你点击了导航栏'
+ *   stopPropagation(evt)
+ * })
+ */
+const stopPropagation = function (evt) {
+  const event = window.event
+
+  if (evt.stopPropagation) {
+    evt.stopPropagation()
+  } else {
+    event.cancelBubble = true
+  }
+}
+
+/**
+ * 阻止事件的默认行为
+ * ========================================================================
+ * @method preventDefault
+ * @param {Event} evt - 事件对象
+ *
+ *
+ * @example
+ * <div id="nav" class="nav">
+ *   <a id="service" class="anchor" href="https://www.yaohaixiao.com/serivce">Service</a>
+ *   <a id="help" class="anchor" href="https://www.yaohaixiao.com/help">Help</a>
+ * </div>
+ *
+ * const $nav = document.querySelector('#nav')
+ * const $service = document.querySelector('.anchor')
+ *
+ * on($nav, 'click', function(evt) {
+ *   console.log('你点击了导航栏')
+ * })
+ *
+ * on($anchor, 'click', function(evt) {
+ *   console.log('tagName', this.tagName)
+ *
+ *   // 在工作台输出：'a'
+ *   // 会触发事件冒泡，输出：'你点击了导航栏'
+ *   // 但不会切换到 href 属性的页面地址，阻止了点击链接的默认行为
+ *   stopEvent(evt)
+ * })
+ */
+const preventDefault = function (evt) {
+  const event = window.event
+
+  if (evt.preventDefault) {
+    evt.preventDefault()
+  } else {
+    event.returnValue = false
+  }
+}
+
+/**
+ * 停止事件（阻止默认行为和阻止事件的捕获或冒泡）
+ * ========================================================================
+ * @method stopEvent
+ * @param {Event} evt - 事件对象
+ *
+ * @example
+ * <div id="nav" class="nav">
+ *   <a id="service" class="anchor" href="https://www.yaohaixiao.com/serivce">Service</a>
+ *   <a id="help" class="anchor" href="https://www.yaohaixiao.com/help">Help</a>
+ * </div>
+ *
+ * const $nav = document.querySelector('#nav')
+ * const $service = document.querySelector('.anchor')
+ *
+ * on($nav, 'click', function(evt) {
+ *   console.log('你点击了导航栏')
+ * })
+ *
+ * on($anchor, 'click', function(evt) {
+ *   console.log('tagName', this.tagName)
+ *
+ *   // 工作台输出：'a'
+ *   // 不会触发事件冒泡，输出：'你点击了导航栏'
+ *   // 也不会切换到 href 属性的页面，阻止了点击链接的默认行为
+ *   stopEvent(evt)
+ * })
+ */
+const stopEvent = function (evt) {
+  stopPropagation(evt)
+  preventDefault(evt)
+}
+
+/**
  * A polyfill for Object.assign()
  * ========================================================================
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#polyfill
@@ -410,25 +520,36 @@ class Emitter {
 
     return this
   }
+}
 
-  preventDefault(evt) {
-    evt.preventDefault()
+/**
+ * @method preventDefault
+ * @static
+ * @param {Event} evt
+ * @returns {*}
+ */
+Emitter.preventDefault = (evt) => {
+  preventDefault(evt)
+}
 
-    return this
-  }
+/**
+ * @method stopPropagation
+ * @static
+ * @param {Event} evt
+ * @returns {*}
+ */
+Emitter.stopPropagation = (evt) => {
+  stopPropagation(evt)
+}
 
-  stopPropagation(evt) {
-    evt.stopPropagation()
-
-    return this
-  }
-
-  stopEvent(evt) {
-    this.preventDefault(evt)
-    this.stopPropagation(evt)
-
-    return this
-  }
+/**
+ * @method stopEvent
+ * @static
+ * @param {Event} evt
+ * @returns {*}
+ */
+Emitter.stopEvent = (evt) => {
+  stopEvent(evt)
 }
 
 /* eslint-disable no-unused-vars */

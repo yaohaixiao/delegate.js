@@ -5,6 +5,9 @@ import isElement from './isElement'
 import isString from './isString'
 import getListeners from './getListeners'
 import purgeElement from './purgeElement'
+import preventDefault from './preventDefault'
+import stopPropagation from './stopPropagation'
+import stopEvent from './stopEvent'
 import './polyfill'
 
 /**
@@ -64,25 +67,36 @@ class Emitter {
 
     return this
   }
+}
 
-  preventDefault(evt) {
-    evt.preventDefault()
+/**
+ * @method preventDefault
+ * @static
+ * @param {Event} evt
+ * @returns {*}
+ */
+Emitter.preventDefault = (evt) => {
+  preventDefault(evt)
+}
 
-    return this
-  }
+/**
+ * @method stopPropagation
+ * @static
+ * @param {Event} evt
+ * @returns {*}
+ */
+Emitter.stopPropagation = (evt) => {
+  stopPropagation(evt)
+}
 
-  stopPropagation(evt) {
-    evt.stopPropagation()
-
-    return this
-  }
-
-  stopEvent(evt) {
-    this.preventDefault(evt)
-    this.stopPropagation(evt)
-
-    return this
-  }
+/**
+ * @method stopEvent
+ * @static
+ * @param {Event} evt
+ * @returns {*}
+ */
+Emitter.stopEvent = (evt) => {
+  stopEvent(evt)
 }
 
 export default Emitter

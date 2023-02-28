@@ -25,14 +25,14 @@ npm i -S @yaohaixiao/delegate.js
 
 ### CDN 调用 JS 文件
 
-```js
-&lt;script src="https://cdn.jsdelivr.net/gh/yaohaixiao/delegate.js/dist/delegate.min.js"&gt;&lt;/script&gt;
+```html
+<script src="https://cdn.jsdelivr.net/gh/yaohaixiao/delegate.js/dist/delegate.min.js"></script>
 ```
 
 ### 本地调用 JS 文件
 
-```js
-&lt;script src="/path/to/delegate.min.js"&gt;&lt;/script&gt;
+```html
+<script src="/path/to/delegate.min.js"></script>
 ```
 
 ## API 文档
@@ -76,6 +76,351 @@ $emitter.$el // => 获取到 list 列表 DOM 元素
 
 ## methods
 
+### on(selector, type, fn, data, context, once = false, capture = false)
+
+#### Description
+
+on() 方法用来绑定事件代理处理器。
+
+#### Parameters
+
+##### selector
+
+Type: `String`
+
+Default: ``
+
+（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。
+
+```js
+const handler = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+}
+
+const $emitter = delegate('.list')
+
+// 类选择器
+$emitter.on('.item', 'click', handler)
+
+// 标签选择择器
+$emitter.on('li', 'click', handler)
+
+// 子类选择器
+$emitter.on('li > span', 'click', handler)
+```
+
+##### type
+
+Type: `String`
+
+Default: ``
+
+（必须）type 用以设置触发的事件类型。
+
+##### fn
+
+Type: `Function`
+
+Default: ``
+
+（必须）fn 为事件处理器回调函数。
+
+##### data
+
+Type: `Object`
+
+Default: ``
+
+（可选）给事件处理器回调函数传递的数据。
+
+```js
+const handler = function(evt, data) {
+  console.log('data', data)
+  // => { user: 'Robert' }
+}
+
+// 使用 DOM 节点选择器
+const $emitter = delegate('#list')
+
+$emitter.on('li', 'click', handler, { user: 'Robert' })
+```
+
+##### context
+
+Type: `Object|Boolean`
+
+Default: ``
+
+（可选）context 指定事件处理器回调函数的 this 的指定上下文，默认指向 $el。可以指向其他 this 上下文，也可以设置为 true，此时为事件处理器的 this 上下文指向 data 对象。
+
+##### once
+
+Type: `Boolean`
+
+Default: `false`
+
+（可选）once 指定事件处理器回调函数是否仅执行一次。
+
+```js
+const handler = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+}
+
+const $emitter = delegate('#list')
+
+// once 属性为 true，点击事件处理器仅触发一次
+$emitter.on('.item', 'click', handler, true)
+
+// 默认每次点击都会触发执行点击事件处理器
+$emitter.on('.item', 'click', handler)
+```
+
+##### capture
+
+Type: `Boolean`
+
+Default: `false`
+
+（可选）capture 指定采用的事件流模型：false - 冒泡（默认值），true - 捕获。
+
+```js
+const handler = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+}
+
+const $emitter = delegate('#list')
+
+// 默认使用事件冒泡
+$emitter.on('.item', 'click', handler)
+
+// mouseenter 和 mouseleave 事件默认使用事件捕获
+$emitter.on('.item', 'mouseenter', handler)
+
+// 设置 capture 为 true，强制使用事件捕获事件流模型
+$emitter.on('.item', 'click', handler, null, null, false, true)
+```
+
+#### Returns
+
+Type: `Emitter`
+
+返回 Emitter 对象（实例）。
+
+### once(selector, type, fn, data, context, capture = false)
+
+#### Description
+
+once() 方法用来绑定事件代理处理器，仅触发一次。
+
+#### Parameters
+
+##### selector
+
+Type: `String`
+
+Default: ``
+
+（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。
+
+```js
+const handler = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+}
+
+const $emitter = delegate('.list')
+
+// 类选择器
+$emitter.once('.item', 'click', handler)
+
+// 标签选择择器
+$emitter.once('li', 'click', handler)
+
+// 子类选择器
+$emitter.once('li > span', 'click', handler)
+```
+
+##### type
+
+Type: `String`
+
+Default: ``
+
+（必须）type 用以设置触发的事件类型。
+
+##### fn
+
+Type: `Function`
+
+Default: ``
+
+（必须）fn 为事件处理器回调函数。
+
+##### data
+
+Type: `Object`
+
+Default: ``
+
+（可选）给事件处理器回调函数传递的数据。
+
+```js
+const handler = function(evt, data) {
+  console.log('data', data)
+  // => { user: 'Robert' }
+}
+
+// 使用 DOM 节点选择器
+const $emitter = delegate('#list')
+
+$emitter.once('li', 'click', handler, { user: 'Robert' })
+```
+
+##### context
+
+Type: `Object|Boolean`
+
+Default: ``
+
+（可选）context 指定事件处理器回调函数的 this 的指定上下文，默认指向 $el。可以指向其他 this 上下文，也可以设置为 true，此时为事件处理器的 this 上下文指向 data 对象。
+
+
+##### capture
+
+Type: `Boolean`
+
+Default: `false`
+
+（可选）capture 指定采用的事件流模型：false - 冒泡（默认值），true - 捕获。
+
+```js
+const handler = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+}
+
+const $emitter = delegate('#list')
+
+// 默认使用事件冒泡
+$emitter.once('.item', 'click', handler)
+
+// mouseenter 和 mouseleave 事件默认使用事件捕获
+$emitter.once('.item', 'mouseenter', handler)
+
+// 设置 capture 为 true，强制使用事件捕获事件流模型
+$emitter.once('.item', 'click', handler, null, null, false, true)
+```
+
+#### Returns
+
+Type: `Emitter`
+
+返回 Emitter 对象（实例）。
+
+
+### off(type, fn, capture = false)
+
+#### Description
+
+off() 方法用来接触绑定的事件代理处理器。
+
+#### Parameters
+
+##### type
+
+Type: `String`
+
+Default: ``
+
+（可选）type 指定需要接触绑定的事件类型，不指定则解绑 $el 上绑定的所有事件处理器。
+
+```js
+const handler = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+}
+
+const callback = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你双击的 li 节点的 id 为 ${$li.id}`)
+}
+
+const fn = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你鼠标划过的 li 节点的 id 为 ${$li.id}`)
+}
+
+const $emitter = delegate('#list')
+
+// 绑定了
+$emitter.on('.item', 'click', handler)
+$emitter.on('.item', 'click', fn)
+$emitter.on('.item', 'dbclick', callback)
+$emitter.on('.item', 'mouserenter', fn)
+
+// 解除 click 事件绑定的 handler 事件处理器
+$emitter.off($list, 'click', callback)
+
+// 解除 #list 绑定的所有事件处理器
+$emitter.off($list)
+```
+
+##### fn
+
+Type: `Function`
+
+Default: ``
+
+（可选）fn 指定需要接触绑定的事件处理器回调函数，如果不指定则接触 $el 绑定的所有指定 type 的事件处理器。
+
+```js
+const handler = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+}
+
+const callback = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你双击的 li 节点的 id 为 ${$li.id}`)
+}
+
+const fn = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你鼠标划过的 li 节点的 id 为 ${$li.id}`)
+}
+
+const $emitter = delegate('#list')
+
+// 绑定了
+$emitter.on('.item', 'click', handler)
+$emitter.on('.item', 'click', fn)
+$emitter.on('.item', 'click', callback)
+
+// 解除 click 事件绑定的 handler 事件处理器
+$emitter.off($list, 'click', callback)
+
+// 解除所有 click 事件处理器
+$emitter.off($list, 'click')
+```
+
+##### capture
+
+Type: `Boolean`
+
+Default: `false`
+
+（可选）capture 事件流模型。
+
+
+#### Returns
+
+Type: `Emitter`
+
+返回 Emitter 对象（实例）。
+
 ### getListeners(type)
 
 #### Description
@@ -118,15 +463,15 @@ $emitter.getListeners()
 
 // 获取所有 click 事件处理器
 $emitter.getListeners('click')
-// => {
-// el,
-// selector,
-// type,
-// fn,
-// data,
-// context,
-// capture
-// }
+// => [{
+//  el,
+//  selector,
+//  type,
+//  fn,
+//  data,
+//  context,
+//  capture
+// }]
 ```
 
 ### purge(type, recurse)
@@ -153,7 +498,6 @@ Default: `false`
 
 （可选）是否递归清理 DOM 元素下所有子节点绑定的事件处理器，默认值：false - 仅清理当前 DOM 元素的事件处理器，true - 同事递归清理 DOM 元素下所有子节点绑定的事件处理器。
 
-
 #### Returns
 
 Type: `Emitter`
@@ -178,7 +522,7 @@ $emitter.getListeners()
 
 // 获取所有 click 事件处理器
 $emitter.getListeners('click')
-// => {
+// => [{
 // el,
 // selector,
 // type,
@@ -186,7 +530,7 @@ $emitter.getListeners('click')
 // data,
 // context,
 // capture
-// }
+// }]
 
 // 清除绑定的所有 click 事件处理器
 $emitter.purge('click')
@@ -198,91 +542,32 @@ $emitter.purge('click')
 $emitter.purge('click', true)
 ```
 
-### 基本用法 - 事件冒泡
+### destroy()
+
+#### Description
+
+解除 DOM 元素（$el）全部包括子元素的所有事件处理器。
+
+
+#### Returns
+
+Type: `Emitter`
+
+返回 Emitter 对象（实例）。
 
 ```js
 const handler = function(evt) {
   const $li = evt.delegateTarget
-  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+  const $textarea = document.querySelector('#log-textarea')
+
+  $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
 }
 
-// 默认使用事件冒泡
-delegate('#list').on('.item', 'click', handler)
-```
+const $emitter = delegate('#list')
 
-### 基本用法 - 事件捕获
-
-```js
-const handler = function(evt) {
-  const $li = evt.delegateTarget
-  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
-}
-
-// 默认使用事件捕获
-delegate('#list').on('.item', 'mouseenter', handler)
-```
-
-### 强制使用事件捕获
-
-```js
-const handler = function(evt) {
-  const $li = evt.delegateTarget
-  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
-}
-
-// 默认使用事件冒泡
-delegate('#list').on('.item', 'click', handler, true)
-```
-
-### 使用不同类型的选择器
-
-```js
-const handler = function(evt) {
-  const $li = evt.delegateTarget
-  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
-}
-
-// 类选择器
-delegate('.list').on('.item', 'click', handler)
-
-// 标签选择择器
-delegate('ul').on('li', 'click', handler)
-
-// 以数组/类似数组的元素为基础
-delegate('#list').on(document.querySelectorAll('.item'), 'click', handler)
-```
-
-### 事件只触发一次
-
-```js
-const handler = function(evt) {
-  const $li = evt.delegateTarget
-  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
-}
-
-// 设置 delegate.on() 方法的 once 属性为 true
-delegate('#list').on('.item', 'click', handler, true)
-
-// 使用 once 方法只触发一次
-delegate('#list').once('.item', 'click', handler)
-```
-
-### 取消事件委托
-
-```js
-const $list = document.querySelector('#list')
-const handler = function(evt) {
-  const $li = evt.delegateTarget
-  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
-}
-
-// 使用 off() 方法取消事件委托
-delegate('#list').on('.item', 'click', handler)
-                 .off($list, 'click', callback)
-
-// 使用 destroy() 方法取消事件委托
-delegate('#list').on('.item', 'click', handler)
-                 .destroy()
+// 解除所有绑定事件
+$emitter.destroy()
+// => 点击 li 元素将不会执行 handler 事件处理器
 ```
 
 

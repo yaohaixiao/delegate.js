@@ -30,7 +30,7 @@ const off = (el, type, fn, capture = false) => {
   if (window.removeEventListener) {
     el.removeEventListener(type, fn, capture)
   } else if (window.detachEvent) {
-    el.detachEvent("on" + type, fn);
+    el.detachEvent('on' + type, fn)
   }
 }
 

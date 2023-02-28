@@ -50,22 +50,52 @@
   <section class="demo">
     <section class="demo-col">
       <pre class="code"><code>&lt;ul id="list" class="list"&gt;
-  &lt;li id="item-1" class="item"&gt;Item 1&lt;/li&gt;
-  &lt;li id="item-2" class="item"&gt;Item 2&lt;/li&gt;
-  &lt;li id="item-3" class="item"&gt;Item 3&lt;/li&gt;
-  &lt;li id="item-4" class="item"&gt;Item 4&lt;/li&gt;
-  &lt;li id="item-5" class="item"&gt;Item 5&lt;/li&gt;
-  &lt;li id="item-6" class="item"&gt;Item 6&lt;/li&gt;
+  &lt;li id="item-1" class="item"&gt;
+    &lt;span class="item-label"&gt;Item 1&lt;/span&gt;
+    &lt;span class="item-remove" data-id="1"&gt;删除&lt;/span&gt;
+  &lt;/li&gt;
+  &lt;li id="item-2" class="item"&gt;
+    &lt;span class="item-label"&gt;Item 2&lt;/span&gt;
+    &lt;span class="item-remove" data-id="2"&gt;删除&lt;/span&gt;
+  &lt;/li&gt;
+  &lt;li id="item-3" class="item"&gt;
+    &lt;span class="item-label"&gt;Item 3&lt;/span&gt;
+    &lt;span class="item-remove" data-id="3"&gt;删除&lt;/span&gt;
+  &lt;/li&gt;
+  &lt;li id="item-4" class="item"&gt;
+    &lt;span class="item-label"&gt;Item 4&lt;/span&gt;
+    &lt;span class="item-remove" data-id="4"&gt;删除&lt;/span&gt;
+  &lt;/li&gt;
+  &lt;li id="item-5" class="item"&gt;
+    &lt;span class="item-label"&gt;Item 5&lt;/span&gt;
+    &lt;span class="item-remove" data-id="5"&gt;删除&lt;/span&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;script src="js/delegate.min.js"&gt;&lt;/script&gt;
 &lt;script&gt;
-const callback = function(evt) {
+const $list = document.querySelector('#list')
+const $emitter = delegate($list)
+const removeItem = function (evt) {
+  const $removeButton = evt.delegateTarget
+  const id = parseInt($removeButton.getAttribute('data-id'), 10)
+  const $textarea = document.querySelector('#log-textarea')
+
+  evt.stopPropagation()
+  evt.preventDefault()
+
+  // 省略删除的逻辑
+  $textarea.value += `你删除的 li 节点的 id 为 item-${id}\r`
+}
+const showLog = function (evt) {
   const $li = evt.delegateTarget
   const $textarea = document.querySelector('#log-textarea')
+
   $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
 }
 
-delegate('#list').on('.item', 'click', callback)
+$emitter.on('.item-remove', 'click', removeItem)
+$emitter.on('.item', 'click', showLog)
 &lt;/script&gt;</code></pre>
     </section>
     <section class="demo-col">
@@ -108,10 +138,6 @@ delegate('#list').on('.item', 'click', callback)
     {
       id: 5,
       text: 'Item 5'
-    },
-    {
-      id: 6,
-      text: 'Item 6'
     }
   ]
   const $button = document.querySelector('#add')
@@ -123,7 +149,12 @@ delegate('#list').on('.item', 'click', callback)
 
     options.forEach((option) => {
       const id = option.id
-      items.push(`<li id="${'item-' + id}" class="item"><span class="item-label">${'Item-' + id}</span><span class="item-remove" data-id="${id}">删除</span></li>`)
+      const item = `<li id="${'item-' + id}" class="item">` +
+        `<span class="item-label">${'Item-' + id}</span>` +
+        `<span class="item-remove" data-id="${id}">删除</span>` +
+        `</li>`
+
+      items.push(item)
     })
 
     $list.innerHTML = items.join('')
@@ -133,10 +164,13 @@ delegate('#list').on('.item', 'click', callback)
     const length = options.length
     const id = length > 0 ? options[length - 1].id + 1 : 1
     const option = { id: id, text: `Item-${id}` }
+    const $textarea = document.querySelector('#log-textarea')
 
     options.push(option)
 
     draw()
+
+    $textarea.value += `你添加的 li 节点的 id 为 item-${id}\r`
   }
 
   const removeItem = function (evt) {
@@ -146,7 +180,6 @@ delegate('#list').on('.item', 'click', callback)
 
     evt.stopPropagation()
     evt.preventDefault()
-    evt.cancelBubble = true
 
     options = options.filter((option) => id !== option.id)
 
@@ -154,29 +187,22 @@ delegate('#list').on('.item', 'click', callback)
 
     $textarea.value += `你删除的 li 节点的 id 为 item-${id}\r`
 
-    return false
+    console.log('evt', evt)
   }
 
   const showLog = function (evt) {
     const $li = evt.delegateTarget
     const $textarea = document.querySelector('#log-textarea')
 
-    evt.stopPropagation()
-    evt.preventDefault()
-    evt.cancelBubble = true
-
     $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
-
-    return false
   }
 
   draw()
 
   $button.addEventListener('click', addItem)
 
-  $emitter.on('.item', 'click', showLog)
-  $emitter.off('click', showLog)
   $emitter.on('.item-remove', 'click', removeItem)
+  $emitter.on('.item', 'click', showLog)
 </script>
 </body>
 </html>

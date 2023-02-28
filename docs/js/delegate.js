@@ -226,7 +226,7 @@ var _off = function off(el, type, fn) {
   if (window.removeEventListener) {
     el.removeEventListener(type, fn, capture);
   } else if (window.detachEvent) {
-    el.detachEvent("on" + type, fn);
+    el.detachEvent('on' + type, fn);
   }
 };
 
@@ -264,7 +264,9 @@ var _on = function on(el, selector, type, fn, data, context) {
       if (once === true) {
         _off(el, type, listener);
       }
-      fn.call(overrideContext, evt, data);
+      if (target === delegateTarget) {
+        fn.call(overrideContext, evt, data);
+      }
     }
   };
   if (MOUSE_EVENTS.includes(type)) {
@@ -288,7 +290,7 @@ var _on = function on(el, selector, type, fn, data, context) {
   if (window.addEventListener) {
     el.addEventListener(type, listener, capture);
   } else if (window.attachEvent) {
-    el.attachEvent("on" + type, listener);
+    el.attachEvent('on' + type, listener);
   }
 };
 

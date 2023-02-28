@@ -47,7 +47,10 @@ const on = (
         off(el, type, listener)
       }
 
-      fn.call(overrideContext, evt, data)
+
+      if (target === delegateTarget) {
+        fn.call(overrideContext, evt, data)
+      }
     }
   }
 
@@ -75,7 +78,7 @@ const on = (
   if (window.addEventListener) {
     el.addEventListener(type, listener, capture)
   } else if (window.attachEvent) {
-    el.attachEvent("on" + type, listener);
+    el.attachEvent('on' + type, listener)
   }
 }
 

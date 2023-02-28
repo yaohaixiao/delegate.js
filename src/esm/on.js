@@ -47,7 +47,9 @@ const on = (
         off(el, type, listener)
       }
 
-      fn.call(overrideContext, evt, data)
+      if (target === delegateTarget) {
+        fn.call(overrideContext, evt, data)
+      }
     }
   }
 

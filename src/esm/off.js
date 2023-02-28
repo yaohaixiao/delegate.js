@@ -27,7 +27,11 @@ const off = (el, type, fn, capture = false) => {
     capture = true
   }
 
-  el.removeEventListener(type, fn, capture)
+  if (window.removeEventListener) {
+    el.removeEventListener(type, fn, capture)
+  } else if (window.detachEvent) {
+    el.detachEvent('on' + type, fn)
+  }
 }
 
 export default off

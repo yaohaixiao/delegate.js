@@ -70,8 +70,13 @@ const on = (
     capture
   })
 
-  fn._delegateListener = fn
-  el.addEventListener(type, listener, capture)
+  fn._delegateListener = listener
+
+  if (window.addEventListener) {
+    el.addEventListener(type, listener, capture)
+  } else if (window.attachEvent) {
+    el.attachEvent('on' + type, listener)
+  }
 }
 
 export default on

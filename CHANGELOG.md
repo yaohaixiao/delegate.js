@@ -1,3 +1,12 @@
+# [0.5.0](https://github.com/yaohaixiao/delegate.js/compare/0.4.0...0.5.0) (2023-03-01)
+
+
+### Features
+
+* 添加 stopEvent, stopPropagation 和 preventDefault 3个新方法 ([0a712a7](https://github.com/yaohaixiao/delegate.js/commit/0a712a7741516d5eeb4941c1710ff783264b318f))
+
+
+
 # [0.4.0](https://github.com/yaohaixiao/delegate.js/compare/0.3.1...0.4.0) (2023-02-28)
 
 

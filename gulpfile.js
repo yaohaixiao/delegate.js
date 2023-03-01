@@ -120,7 +120,7 @@ const watchDocs = () => {
 const watchAll = gulp.parallel(watchSource, watchDocs)
 
 const dev = gulp.parallel(lint, transpile, connectDocs, watchAll, openDocs)
-const build = gulp.series(cleanAll, lint, transpile, copy)
+const build = gulp.series(lint, cleanAll, transpile, copy)
 
 module.exports.cleanDist = cleanDist
 module.exports.cleanDocs = cleanDocs

@@ -570,6 +570,190 @@ $emitter.destroy()
 // => 点击 li 元素将不会执行 handler 事件处理器
 ```
 
+### preventDefault(evt)
+
+#### Description
+
+阻止触发绑定事件 DOM 元素的默认行为。
+
+#### Parameters
+
+##### type
+
+Type: `Event`
+
+Default: ``
+
+（必须）事件对象。
+
+#### Returns
+
+Type: `Emitter`
+
+返回 Emitter 对象（实例）。
+
+```html
+<ul id="list" class="list">
+  <li class="item">
+    <a href="/home" class="nav">Home</a>
+  </li>
+  <li class="item">
+    <a href="/support" class="nav">Support</a>
+  </li>
+  <li class="item">
+    <a href="/faqs" class="nav">FAQs</a>
+  </li>
+</ul>
+```
+
+```js
+const handler = function(evt) {
+  const $link = evt.delegateTarget
+  const $textarea = document.querySelector('#log-textarea')
+
+  // preventDefault() 方法会阻止点击链接后默认跳转页面的行为发生
+  $emitter.preventDefault(evt)
+
+  $textarea.value += `你点击了导航菜单 ${$link.innerHTML},但它不会跳转到${$link.href}页面\r`
+}
+
+const $emitter = delegate('#list')
+
+// 点击导航菜单，不会跳转页面
+$emitter.on('a.nav', 'click', handler)
+// => 点击 li 元素将不会执行 handler 事件处理器
+```
+
+### stopPropagation(evt)
+
+#### Description
+
+终止事件在传播过程的捕获或冒泡的事件流。
+
+#### Parameters
+
+##### type
+
+Type: `Event`
+
+Default: ``
+
+（必须）事件对象。
+
+#### Returns
+
+Type: `Emitter`
+
+返回 Emitter 对象（实例）。
+
+```html
+<ul id="list" class="list">
+  <li class="item" id="item-home">
+    <span>Home</span>
+    <span class="item-remove" data-id="home">删除</a>
+  </li>
+  <li class="item" id="item-support">
+    <span>Support</span>
+    <span class="item-remove" data-id="support">删除</a>
+  </li>
+  <li class="item" id="item-faqs">
+    <span>FAQs</span>
+    <span class="item-remove" data-id="faqs">删除</a>
+  </li>
+</ul>
+```
+
+```js
+const $emitter = delegate('#list')
+const removeItem = function (evt) {
+  const $removeButton = evt.delegateTarget
+  const id = parseInt($removeButton.getAttribute('data-id'), 10)
+  const $textarea = document.querySelector('#log-textarea')
+
+  // 阻止事件冒泡，不触发执行 showLog() 回调函数
+  $emitter.stopPropagation(evt)
+
+  // ...省略删除的逻辑
+
+  $textarea.value += `你删除的 li 节点的 id 为 item-${id}\r`
+}
+const showLog = function (evt) {
+  const $li = evt.delegateTarget
+  const $textarea = document.querySelector('#log-textarea')
+
+  $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
+}
+
+// 点击删除，只会删除点击行，但不会触发事件冒泡，触发点击 .item 的事件处理函数执行
+$emitter.on('.item-remove', 'click', removeItem)
+$emitter.on('.item', 'click', showLog)
+```
+
+### stopEvent(evt)
+
+#### Description
+
+停止事件（阻止默认行为和阻止事件的捕获或冒泡）。
+
+#### Parameters
+
+##### type
+
+Type: `Event`
+
+Default: ``
+
+（必须）事件对象。
+
+#### Returns
+
+Type: `Emitter`
+
+返回 Emitter 对象（实例）。
+
+```html
+<ul id="list" class="list">
+  <li class="item" id="item-home">
+    <span>Home</span>
+    <a href="/sitemap#home" class="item-remove" data-id="home">删除</a>
+  </li>
+  <li class="item" id="item-support">
+    <span>Support</span>
+    <a href="/sitemap#support" class="item-remove" data-id="support">删除</a>
+  </li>
+  <li class="item" id="item-faqs">
+    <span>FAQs</span>
+    <a href="/sitemap#support" class="item-remove" data-id="faqs">删除</a>
+  </li>
+</ul>
+```
+
+```js
+const $emitter = delegate('#list')
+const removeItem = function (evt) {
+  const $removeButton = evt.delegateTarget
+  const id = parseInt($removeButton.getAttribute('data-id'), 10)
+  const $textarea = document.querySelector('#log-textarea')
+
+  // 阻止事件冒泡，不触发执行 showLog() 回调函数
+  // 同时阻止点击链接跳转到 /sitemap 页面
+  $emitter.stopEvent(evt)
+
+  // ...省略删除的逻辑
+
+  $textarea.value += `你删除的 li 节点的 id 为 item-${id}\r`
+}
+const showLog = function (evt) {
+  const $li = evt.delegateTarget
+  const $textarea = document.querySelector('#log-textarea')
+
+  $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
+}
+
+// 点击删除，只会删除行，不会跳转页面，也不会触发事件冒泡，触发执行 showLog() 回调函数
+$emitter.on('.item-remove', 'click', removeItem)
+$emitter.on('.item', 'click', showLog)
+```
 
 ## Example
 

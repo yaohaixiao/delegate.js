@@ -6,13 +6,14 @@ import off from './off'
  * ========================================================================
  * @method on
  * @param {HTMLElement} el - 绑定代理事件的 DOM 节点
- * @param {String} selector - 触发 el 代理事件的 DOM 节点的选择器
- * @param {String} type - 事件类型
- * @param {Function} fn - 绑定事件的回调函数
- * @param {Object} [data] - 传递给事件处理器需要使用的数据
- * @param {Object|Boolean} [context] - callback 回调函数的 this 上下文（默认值：el）
- * @param {Boolean} [once] - 是否只触发一次（默认值：false - 事件冒泡）
- * @param {Boolean} [capture] - 是否采用事件捕获（默认值：false - 事件冒泡）
+ * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+ * @param {String} type - （必须）事件类型
+ * @param {Function} fn - （必须） 事件处理器回调函数
+ * @param {Object} data - （可选）传递给事件处理器回调函数的数据对象
+ * @param {Object|Boolean} context - （可选）事件处理器回调函数的 this 上下文指向，
+ * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
+ * @param {Boolean} once - （可选）是否仅触发一次
+ * @param {Boolean} capture - （可选）是否采用事件冒泡模型：false - 冒泡，true - 捕获
  */
 const on = (
   el,
@@ -46,7 +47,6 @@ const on = (
       if (once === true) {
         off(el, type, listener)
       }
-
 
       if (target === delegateTarget) {
         fn.call(overrideContext, evt, data)

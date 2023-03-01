@@ -81,8 +81,8 @@ const removeItem = function (evt) {
   const id = parseInt($removeButton.getAttribute('data-id'), 10)
   const $textarea = document.querySelector('#log-textarea')
 
-  evt.stopPropagation()
-  evt.preventDefault()
+  // 阻止事件冒泡，不触发执行 showLog() 回调函数
+  $emitter.stopEvent(evt)
 
   // 省略删除的逻辑
   $textarea.value += `你删除的 li 节点的 id 为 item-${id}\r`
@@ -178,8 +178,7 @@ $emitter.on('.item', 'click', showLog)
     const id = parseInt($removeButton.getAttribute('data-id'), 10)
     const $textarea = document.querySelector('#log-textarea')
 
-    evt.stopPropagation()
-    evt.preventDefault()
+    $emitter.stopEvent(evt)
 
     options = options.filter((option) => id !== option.id)
 

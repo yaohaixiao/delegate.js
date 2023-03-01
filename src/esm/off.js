@@ -2,13 +2,15 @@ import purgeElement from './purgeElement'
 import isFunction from './isFunction'
 
 /**
- * 取消事件绑定
+ * 取消 type 类型的代理事件绑定
+ * ========================================================================
+ * 如果没有设置 handler，则销毁 this.$el 绑定的所有符合 type 事件类型的事件绑定
  * ========================================================================
  * @method off
- * @param {HTMLElement} el - 取消绑定（代理）事件的 DOM 节点
- * @param {String} type - 事件类型
- * @param {Function} fn - 绑定事件的回调函数
- * @param {Boolean} [capture] - 是否采用事件捕获（默认值：false - 事件冒泡）
+ * @param {HTMLElement} el - （必须）取消事件绑定的 DOM 元素
+ * @param {String} type - （必须）事件类型
+ * @param {Function} [fn] - （可选）事件处理器回调函数
+ * @param {Boolean} [capture] - （可选）是否启用冒泡事件模型
  */
 const off = (el, type, fn, capture = false) => {
   const MOUSE_EVENTS = ['mouseenter', 'mouseleave']

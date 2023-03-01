@@ -2,7 +2,7 @@
  * 检测是否为 HTMLElement 元素节点
  * ========================================================================
  * @method isElement
- * @param {*} el - 要测试的数据
+ * @param {*|HTMLElement} el - （必须）待检测的数据（DOM 元素）
  * @returns {Boolean}
  */
 const isElement = (el) => {

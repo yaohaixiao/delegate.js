@@ -1,3 +1,12 @@
+# [0.6.0](https://github.com/yaohaixiao/delegate.js/compare/0.5.0...0.6.0) (2023-03-02)
+
+
+### Features
+
+* 添加 getPageX, getPageXY 和 getPageXY 方法 ([f2aa3b9](https://github.com/yaohaixiao/delegate.js/commit/f2aa3b9b806ff02abe9649a1e740bcc940641ae9))
+
+
+
 # [0.5.0](https://github.com/yaohaixiao/delegate.js/compare/0.4.0...0.5.0) (2023-03-01)
 
 

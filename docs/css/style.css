@@ -111,18 +111,25 @@ a:hover {
   font-size: 14px;
   padding: 0 10px;
   text-align: right;
-  border-bottom: 1px solid #e7e8e9;
   overflow: hidden;
 }
 
 .demo-action,
-.item-remove {
+.remove {
   cursor: pointer;
   color: #01aa95;
   user-select: none;
 }
 
-.item-remove {
+.demo-action {
+  padding-left: 10px;
+}
+
+.demo-action:first-child {
+  padding-left: 0;
+}
+
+.remove {
   float: right;
 }
 
@@ -155,7 +162,9 @@ a:hover {
 }
 
 .list {
-  max-height: 814px;
+  max-height: 684px;
+  border-top: 1px solid #e7e8e9;
+  border-bottom: 1px solid #e7e8e9;
   overflow: auto;
 }
 

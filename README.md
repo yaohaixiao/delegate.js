@@ -13,6 +13,12 @@ delegate.js 是一个轻量级的 JavaScript 事件委托库。delegate.js 中�
 - 采用 jQuery 链式调用语法，调用语法简洁方便；
 - 文件体积小，加载速度快；
 
+## Browsers support
+
+| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](https://yaohaixiao.github.io/calendar.js/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](https://yaohaixiao.github.io/calendar.js/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](https://yaohaixiao.github.io/calendar.js/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](https://yaohaixiao.github.io/calendar.js/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](https://yaohaixiao.github.io/calendar.js/)</br>Opera |
+| --------- | --------- | --------- | --------- | --------- |
+| IE11, Edge| last 10 versions| last 10 versions| last 10 versions| last 10 versions
+
 ## 安装说明
 
 delegate.js 支持 AMD 和 CommonJS 规范的模块调用方式，可以直接使用 npm 安装，也可以使用 script 标签引入到页面。
@@ -752,6 +758,105 @@ const showLog = function (evt) {
 
 // 点击删除，只会删除行，不会跳转页面，也不会触发事件冒泡，触发执行 showLog() 回调函数
 $emitter.on('.item-remove', 'click', removeItem)
+$emitter.on('.item', 'click', showLog)
+```
+
+### getPageX(evt)
+
+#### Description
+
+获取事件触发时的 pageX 值。
+
+#### Parameters
+
+##### type
+
+Type: `Event`
+
+Default: ``
+
+（必须）事件对象。
+
+#### Returns
+
+Type: `Number`
+
+返回事件触发时的 pageX 值。
+
+```js
+const $emitter = delegate('#list')
+const showLog = function (evt) {
+  const pageX = $emitter.getPageX(evt)
+
+  console.log(`pageX 为：${pageX}`)
+}
+
+$emitter.on('.item', 'click', showLog)
+```
+
+### getPageY(evt)
+
+#### Description
+
+获取事件触发时的 pageY 值。
+
+#### Parameters
+
+##### type
+
+Type: `Event`
+
+Default: ``
+
+（必须）事件对象。
+
+#### Returns
+
+Type: `Number`
+
+返回事件触发时的 pageY 值。
+
+```js
+const $emitter = delegate('#list')
+const showLog = function (evt) {
+  const pageY = $emitter.getPageY(evt)
+
+  console.log(`pageY 为：${pageY}`)
+}
+
+$emitter.on('.item', 'click', showLog)
+```
+### getPageXY(evt)
+
+#### Description
+
+获取事件触发时的 pageX 和 pageY 数组数据。
+
+#### Parameters
+
+##### type
+
+Type: `Event`
+
+Default: ``
+
+（必须）事件对象。
+
+#### Returns
+
+Type: `Array`
+
+返回事件触发时的数组数据：[pageX, pageY]。
+
+```js
+const $emitter = delegate('#list')
+const showLog = function (evt) {
+  const pageXY = $emitter.getPageXY(evt)
+
+  console.log(`pageX 为：${pageXY[0]}`)
+  console.log(`pageY 为：${pageXY[1]}`)
+}
+
 $emitter.on('.item', 'click', showLog)
 ```
 

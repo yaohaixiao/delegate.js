@@ -4,6 +4,9 @@ import once from './once'
 import isElement from './isElement'
 import isString from './isString'
 import getListeners from './getListeners'
+import getPageX from './getPageX'
+import getPageY from './getPageY'
+import getPageXY from './getPageXY'
 import purgeElement from './purgeElement'
 import preventDefault from './preventDefault'
 import stopPropagation from './stopPropagation'
@@ -45,6 +48,42 @@ class Emitter {
    */
   getListeners(type) {
     return getListeners(this.$el, type)
+  }
+
+  /**
+   * 获取事件触发时的 pageX 值
+   * ========================================================================
+   * @method getPageX
+   * @see getPageX
+   * @param {Event} evt - （必须）Event 对象
+   * @return {Number} - 返回事件触发时的 pageX 值
+   */
+  getPageX(evt) {
+    return getPageX(evt)
+  }
+
+  /**
+   * 获取事件触发时的 pageY 值
+   * ========================================================================
+   * @method getPageY
+   * @see getPageY
+   * @param {Event} evt - （必须）Event 对象
+   * @return {Number} - 返回事件触发时的 pageY 值
+   */
+  getPageY(evt) {
+    return getPageY(evt)
+  }
+
+  /**
+   * 获取事件触发时的 pageX 和 pageY 数组数据
+   * ========================================================================
+   * @method getPageXY
+   * @see getPageXY
+   * @param {Event} evt - （必须）Event 对象
+   * @return {Array} - 返回事件触发时的数组数据：[pageX, pageY]
+   */
+  getPageXY(evt) {
+    return getPageXY(evt)
   }
 
   /**
@@ -107,11 +146,11 @@ class Emitter {
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {String} type - （必须）事件类型
    * @param {Function} handler - （必须） 事件处理器回调函数
-   * @param {Object} data - （可选）传递给事件处理器回调函数的数据对象
-   * @param {Object|Boolean} context - （可选）事件处理器回调函数的 this 上下文指向，
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
    * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
-   * @param {Boolean} once - （可选）是否仅触发一次
-   * @param {Boolean} capture - （可选）是否采用事件冒泡模型：false - 冒泡，true - 捕获
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @param {Boolean} [capture] - （可选）是否采用事件冒泡模型：false - 冒泡，true - 捕获
    * @returns {Emitter} - Emitter 对象
    */
   on(selector, type, handler, data, context, once = false, capture = false) {
@@ -127,10 +166,10 @@ class Emitter {
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {String} type - （必须）事件类型
    * @param {Function} handler - （必须） 事件处理器回调函数
-   * @param {Object} data - （可选）传递给事件处理器回调函数的数据对象
-   * @param {Object|Boolean} context - （可选）事件处理器回调函数的 this 上下文指向，
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
    * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
-   * @param {Boolean} capture - （可选）是否采用事件冒泡模型：false - 冒泡，true - 捕获
+   * @param {Boolean} [capture] - （可选）是否采用事件冒泡模型：false - 冒泡，true - 捕获
    * @returns {Emitter} - Emitter 对象
    */
   once(selector, type, handler, data, context, capture = false) {

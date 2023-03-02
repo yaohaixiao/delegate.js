@@ -50,58 +50,65 @@
   <section class="demo">
     <section class="demo-col">
       <pre class="code"><code>&lt;ul id="list" class="list"&gt;
-  &lt;li id="item-1" class="item"&gt;
-    &lt;span class="item-label"&gt;Item 1&lt;/span&gt;
-    &lt;span class="item-remove" data-id="1"&gt;删除&lt;/span&gt;
-  &lt;/li&gt;
-  &lt;li id="item-2" class="item"&gt;
-    &lt;span class="item-label"&gt;Item 2&lt;/span&gt;
-    &lt;span class="item-remove" data-id="2"&gt;删除&lt;/span&gt;
-  &lt;/li&gt;
-  &lt;li id="item-3" class="item"&gt;
-    &lt;span class="item-label"&gt;Item 3&lt;/span&gt;
-    &lt;span class="item-remove" data-id="3"&gt;删除&lt;/span&gt;
-  &lt;/li&gt;
-  &lt;li id="item-4" class="item"&gt;
-    &lt;span class="item-label"&gt;Item 4&lt;/span&gt;
-    &lt;span class="item-remove" data-id="4"&gt;删除&lt;/span&gt;
-  &lt;/li&gt;
-  &lt;li id="item-5" class="item"&gt;
-    &lt;span class="item-label"&gt;Item 5&lt;/span&gt;
-    &lt;span class="item-remove" data-id="5"&gt;删除&lt;/span&gt;
-  &lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;script src="js/delegate.min.js"&gt;&lt;/script&gt;
 &lt;script&gt;
+// ...省略获取操作按钮的逻辑
 const $list = document.querySelector('#list')
 const $emitter = delegate($list)
 const removeItem = function (evt) {
   const $removeButton = evt.delegateTarget
   const id = parseInt($removeButton.getAttribute('data-id'), 10)
   const $textarea = document.querySelector('#log-textarea')
-
   // 阻止事件冒泡，不触发执行 showLog() 回调函数
   $emitter.stopEvent(evt)
-
   // 省略删除的逻辑
   $textarea.value += `你删除的 li 节点的 id 为 item-${id}\r`
 }
 const showLog = function (evt) {
   const $li = evt.delegateTarget
   const $textarea = document.querySelector('#log-textarea')
-
   $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
 }
-
-$emitter.on('.item-remove', 'click', removeItem)
-$emitter.on('.item', 'click', showLog)
+const onRemove = () => {
+  $emitter.on('.remove', 'click', removeItem)
+}
+const offRemove = () => {
+  $emitter.off('click', removeItem)
+}
+const onItem = () => {
+  $emitter.on('.item', 'click', showLog)
+}
+const offItem = () => {
+  $emitter.off('click', showLog)
+}
+const onAll = () => {
+  onRemove()
+  onItem()
+}
+const offAll = () => {
+  $emitter.destroy()
+}
+// 动态绘制 #list 的内容（实现代码省略）
+draw()
+onAll()
+// ...省略操作按钮的事件绑定逻辑
 &lt;/script&gt;</code></pre>
     </section>
     <section class="demo-col">
-      <div class="demo-actions"><span class="demo-action" id="add">添加行</span></div>
+      <div class="demo-actions">
+        <span class="demo-action" id="off-item">解除 .item 绑定</span>
+        <span class="demo-action" id="on-item">恢复 .item 绑定</span>
+        <span class="demo-action" id="off-remove">解除 .remove 绑定</span>
+        <span class="demo-action" id="on-remove">恢复 .remove 绑定</span>
+        <span class="demo-action" id="off-all">解除所有绑定</span>
+        <span class="demo-action" id="on-all">恢复所有绑定</span>
+      </div>
       <ul id="list" class="list">
       </ul>
+      <div class="demo-actions">
+        <span class="demo-action" id="add">添加行</span>
+      </div>
       <div class="demo-log">
         <textarea id="log-textarea" class="log-textarea"></textarea>
       </div>
@@ -140,7 +147,16 @@ $emitter.on('.item', 'click', showLog)
       text: 'Item 5'
     }
   ]
-  const $button = document.querySelector('#add')
+  let isRemoveOn = true
+  let isItemOn = true
+
+  const $buttonOnRemove = document.querySelector('#on-remove')
+  const $buttonOffRemove = document.querySelector('#off-remove')
+  const $buttonOnItem = document.querySelector('#on-item')
+  const $buttonOffItem = document.querySelector('#off-item')
+  const $buttonOnAll = document.querySelector('#on-all')
+  const $buttonOffAll = document.querySelector('#off-all')
+  const $buttonAdd = document.querySelector('#add')
   const $list = document.querySelector('#list')
   const $emitter = delegate($list)
 
@@ -150,8 +166,8 @@ $emitter.on('.item', 'click', showLog)
     options.forEach((option) => {
       const id = option.id
       const item = `<li id="${'item-' + id}" class="item">` +
-        `<span class="item-label">${'Item-' + id}</span>` +
-        `<span class="item-remove" data-id="${id}">删除</span>` +
+        `<span class="label">${'Item-' + id}</span>` +
+        `<span class="remove" data-id="${id}">删除</span>` +
         `</li>`
 
       items.push(item)
@@ -190,18 +206,86 @@ $emitter.on('.item', 'click', showLog)
   }
 
   const showLog = function (evt) {
+    const pageX = $emitter.getPageX(evt)
+    const pageY = $emitter.getPageY(evt)
     const $li = evt.delegateTarget
     const $textarea = document.querySelector('#log-textarea')
 
     $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
+    $textarea.value += `pageX 为：${pageX}\r`
+    $textarea.value += `pageY 为：${pageY}\r`
+  }
+
+  const onRemove = () => {
+    $emitter.on('.remove', 'click', removeItem)
+    isRemoveOn = true
+    updateButtons()
+  }
+  const offRemove = () => {
+    $emitter.off('click', removeItem)
+    isRemoveOn = false
+    updateButtons()
+  }
+  const onItem = () => {
+    $emitter.on('.item', 'click', showLog)
+    isItemOn = true
+    updateButtons()
+  }
+  const offItem = () => {
+    $emitter.off('click', showLog)
+    isItemOn = false
+    updateButtons()
+  }
+  const onAll = () => {
+    onRemove()
+    onItem()
+    isRemoveOn = true
+    isItemOn = true
+    updateButtons()
+
+  }
+  const offAll = () => {
+    $emitter.destroy()
+    isRemoveOn = false
+    isItemOn = false
+    updateButtons()
+  }
+  const updateButtons = () => {
+    if(isRemoveOn){
+      $buttonOnRemove.style.display = 'none'
+      $buttonOffRemove.style.display = 'inline-block'
+    } else {
+      $buttonOnRemove.style.display = 'inline-block'
+      $buttonOffRemove.style.display = 'none'
+    }
+
+    if(isItemOn){
+      $buttonOnItem.style.display = 'none'
+      $buttonOffItem.style.display = 'inline-block'
+    } else {
+      $buttonOnItem.style.display = 'inline-block'
+      $buttonOffItem.style.display = 'none'
+    }
+
+    if(isItemOn || isRemoveOn){
+      $buttonOnAll.style.display = 'none'
+      $buttonOffAll.style.display = 'inline-block'
+    } else {
+      $buttonOnAll.style.display = 'inline-block'
+      $buttonOffAll.style.display = 'none'
+    }
   }
 
   draw()
+  onAll()
 
-  $button.addEventListener('click', addItem)
-
-  $emitter.on('.item-remove', 'click', removeItem)
-  $emitter.on('.item', 'click', showLog)
+  $buttonOnRemove.addEventListener('click', onRemove)
+  $buttonOffRemove.addEventListener('click', offRemove)
+  $buttonOnItem.addEventListener('click', onItem)
+  $buttonOffItem.addEventListener('click', offItem)
+  $buttonOnAll.addEventListener('click', onAll)
+  $buttonOffAll.addEventListener('click', offAll)
+  $buttonAdd.addEventListener('click', addItem)
 </script>
 </body>
 </html>

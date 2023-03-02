@@ -25,7 +25,7 @@ const off = (el, type, fn, capture = false) => {
     delete fn._delegateListener
   }
 
-  if (MOUSE_EVENTS.includes(type)) {
+  if (MOUSE_EVENTS.indexOf(type) > -1) {
     capture = true
   }
 

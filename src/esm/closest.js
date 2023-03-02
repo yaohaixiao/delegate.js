@@ -3,7 +3,7 @@ import getParentOrHost from './getParentOrHost'
 
 /**
  * 获取 el 元素父元素最近的包含 selector 选择器的元素
- * =============================================================
+ * ========================================================================
  * @method closest
  * @param {HTMLElement} el - （必须）DOM 元素
  * @param {String} selector - （必须）DOM 元素的选择其

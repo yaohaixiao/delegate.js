@@ -59,6 +59,20 @@ const isElement = (el) => {
 }
 
 /**
+ * 检测当前浏览器是否为 IE 浏览器
+ * ========================================================================
+ * IE 浏览器返回 true，其它浏览器返回 false
+ * ========================================================================
+ * @method isIE
+ * @returns {Boolean} - IE 浏览器返回 true，其它浏览器返回 false
+ */
+const isIE = () => {
+  const agent = navigator.userAgent
+
+  return !!agent.match(/Trident/g) || !!agent.match(/MSIE/g)
+}
+
+/**
  * 获取 DOM 元素的父节点
  * ========================================================================
  * @method getParentOrHost
@@ -165,6 +179,100 @@ const getListeners = (el, type) => {
 }
 
 /**
+ * 获取 scrollTop 和 scrollLeft 数组数据
+ * ========================================================================
+ * IE 浏览器种计算 pageX 和 pageY，需要包含 scrollTop 和 scrollLeft 的值
+ * ========================================================================
+ * @method getScroll
+ * @return {Array} - 返回滚动信息的数组 [scrollTop, scrollLeft]
+ */
+const getScroll = function () {
+  const dd = document.documentElement
+  const db = document.body
+
+  if (dd && (dd.scrollTop || dd.scrollLeft)) {
+    return [dd.scrollTop, dd.scrollLeft]
+  } else if (db) {
+    return [db.scrollTop, db.scrollLeft]
+  } else {
+    return [0, 0]
+  }
+}
+
+/**
+ * 获取 scrollTop 值
+ * ========================================================================
+ * @method getScrollTop
+ * @return {Number} - 返回 getScrollTop 值
+ */
+const getScrollTop = function () {
+  return getScroll()[0]
+}
+
+/**
+ * 获取 scrollTop 值
+ * ========================================================================
+ * @method getScrollLeft
+ * @return {Number} - 返回 scrollLeft 值
+ */
+const getScrollLeft = function () {
+  return getScroll()[1]
+}
+
+/**
+ * 获取事件触发时的 pageX 值
+ * ========================================================================
+ * @method getPageX
+ * @param {Event} evt - （必须）Event 对象
+ * @return {Number} - 返回事件触发时的 pageX 值
+ */
+const getPageX = function (evt) {
+  let x = evt.pageX
+
+  if (!x && 0 !== x) {
+    x = evt.clientX || 0
+
+    if (isIE()) {
+      x += getScrollLeft()
+    }
+  }
+
+  return x
+}
+
+/**
+ * 获取事件触发时的 pageY 值
+ * ========================================================================
+ * @method getPageY
+ * @param {Event} evt - （必须）Event 对象
+ * @return {Number} - 返回事件触发时的 pageY 值
+ */
+const getPageY = function (evt) {
+  let y = evt.pageY
+
+  if (!y && 0 !== y) {
+    y = evt.clientY || 0
+
+    if (isIE()) {
+      y += getScrollTop()
+    }
+  }
+
+  return y
+}
+
+/**
+ * 获取事件触发时的 pageX 和 pageY 数组数据
+ * ========================================================================
+ * @method getPageXY
+ * @param {Event} evt - （必须）Event 对象
+ * @return {Array} - 返回事件触发时的数组数据：[pageX, pageY]
+ */
+const getPageXY = function (evt) {
+  return [getPageX(evt), getPageY(evt)]
+}
+
+/**
  * 销毁 DOM 元素绑定的事件处理器
  * ========================================================================
  * 1. 设置了 type 则清除指定类型的事件处理器，没有指定 type 则清除所有已绑定的事件处理器
@@ -220,7 +328,7 @@ const off = (el, type, fn, capture = false) => {
     delete fn._delegateListener
   }
 
-  if (MOUSE_EVENTS.includes(type)) {
+  if (MOUSE_EVENTS.indexOf(type) > -1) {
     capture = true
   }
 
@@ -478,6 +586,42 @@ class Emitter {
   }
 
   /**
+   * 获取事件触发时的 pageX 值
+   * ========================================================================
+   * @method getPageX
+   * @see getPageX
+   * @param {Event} evt - （必须）Event 对象
+   * @return {Number} - 返回事件触发时的 pageX 值
+   */
+  getPageX(evt) {
+    return getPageX(evt)
+  }
+
+  /**
+   * 获取事件触发时的 pageY 值
+   * ========================================================================
+   * @method getPageY
+   * @see getPageY
+   * @param {Event} evt - （必须）Event 对象
+   * @return {Number} - 返回事件触发时的 pageY 值
+   */
+  getPageY(evt) {
+    return getPageY(evt)
+  }
+
+  /**
+   * 获取事件触发时的 pageX 和 pageY 数组数据
+   * ========================================================================
+   * @method getPageXY
+   * @see getPageXY
+   * @param {Event} evt - （必须）Event 对象
+   * @return {Array} - 返回事件触发时的数组数据：[pageX, pageY]
+   */
+  getPageXY(evt) {
+    return getPageXY(evt)
+  }
+
+  /**
    * 销毁（type 类型的）代理事件绑定
    * ========================================================================
    * 1. 设置了事件类型 type，则销毁指定类型的事件绑定，否则清除所有代理事件绑定
@@ -537,11 +681,11 @@ class Emitter {
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {String} type - （必须）事件类型
    * @param {Function} handler - （必须） 事件处理器回调函数
-   * @param {Object} data - （可选）传递给事件处理器回调函数的数据对象
-   * @param {Object|Boolean} context - （可选）事件处理器回调函数的 this 上下文指向，
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
    * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
-   * @param {Boolean} once - （可选）是否仅触发一次
-   * @param {Boolean} capture - （可选）是否采用事件冒泡模型：false - 冒泡，true - 捕获
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @param {Boolean} [capture] - （可选）是否采用事件冒泡模型：false - 冒泡，true - 捕获
    * @returns {Emitter} - Emitter 对象
    */
   on(selector, type, handler, data, context, once = false, capture = false) {
@@ -557,10 +701,10 @@ class Emitter {
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {String} type - （必须）事件类型
    * @param {Function} handler - （必须） 事件处理器回调函数
-   * @param {Object} data - （可选）传递给事件处理器回调函数的数据对象
-   * @param {Object|Boolean} context - （可选）事件处理器回调函数的 this 上下文指向，
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
    * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
-   * @param {Boolean} capture - （可选）是否采用事件冒泡模型：false - 冒泡，true - 捕获
+   * @param {Boolean} [capture] - （可选）是否采用事件冒泡模型：false - 冒泡，true - 捕获
    * @returns {Emitter} - Emitter 对象
    */
   once(selector, type, handler, data, context, capture = false) {

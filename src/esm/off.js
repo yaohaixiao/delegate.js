@@ -10,10 +10,10 @@ import isFunction from './isFunction'
  * @param {HTMLElement} el - （必须）取消事件绑定的 DOM 元素
  * @param {String} type - （必须）事件类型
  * @param {Function} [fn] - （可选）事件处理器回调函数
- * @param {Boolean} [capture] - （可选）是否启用冒泡事件模型
  */
-const off = (el, type, fn, capture = false) => {
+const off = (el, type, fn) => {
   const MOUSE_EVENTS = ['mouseenter', 'mouseleave']
+  let capture = false
 
   // 如果不设置 fn 参数，默认清除 el 元素上绑定的所有事件处理器
   if (!isFunction(fn)) {

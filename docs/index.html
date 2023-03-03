@@ -61,6 +61,7 @@ const removeItem = function (evt) {
   const id = parseInt($removeButton.getAttribute('data-id'), 10)
   const $textarea = document.querySelector('#log-textarea')
   // 阻止事件冒泡，不触发执行 showLog() 回调函数
+  // 同时阻止删除链接的默认行为，页面不会跳转
   $emitter.stopEvent(evt)
   // 省略删除的逻辑
   $textarea.value += `你删除的 li 节点的 id 为 item-${id}\r`
@@ -167,7 +168,7 @@ onAll()
       const id = option.id
       const item = `<li id="${'item-' + id}" class="item">` +
         `<span class="label">${'Item-' + id}</span>` +
-        `<span class="remove" data-id="${id}">删除</span>` +
+        `<a href="#list" class="remove" data-id="${id}">删除</a>` +
         `</li>`
 
       items.push(item)
@@ -194,6 +195,7 @@ onAll()
     const id = parseInt($removeButton.getAttribute('data-id'), 10)
     const $textarea = document.querySelector('#log-textarea')
 
+    // 阻止删除链接的默认行为
     $emitter.stopEvent(evt)
 
     options = options.filter((option) => id !== option.id)
@@ -201,8 +203,6 @@ onAll()
     draw()
 
     $textarea.value += `你删除的 li 节点的 id 为 item-${id}\r`
-
-    console.log('evt', evt)
   }
 
   const showLog = function (evt) {
@@ -217,6 +217,7 @@ onAll()
   }
 
   const onRemove = () => {
+    // 强制使用事件捕获模型
     $emitter.on('.remove', 'click', removeItem)
     isRemoveOn = true
     updateButtons()

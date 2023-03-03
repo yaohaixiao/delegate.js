@@ -13,19 +13,10 @@ import off from './off'
  * @param {Object|Boolean} context - （可选）事件处理器回调函数的 this 上下文指向，
  * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
  * @param {Boolean} once - （可选）是否仅触发一次
- * @param {Boolean} capture - （可选）是否采用事件冒泡模型：false - 冒泡，true - 捕获
  */
-const on = (
-  el,
-  selector,
-  type,
-  fn,
-  data,
-  context,
-  once = false,
-  capture = false
-) => {
+const on = (el, selector, type, fn, data, context, once = false) => {
   const MOUSE_EVENTS = ['mouseenter', 'mouseleave']
+  let capture = false
 
   const listener = function (evt) {
     const target = evt.target

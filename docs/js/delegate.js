@@ -305,11 +305,10 @@ var purgeElement = function purgeElement(el) {
  * @param {HTMLElement} el - （必须）取消事件绑定的 DOM 元素
  * @param {String} type - （必须）事件类型
  * @param {Function} [fn] - （可选）事件处理器回调函数
- * @param {Boolean} [capture] - （可选）是否启用冒泡事件模型
  */
 var _off = function off(el, type, fn) {
-  var capture = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
   var MOUSE_EVENTS = ['mouseenter', 'mouseleave'];
+  var capture = false;
 
   // 如果不设置 fn 参数，默认清除 el 元素上绑定的所有事件处理器
   if (!isFunction(fn)) {
@@ -341,12 +340,11 @@ var _off = function off(el, type, fn) {
  * @param {Object|Boolean} context - （可选）事件处理器回调函数的 this 上下文指向，
  * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
  * @param {Boolean} once - （可选）是否仅触发一次
- * @param {Boolean} capture - （可选）是否采用事件冒泡模型：false - 冒泡，true - 捕获
  */
 var _on = function on(el, selector, type, fn, data, context) {
   var once = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : false;
-  var capture = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : false;
   var MOUSE_EVENTS = ['mouseenter', 'mouseleave'];
+  var capture = false;
   var listener = function listener(evt) {
     var target = evt.target;
     // 通过 Element.matches 方法获得点击的目标元素
@@ -405,11 +403,9 @@ var _on = function on(el, selector, type, fn, data, context) {
  * @param {Object} data - （可选）传递给事件处理器回调函数的数据对象
  * @param {Object|Boolean} context - （可选）事件处理器回调函数的 this 上下文指向，
  * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
- * @param {Boolean} capture - （可选）是否采用事件冒泡模型：false - 冒泡，true - 捕获
  */
 var _once = function once(el, selector, type, fn, data, context) {
-  var capture = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : false;
-  _on(el, selector, type, fn, data, context, true, capture);
+  _on(el, selector, type, fn, data, context, true);
 };
 
 /**
@@ -647,13 +643,12 @@ var Emitter = /*#__PURE__*/function () {
      * @method off
      * @param {String} type - （必须）事件类型
      * @param {Function} [handler] - （可选）事件处理器回调函数
-     * @param {Boolean} [capture] - （可选）是否启用冒泡事件模型
      * @returns {Emitter} - Emitter 对象
      */
   }, {
     key: "off",
-    value: function off(type, handler, capture) {
-      _off(this.$el, type, handler, capture);
+    value: function off(type, handler) {
+      _off(this.$el, type, handler);
       return this;
     }
 
@@ -668,15 +663,13 @@ var Emitter = /*#__PURE__*/function () {
      * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
      * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
      * @param {Boolean} [once] - （可选）是否仅触发一次
-     * @param {Boolean} [capture] - （可选）是否采用事件冒泡模型：false - 冒泡，true - 捕获
      * @returns {Emitter} - Emitter 对象
      */
   }, {
     key: "on",
     value: function on(selector, type, handler, data, context) {
       var once = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
-      var capture = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : false;
-      _on(this.$el, selector, type, handler, data, this, once, capture);
+      _on(this.$el, selector, type, handler, data, this, once);
       return this;
     }
 
@@ -690,19 +683,17 @@ var Emitter = /*#__PURE__*/function () {
      * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
      * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
      * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
-     * @param {Boolean} [capture] - （可选）是否采用事件冒泡模型：false - 冒泡，true - 捕获
      * @returns {Emitter} - Emitter 对象
      */
   }, {
     key: "once",
     value: function once(selector, type, handler, data, context) {
-      var capture = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
-      _once(this.$el, selector, type, handler, this, true, capture);
+      _once(this.$el, selector, type, handler, data, context);
       return this;
     }
 
     /**
-     * 阻止触发绑定事件 DOM 元素的默认行为
+     * 阻止事件的默认行为
      * ========================================================================
      * @method preventDefault
      * @param {Event} evt - （必须）Event 对象

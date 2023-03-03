@@ -313,10 +313,10 @@ const purgeElement = function (el, type = '', recurse = false) {
  * @param {HTMLElement} el - （必须）取消事件绑定的 DOM 元素
  * @param {String} type - （必须）事件类型
  * @param {Function} [fn] - （可选）事件处理器回调函数
- * @param {Boolean} [capture] - （可选）是否启用冒泡事件模型
  */
-const off = (el, type, fn, capture = false) => {
+const off = (el, type, fn) => {
   const MOUSE_EVENTS = ['mouseenter', 'mouseleave']
+  let capture = false
 
   // 如果不设置 fn 参数，默认清除 el 元素上绑定的所有事件处理器
   if (!isFunction(fn)) {
@@ -351,19 +351,10 @@ const off = (el, type, fn, capture = false) => {
  * @param {Object|Boolean} context - （可选）事件处理器回调函数的 this 上下文指向，
  * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
  * @param {Boolean} once - （可选）是否仅触发一次
- * @param {Boolean} capture - （可选）是否采用事件冒泡模型：false - 冒泡，true - 捕获
  */
-const on = (
-  el,
-  selector,
-  type,
-  fn,
-  data,
-  context,
-  once = false,
-  capture = false
-) => {
+const on = (el, selector, type, fn, data, context, once = false) => {
   const MOUSE_EVENTS = ['mouseenter', 'mouseleave']
+  let capture = false
 
   const listener = function (evt) {
     const target = evt.target
@@ -431,10 +422,9 @@ const on = (
  * @param {Object} data - （可选）传递给事件处理器回调函数的数据对象
  * @param {Object|Boolean} context - （可选）事件处理器回调函数的 this 上下文指向，
  * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
- * @param {Boolean} capture - （可选）是否采用事件冒泡模型：false - 冒泡，true - 捕获
  */
-const once = (el, selector, type, fn, data, context, capture = false) => {
-  on(el, selector, type, fn, data, context, true, capture)
+const once = (el, selector, type, fn, data, context) => {
+  on(el, selector, type, fn, data, context, true)
 }
 
 /**
@@ -665,11 +655,10 @@ class Emitter {
    * @method off
    * @param {String} type - （必须）事件类型
    * @param {Function} [handler] - （可选）事件处理器回调函数
-   * @param {Boolean} [capture] - （可选）是否启用冒泡事件模型
    * @returns {Emitter} - Emitter 对象
    */
-  off(type, handler, capture) {
-    off(this.$el, type, handler, capture)
+  off(type, handler) {
+    off(this.$el, type, handler)
 
     return this
   }
@@ -685,11 +674,10 @@ class Emitter {
    * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
    * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
    * @param {Boolean} [once] - （可选）是否仅触发一次
-   * @param {Boolean} [capture] - （可选）是否采用事件冒泡模型：false - 冒泡，true - 捕获
    * @returns {Emitter} - Emitter 对象
    */
-  on(selector, type, handler, data, context, once = false, capture = false) {
-    on(this.$el, selector, type, handler, data, this, once, capture)
+  on(selector, type, handler, data, context, once = false) {
+    on(this.$el, selector, type, handler, data, this, once)
 
     return this
   }
@@ -704,17 +692,16 @@ class Emitter {
    * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
    * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
    * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
-   * @param {Boolean} [capture] - （可选）是否采用事件冒泡模型：false - 冒泡，true - 捕获
    * @returns {Emitter} - Emitter 对象
    */
-  once(selector, type, handler, data, context, capture = false) {
-    once(this.$el, selector, type, handler, this, true, capture)
+  once(selector, type, handler, data, context) {
+    once(this.$el, selector, type, handler, data, context)
 
     return this
   }
 
   /**
-   * 阻止触发绑定事件 DOM 元素的默认行为
+   * 阻止事件的默认行为
    * ========================================================================
    * @method preventDefault
    * @param {Event} evt - （必须）Event 对象

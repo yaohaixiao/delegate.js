@@ -11,10 +11,9 @@ import on from './on'
  * @param {Object} data - （可选）传递给事件处理器回调函数的数据对象
  * @param {Object|Boolean} context - （可选）事件处理器回调函数的 this 上下文指向，
  * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
- * @param {Boolean} capture - （可选）是否采用事件冒泡模型：false - 冒泡，true - 捕获
  */
-const once = (el, selector, type, fn, data, context, capture = false) => {
-  on(el, selector, type, fn, data, context, true, capture)
+const once = (el, selector, type, fn, data, context) => {
+  on(el, selector, type, fn, data, context, true)
 }
 
 export default once

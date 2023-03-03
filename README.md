@@ -16,8 +16,8 @@ delegate.js 是一个轻量级的 JavaScript 事件委托库。delegate.js 中�
 ## Browsers support
 
 | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](https://yaohaixiao.github.io/calendar.js/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](https://yaohaixiao.github.io/calendar.js/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](https://yaohaixiao.github.io/calendar.js/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](https://yaohaixiao.github.io/calendar.js/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](https://yaohaixiao.github.io/calendar.js/)</br>Opera |
-| --------- | --------- | --------- | --------- | --------- |
-| IE11, Edge| last 10 versions| last 10 versions| last 10 versions| last 10 versions
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| IE11, Edge                                                                                                                                                                                               | last 10 versions                                                                                                                                                                                           | last 10 versions                                                                                                                                                                                       | last 10 versions                                                                                                                                                                                       | last 10 versions                                                                                                                                                                                   |
 
 ## 安装说明
 
@@ -82,7 +82,7 @@ $emitter.$el // => 获取到 list 列表 DOM 元素
 
 ## methods
 
-### on(selector, type, fn, data, context, once = false, capture = false)
+### on(selector, type, fn, data, context, once = false)
 
 #### Description
 
@@ -183,39 +183,13 @@ $emitter.on('.item', 'click', handler, true)
 $emitter.on('.item', 'click', handler)
 ```
 
-##### capture
-
-Type: `Boolean`
-
-Default: `false`
-
-（可选）capture 指定采用的事件流模型：false - 冒泡（默认值），true - 捕获。
-
-```js
-const handler = function(evt) {
-  const $li = evt.delegateTarget
-  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
-}
-
-const $emitter = delegate('#list')
-
-// 默认使用事件冒泡
-$emitter.on('.item', 'click', handler)
-
-// mouseenter 和 mouseleave 事件默认使用事件捕获
-$emitter.on('.item', 'mouseenter', handler)
-
-// 设置 capture 为 true，强制使用事件捕获事件流模型
-$emitter.on('.item', 'click', handler, null, null, false, true)
-```
-
 #### Returns
 
 Type: `Emitter`
 
 返回 Emitter 对象（实例）。
 
-### once(selector, type, fn, data, context, capture = false)
+### once(selector, type, fn, data, context)
 
 #### Description
 
@@ -294,32 +268,6 @@ Default: ``
 （可选）context 指定事件处理器回调函数的 this 的指定上下文，默认指向 $el。可以指向其他 this 上下文，也可以设置为 true，此时为事件处理器的 this 上下文指向 data 对象。
 
 
-##### capture
-
-Type: `Boolean`
-
-Default: `false`
-
-（可选）capture 指定采用的事件流模型：false - 冒泡（默认值），true - 捕获。
-
-```js
-const handler = function(evt) {
-  const $li = evt.delegateTarget
-  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
-}
-
-const $emitter = delegate('#list')
-
-// 默认使用事件冒泡
-$emitter.once('.item', 'click', handler)
-
-// mouseenter 和 mouseleave 事件默认使用事件捕获
-$emitter.once('.item', 'mouseenter', handler)
-
-// 设置 capture 为 true，强制使用事件捕获事件流模型
-$emitter.once('.item', 'click', handler, null, null, false, true)
-```
-
 #### Returns
 
 Type: `Emitter`
@@ -327,7 +275,7 @@ Type: `Emitter`
 返回 Emitter 对象（实例）。
 
 
-### off(type, fn, capture = false)
+### off(type, fn)
 
 #### Description
 
@@ -411,21 +359,6 @@ $emitter.off($list, 'click', callback)
 // 解除所有 click 事件处理器
 $emitter.off($list, 'click')
 ```
-
-##### capture
-
-Type: `Boolean`
-
-Default: `false`
-
-（可选）capture 事件流模型。
-
-
-#### Returns
-
-Type: `Emitter`
-
-返回 Emitter 对象（实例）。
 
 ### getListeners(type)
 

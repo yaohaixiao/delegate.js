@@ -1,3 +1,12 @@
+## [0.6.1](https://github.com/yaohaixiao/delegate.js/compare/0.6.0...0.6.1) (2023-03-03)
+
+
+### Bug Fixes
+
+* 修复 once 方法传递 data 和 context 不正确的问题 ([c099fa8](https://github.com/yaohaixiao/delegate.js/commit/c099fa85bf300dbcb168b2b92ff48b76f3d83593))
+
+
+
 # [0.6.0](https://github.com/yaohaixiao/delegate.js/compare/0.5.0...0.6.0) (2023-03-02)
 
 

@@ -14,15 +14,7 @@ import off from './off'
  * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
  * @param {Boolean} once - （可选）是否仅触发一次
  */
-const on = (
-  el,
-  selector,
-  type,
-  fn,
-  data,
-  context,
-  once = false
-) => {
+const on = (el, selector, type, fn, data, context, once = false) => {
   const MOUSE_EVENTS = ['mouseenter', 'mouseleave']
   let capture = false
 

@@ -28,12 +28,10 @@
  * })
  */
 const preventDefault = function (evt) {
-  const event = window.event
-
   if (evt.preventDefault) {
     evt.preventDefault()
   } else {
-    event.returnValue = false
+    evt.returnValue = false
   }
 }
 

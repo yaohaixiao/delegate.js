@@ -359,8 +359,10 @@ const on = (el, selector, type, fn, data, context, once = false) => {
   const listener = function (evt) {
     const target = evt.target
     // 通过 Element.matches 方法获得点击的目标元素
-    const delegateTarget = closest(target, selector)
+    const delegateTarget = closest(target, selector, el)
     let overrideContext = el
+
+    console.log('delegateTarget', delegateTarget)
 
     evt.delegateTarget = delegateTarget
 
@@ -457,12 +459,10 @@ const once = (el, selector, type, fn, data, context) => {
  * })
  */
 const preventDefault = function (evt) {
-  const event = window.event
-
   if (evt.preventDefault) {
     evt.preventDefault()
   } else {
-    event.returnValue = false
+    evt.returnValue = false
   }
 }
 
@@ -495,12 +495,10 @@ const preventDefault = function (evt) {
  * })
  */
 const stopPropagation = function (evt) {
-  const event = window.event
-
   if (evt.stopPropagation) {
     evt.stopPropagation()
   } else {
-    event.cancelBubble = true
+    evt.cancelBubble = true
   }
 }
 

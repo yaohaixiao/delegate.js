@@ -348,8 +348,9 @@ var _on = function on(el, selector, type, fn, data, context) {
   var listener = function listener(evt) {
     var target = evt.target;
     // 通过 Element.matches 方法获得点击的目标元素
-    var delegateTarget = closest(target, selector);
+    var delegateTarget = closest(target, selector, el);
     var overrideContext = el;
+    console.log('delegateTarget', delegateTarget);
     evt.delegateTarget = delegateTarget;
     if (context) {
       if (context === true) {
@@ -438,11 +439,10 @@ var _once = function once(el, selector, type, fn, data, context) {
  * })
  */
 var _preventDefault = function preventDefault(evt) {
-  var event = window.event;
   if (evt.preventDefault) {
     evt.preventDefault();
   } else {
-    event.returnValue = false;
+    evt.returnValue = false;
   }
 };
 
@@ -475,11 +475,10 @@ var _preventDefault = function preventDefault(evt) {
  * })
  */
 var _stopPropagation = function stopPropagation(evt) {
-  var event = window.event;
   if (evt.stopPropagation) {
     evt.stopPropagation();
   } else {
-    event.cancelBubble = true;
+    evt.cancelBubble = true;
   }
 };
 

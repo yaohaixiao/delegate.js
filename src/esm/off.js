@@ -12,7 +12,14 @@ import isFunction from './isFunction'
  * @param {Function} [fn] - （可选）事件处理器回调函数
  */
 const off = (el, type, fn) => {
-  const MOUSE_EVENTS = ['mouseenter', 'mouseleave']
+  const MOUSE_EVENTS = [
+    'blur',
+    'focus',
+    'load',
+    'unload',
+    'mouseenter',
+    'mouseleave'
+  ]
   let capture = false
 
   // 如果不设置 fn 参数，默认清除 el 元素上绑定的所有事件处理器

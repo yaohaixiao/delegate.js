@@ -177,7 +177,7 @@ onAll()
     $list.innerHTML = items.join('')
   }
 
-  const addItem = function () {
+  const addItem = function (evt) {
     const length = options.length
     const id = length > 0 ? options[length - 1].id + 1 : 1
     const option = { id: id, text: `Item-${id}` }

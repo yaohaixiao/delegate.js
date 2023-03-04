@@ -15,13 +15,20 @@ import off from './off'
  * @param {Boolean} once - （可选）是否仅触发一次
  */
 const on = (el, selector, type, fn, data, context, once = false) => {
-  const MOUSE_EVENTS = ['mouseenter', 'mouseleave']
+  const MOUSE_EVENTS = [
+    'blur',
+    'focus',
+    'load',
+    'unload',
+    'mouseenter',
+    'mouseleave'
+  ]
   let capture = false
 
   const listener = function (evt) {
     const target = evt.target
     // 通过 Element.matches 方法获得点击的目标元素
-    const delegateTarget = closest(target, selector)
+    const delegateTarget = closest(target, selector, el)
     let overrideContext = el
 
     evt.delegateTarget = delegateTarget

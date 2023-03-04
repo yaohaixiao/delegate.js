@@ -27,12 +27,10 @@
  * })
  */
 const stopPropagation = function (evt) {
-  const event = window.event
-
   if (evt.stopPropagation) {
     evt.stopPropagation()
   } else {
-    event.cancelBubble = true
+    evt.cancelBubble = true
   }
 }
 

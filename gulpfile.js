@@ -22,15 +22,6 @@ const cleanDocs = () => {
 
 const cleanAll = gulp.parallel(cleanDist, cleanDocs)
 
-const copy = () => {
-  return gulp
-    .src('./src/esm/*.js')
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failOnError())
-    .pipe(gulp.dest('dist/esm'))
-}
-
 const openDocs = () => {
   let browser
   if (os.platform() === 'darwin') {
@@ -85,8 +76,8 @@ const transpile = () => {
         }
       })
     )
-    .pipe(gulp.dest('dist'))
-    .pipe(gulp.dest('docs/js'))
+    .pipe(gulp.dest('./dist'))
+    .pipe(gulp.dest('./docs/js'))
     .pipe(uglify())
     .pipe(
       sourcemaps.init({
@@ -99,7 +90,7 @@ const transpile = () => {
       })
     )
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('./dist'))
     .pipe(gulp.dest('docs/js'))
 }
 
@@ -109,7 +100,7 @@ const watchSource = () => {
     {
       ignoreInitial: false
     },
-    gulp.series(lint, transpile, copy)
+    gulp.series(lint, transpile)
   ).pipe(reload())
 }
 
@@ -120,19 +111,16 @@ const watchDocs = () => {
 const watchAll = gulp.parallel(watchSource, watchDocs)
 
 const dev = gulp.parallel(lint, transpile, connectDocs, watchAll, openDocs)
-const build = gulp.series(lint, cleanAll, transpile, copy)
+const build = gulp.series(lint, cleanAll, transpile)
 
+module.exports.start = dev
+module.exports.build = build
 module.exports.cleanDist = cleanDist
 module.exports.cleanDocs = cleanDocs
 module.exports.clean = cleanAll
-module.exports.copy = copy
 module.exports.lint = lint
-module.exports.transpile = transpile
-module.exports.conect = connectDocs
 module.exports.reload = reload
+module.exports.transpile = transpile
 module.exports.watchSource = watchSource
 module.exports.watchDocs = watchDocs
 module.exports.watch = watchAll
-module.exports.start = dev
-module.exports.dev = dev
-module.exports.build = build

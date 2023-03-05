@@ -1,9 +1,11 @@
+import stopPropagation from './stopPropagation'
+import preventDefault from './preventDefault'
+
 /**
- * 阻止触发绑定事件 DOM 元素的默认行为
+ * 停止事件（阻止默认行为和阻止事件的捕获或冒泡）
  * ========================================================================
- * @method preventDefault
+ * @method stopEvent
  * @param {Event} evt - 事件对象
- *
  *
  * @example
  * <div id="nav" class="nav">
@@ -21,18 +23,15 @@
  * on($anchor, 'click', function(evt) {
  *   console.log('tagName', this.tagName)
  *
- *   // 在工作台输出：'a'
- *   // 会触发事件冒泡，输出：'你点击了导航栏'
- *   // 但不会切换到 href 属性的页面地址，阻止了点击链接的默认行为
+ *   // 工作台输出：'a'
+ *   // 不会触发事件冒泡，输出：'你点击了导航栏'
+ *   // 也不会切换到 href 属性的页面，阻止了点击链接的默认行为
  *   stopEvent(evt)
  * })
  */
-const preventDefault = function (evt) {
-  if (evt.preventDefault) {
-    evt.preventDefault()
-  } else {
-    evt.returnValue = false
-  }
+const stopEvent = function (evt) {
+  stopPropagation(evt)
+  preventDefault(evt)
 }
 
-export default preventDefault
+export default stopEvent

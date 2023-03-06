@@ -1,3 +1,12 @@
+# [0.7.0](https://github.com/yaohaixiao/delegate.js/compare/0.6.1...0.7.0) (2023-03-06)
+
+
+### Features
+
+* 调整 on() 和 off() 方法，添加针对 blur, focus, load, unload 方法采用事件捕获模型； ([7ddaab7](https://github.com/yaohaixiao/delegate.js/commit/7ddaab7229d004154e6943cf598a3a55cfcdb39a))
+
+
+
 ## [0.6.1](https://github.com/yaohaixiao/delegate.js/compare/0.6.0...0.6.1) (2023-03-03)
 
 

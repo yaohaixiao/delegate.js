@@ -16,7 +16,8 @@ module.exports = {
     es6: true,
     mocha: true
   },
-  extends: ['prettier', 'eslint:recommended'],
+  extends: ['prettier', 'eslint:recommended', 'plugin:import/errors'],
+  plugins: ['import'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly'
@@ -24,17 +25,15 @@ module.exports = {
   // JavaScript 语言选项
   parserOptions: {
     // ECMAScript 版本
-    ecmaVersion: 2018,
+    ecmaVersion: 6,
     // 设置为 "script" (默认) 或 "module"（如果你的代码是 ECMAScript 模块)。
     sourceType: 'module',
     // 想使用的额外的语言特性:
     ecmaFeatures: {
       // 允许在全局作用域下使用 return 语句
       globalReturn: false,
-      // impliedStric
-      impliedStrict: false,
-      // 启用 JSX
-      jsx: false,
+      impliedStrict: true,
+      objectLiteralDuplicateProperties: false,
       modules: true
     }
   }

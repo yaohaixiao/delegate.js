@@ -350,7 +350,6 @@ var _on = function on(el, selector, type, fn, data, context) {
     // 通过 Element.matches 方法获得点击的目标元素
     var delegateTarget = closest(target, selector, el);
     var overrideContext = el;
-    console.log('delegateTarget', delegateTarget);
     evt.delegateTarget = delegateTarget;
     if (context) {
       if (context === true) {

@@ -76,7 +76,7 @@ const transpile = () => {
         }
       })
     )
-    .pipe(gulp.dest('./dist'))
+    .pipe(gulp.dest('./'))
     .pipe(gulp.dest('./docs/js'))
     .pipe(uglify())
     .pipe(
@@ -90,7 +90,7 @@ const transpile = () => {
       })
     )
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./dist'))
+    .pipe(gulp.dest('./'))
     .pipe(gulp.dest('docs/js'))
 }
 

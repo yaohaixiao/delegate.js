@@ -1,8 +1,8 @@
 {
   "name": "@yaohaixiao/delegate.js",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "delegate.js 是一个轻量级的 JavaScript 事件委托库，封装了：on()、once()、off() 等事件侦听相关的常用方法，使用起来方便灵活。",
-  "main": "dist/delegate.min.js",
+  "main": "delegate.min.js",
   "scripts": {
     "start": "gulp dev",
     "build": "gulp build",
@@ -41,6 +41,7 @@
     "conventional-changelog-cli": "^2.2.2",
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "^4.2.1",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",

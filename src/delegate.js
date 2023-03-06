@@ -362,8 +362,6 @@ const on = (el, selector, type, fn, data, context, once = false) => {
     const delegateTarget = closest(target, selector, el)
     let overrideContext = el
 
-    console.log('delegateTarget', delegateTarget)
-
     evt.delegateTarget = delegateTarget
 
     if (context) {

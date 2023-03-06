@@ -29,16 +29,41 @@ delegate.js 支持 AMD 和 CommonJS 规范的模块调用方式，可以直接�
 npm i -S @yaohaixiao/delegate.js
 ```
 
-### CDN 调用 JS 文件
+### 浏览器中调用
+
+在浏览器中调用 delegate.js，可以选择调用 jsdelivr 提供的 CDN 服务中的文件，也可以使用本地的 delegate.js 文件。
+
+#### CDN 调用 JS 文件
 
 ```html
 <script src="https://cdn.jsdelivr.net/gh/yaohaixiao/delegate.js/dist/delegate.min.js"></script>
 ```
 
-### 本地调用 JS 文件
+#### 本地调用 JS 文件
 
 ```html
 <script src="/path/to/delegate.min.js"></script>
+```
+
+### Node.js 中调用
+
+```js
+const delegate = require('@yaohaixiao/delegate.js')
+```
+
+### ES6 模块中调用
+
+```js
+// 调用 delegate 实例对象
+import delegate from '@yaohaixiao/delegate.js'
+
+// 调用 Emitter 构造函数
+import Emitter from '@yaohaixiao/delegate.js/esm/Emitter'
+
+// 调用单个（on/once/off）方法
+import on from '@yaohaixiao/delegate.js/esm/on'
+import once from '@yaohaixiao/delegate.js/esm/once'
+import off from '@yaohaixiao/delegate.js/esm/off'
 ```
 
 ## API 文档

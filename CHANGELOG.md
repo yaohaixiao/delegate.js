@@ -1,3 +1,12 @@
+# [0.8.0](https://github.com/yaohaixiao/delegate.js/compare/0.7.0...0.8.0) (2023-03-07)
+
+
+### Features
+
+* 添加 getCharCode() 方法 ([c4bfd99](https://github.com/yaohaixiao/delegate.js/commit/c4bfd9995172aad9eb26ab6fcdfaafa1c5d83427))
+
+
+
 # [0.7.0](https://github.com/yaohaixiao/delegate.js/compare/0.6.1...0.7.0) (2023-03-06)
 
 

@@ -177,6 +177,10 @@ onAll()
     $list.innerHTML = items.join('')
   }
 
+  const afterDraw = (evt) => {
+    console.log('afterDraw', evt)
+  }
+
   const addItem = function (evt) {
     const length = options.length
     const id = length > 0 ? options[length - 1].id + 1 : 1

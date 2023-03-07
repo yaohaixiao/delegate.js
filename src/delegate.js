@@ -73,6 +73,23 @@ const isIE = () => {
 }
 
 /**
+ * 检测当前浏览器是否为 Webkit 内核
+ * ========================================================================
+ * @method isWebkit
+ * @returns {Boolean}
+ */
+const isWebkit = () => {
+  const UA = navigator.userAgent
+
+  return (
+    /\b(iPad|iPhone|iPod)\b/.test(UA) &&
+    /WebKit/.test(UA) &&
+    !/Edge/.test(UA) &&
+    !window.MSStream
+  )
+}
+
+/**
  * 获取 DOM 元素的父节点
  * ========================================================================
  * @method getParentOrHost
@@ -270,6 +287,35 @@ const getPageY = function (evt) {
  */
 const getPageXY = function (evt) {
   return [getPageX(evt), getPageY(evt)]
+}
+
+/**
+ * 返回触发事件的 charCode
+ * ========================================================================
+ * @method getCharCode
+ * @param {Event} evt - Event 对象
+ * @return {Number} - 返回事件的 charCode
+ */
+const getCharCode = function (evt) {
+  let code = evt.keyCode || evt.charCode || 0
+  // keycodes for webkit/safari
+  const webkitKeymap = {
+    63232: 38, // up
+    63233: 40, // down
+    63234: 37, // left
+    63235: 39, // right
+    63276: 33, // page up
+    63277: 34, // page down
+    25: 9 // SHIFT-TAB (Safari provides a different key code in
+    // this case, even though the shiftKey modifier is set)
+  }
+
+  // webkit key normalization
+  if (isWebkit() && code in webkitKeymap) {
+    code = webkitKeymap[code]
+  }
+
+  return code
 }
 
 /**
@@ -605,6 +651,18 @@ class Emitter {
    */
   getPageXY(evt) {
     return getPageXY(evt)
+  }
+
+  /**
+   * 返回触发事件的 charCode
+   * ========================================================================
+   * @method getCharCode
+   * @see getCharCode
+   * @param {Event} evt - （必须）Event 对象
+   * @return {Number} - 返回事件的 charCode
+   */
+  getCharCode(evt) {
+    return getCharCode(evt)
   }
 
   /**

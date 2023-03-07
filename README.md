@@ -818,6 +818,52 @@ const showLog = function (evt) {
 $emitter.on('.item', 'click', showLog)
 ```
 
+### getCharCode(evt)
+
+#### Description
+
+返回触发事件的 charCode。
+
+#### Parameters
+
+##### type
+
+Type: `Event`
+
+Default: ``
+
+（必须）事件对象。
+
+#### Returns
+
+Type: `Number`
+
+返回事件的 charCode。
+
+```html
+<form id="form" name="form" class="form">
+  <div class="field">
+    <label for="user">用户名：</label>
+    <input id="user" name="user" type="text" class="input" />
+  </div>
+  <div class="field">
+    <label for="password">密 码：</label>
+    <input id="password" name="password" type="password" class="input" />
+  </div>
+</form>
+```
+
+```js
+const $emitter = delegate('#form')
+const showLog = function (evt) {
+  const charCode = $emitter.getCharCode(evt)
+
+  console.log(`当前按键的 charCode 为：${charCode}`)
+}
+
+$emitter.on('.input', 'keydown', showLog)
+```
+
 ## Example
 
 https://yaohaixiao.github.io/delegate.js/

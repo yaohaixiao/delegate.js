@@ -7,6 +7,7 @@ import getListeners from './getListeners'
 import getPageX from './getPageX'
 import getPageY from './getPageY'
 import getPageXY from './getPageXY'
+import getCharCode from './getCharCode'
 import purgeElement from './purgeElement'
 import preventDefault from './preventDefault'
 import stopPropagation from './stopPropagation'
@@ -84,6 +85,18 @@ class Emitter {
    */
   getPageXY(evt) {
     return getPageXY(evt)
+  }
+
+  /**
+   * 返回触发事件的 charCode
+   * ========================================================================
+   * @method getCharCode
+   * @see getCharCode
+   * @param {Event} evt - （必须）Event 对象
+   * @return {Number} - 返回事件的 charCode
+   */
+  getCharCode(evt) {
+    return getCharCode(evt)
   }
 
   /**

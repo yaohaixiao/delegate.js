@@ -5,17 +5,17 @@ import off from './off'
  * 绑定代理事件
  * ========================================================================
  * @method on
- * @param {HTMLElement} el - 绑定代理事件的 DOM 节点
+ * @param {HTMLElement|String} el - 绑定代理事件的 DOM 节点
  * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
  * @param {String} type - （必须）事件类型
  * @param {Function} fn - （必须） 事件处理器回调函数
- * @param {Object} data - （可选）传递给事件处理器回调函数的数据对象
- * @param {Object|Boolean} context - （可选）事件处理器回调函数的 this 上下文指向，
+ * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+ * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
  * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
  * @param {Boolean} once - （可选）是否仅触发一次
  */
 const on = (el, selector, type, fn, data, context, once = false) => {
-  const MOUSE_EVENTS = [
+  const CAPTURE_EVENTS = [
     'blur',
     'focus',
     'load',
@@ -29,31 +29,30 @@ const on = (el, selector, type, fn, data, context, once = false) => {
     const target = evt.target
     // 通过 Element.matches 方法获得点击的目标元素
     const delegateTarget = closest(target, selector, el)
-    let overrideContext = el
+    let overrideContext = context || el
 
     evt.delegateTarget = delegateTarget
 
-    if (context) {
-      if (context === true) {
-        overrideContext = data
-      } else {
-        overrideContext = context
-      }
+    if (context === true) {
+      overrideContext = data
     }
 
+    /* istanbul ignore else */
     if (delegateTarget) {
+      /* istanbul ignore else */
       if (once === true) {
         off(el, type, listener)
       }
 
       // 直接过滤了点击对象，会阻止事件冒泡或者捕获
+      /* istanbul ignore else */
       if (target === delegateTarget) {
         fn.call(overrideContext, evt, data)
       }
     }
   }
 
-  if (MOUSE_EVENTS.includes(type)) {
+  if (CAPTURE_EVENTS.includes(type)) {
     capture = true
   }
 
@@ -74,10 +73,13 @@ const on = (el, selector, type, fn, data, context, once = false) => {
 
   fn._delegateListener = listener
 
+  /* istanbul ignore else */
   if (window.addEventListener) {
     el.addEventListener(type, listener, capture)
-  } else if (window.attachEvent) {
-    el.attachEvent('on' + type, listener)
+  } else {
+    if (window.attachEvent) {
+      el.attachEvent('on' + type, listener)
+    }
   }
 }
 

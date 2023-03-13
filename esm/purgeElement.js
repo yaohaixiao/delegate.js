@@ -16,9 +16,10 @@ import off from './off'
 const purgeElement = function (el, type = '', recurse = false) {
   const $element = isString(el) ? document.querySelector(el) : el
   const $childNodes = $element.childNodes
-  const listeners = getListeners(el, type)
+  const listeners = getListeners($element, type)
   let i
 
+  /* istanbul ignore else */
   if (listeners) {
     for (i = listeners.length - 1; i > -1; i -= 1) {
       let listener = listeners[i]
@@ -28,8 +29,8 @@ const purgeElement = function (el, type = '', recurse = false) {
   }
 
   if (recurse && $element && $childNodes) {
-    $childNodes.forEach(($child) => {
-      purgeElement($child, type, recurse)
+    $childNodes.forEach(($childNode) => {
+      purgeElement($childNode, type, recurse)
     })
   }
 }

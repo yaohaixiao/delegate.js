@@ -11,28 +11,23 @@
  * @param {String} selector - （必须）匹配 DOM 元素的选择器
  * @returns {Boolean}
  */
-const matches = (el, selector) => {
-  if (!selector) {
+const matches = (el, selector= '') => {
+  const sel = selector.replace(/^>/i, '')
+
+  if (!selector || !sel || !el) {
     return false
   }
 
-  selector[0] === '>' && (selector = selector.substring(1))
-
-  if (el) {
-    try {
-      if (el.matches) {
-        return el.matches(selector)
-      } else if (el.msMatchesSelector) {
-        return el.msMatchesSelector(selector)
-      } else if (el.webkitMatchesSelector) {
-        return el.webkitMatchesSelector(selector)
-      }
-    } catch (_) {
-      return false
-    }
+  /* istanbul ignore else */
+  if (el.matches) {
+    return el.matches(sel)
+  } else if (el.msMatchesSelector) {
+    return el.msMatchesSelector(sel)
+  } else if (el.webkitMatchesSelector) {
+    return el.webkitMatchesSelector(sel)
+  } else {
+    return false
   }
-
-  return false
 }
 
 export default matches

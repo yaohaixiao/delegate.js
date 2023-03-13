@@ -696,7 +696,7 @@ Type: `Emitter`
 const $emitter = delegate('#list')
 const removeItem = function (evt) {
   const $removeButton = evt.delegateTarget
-  const id = parseInt($removeButton.getAttribute('data-id'), 10)
+  const id = $removeButton.getAttribute('data-id')
   const $textarea = document.querySelector('#log-textarea')
 
   // 阻止事件冒泡，不触发执行 showLog() 回调函数

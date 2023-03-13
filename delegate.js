@@ -15,6 +15,8 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof2(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof2(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof2(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+var CAPTURE_EVENTS = ['blur', 'focus', 'load', 'unload', 'mouseenter', 'mouseleave'];
+
 /**
  * 返回检测数据调用 toString() 方法后的字符串，用以判断数据类型。
  * ========================================================================
@@ -123,25 +125,23 @@ var getParentOrHost = function getParentOrHost(el) {
  * @see https://developer.mozilla.org/en-US/docs/web/api/element/matches
  * @returns {Boolean}
  */
-var matches = function matches(el, selector) {
-  if (!selector) {
+var matches = function matches(el) {
+  var selector = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  var sel = selector.replace(/^>/i, '');
+  if (!selector || !sel || !el) {
     return false;
   }
-  selector[0] === '>' && (selector = selector.substring(1));
-  if (el) {
-    try {
-      if (el.matches) {
-        return el.matches(selector);
-      } else if (el.msMatchesSelector) {
-        return el.msMatchesSelector(selector);
-      } else if (el.webkitMatchesSelector) {
-        return el.webkitMatchesSelector(selector);
-      }
-    } catch (_) {
-      return false;
-    }
+
+  /* istanbul ignore else */
+  if (el.matches) {
+    return el.matches(sel);
+  } else if (el.msMatchesSelector) {
+    return el.msMatchesSelector(sel);
+  } else if (el.webkitMatchesSelector) {
+    return el.webkitMatchesSelector(sel);
+  } else {
+    return false;
   }
-  return false;
 };
 
 /**
@@ -160,9 +160,12 @@ var closest = function closest(el, selector, ctx, includeCTX) {
     return null;
   }
   do {
+    /* istanbul ignore else */
     if (selector != null && (selector[0] === '>' ? el.parentNode === context && matches(el, selector) : matches(el, selector)) || includeCTX && el === context) {
       return el;
     }
+
+    /* istanbul ignore else */
     if (el === context) {
       break;
     }
@@ -326,8 +329,10 @@ var purgeElement = function purgeElement(el) {
   var recurse = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
   var $element = isString(el) ? document.querySelector(el) : el;
   var $childNodes = $element.childNodes;
-  var listeners = _getListeners(el, type);
+  var listeners = _getListeners($element, type);
   var i;
+
+  /* istanbul ignore else */
   if (listeners) {
     for (i = listeners.length - 1; i > -1; i -= 1) {
       var listener = listeners[i];
@@ -335,8 +340,8 @@ var purgeElement = function purgeElement(el) {
     }
   }
   if (recurse && $element && $childNodes) {
-    $childNodes.forEach(function ($child) {
-      purgeElement($child, type, recurse);
+    $childNodes.forEach(function ($childNode) {
+      purgeElement($childNode, type, recurse);
     });
   }
 };
@@ -352,24 +357,51 @@ var purgeElement = function purgeElement(el) {
  * @param {Function} [fn] - （可选）事件处理器回调函数
  */
 var _off = function off(el, type, fn) {
-  var MOUSE_EVENTS = ['mouseenter', 'mouseleave'];
+  var listeners = el._listeners;
   var capture = false;
+  var index = -1;
 
   // 如果不设置 fn 参数，默认清除 el 元素上绑定的所有事件处理器
   if (!isFunction(fn)) {
     return purgeElement(el, type);
   }
+
+  /* istanbul ignore else */
   if (fn._delegateListener) {
     fn = fn._delegateListener;
     delete fn._delegateListener;
   }
-  if (MOUSE_EVENTS.indexOf(type) > -1) {
+  listeners.forEach(function (listener, i) {
+    if (listener.type === type) {
+      index = i;
+    }
+  });
+
+  // 移除缓存的 _listeners 数据
+  /* istanbul ignore else */
+  if (listeners.length > 0 && fn) {
+    listeners.forEach(function (listener, i) {
+      if (listener.type === type && listener.fn === fn) {
+        index = i;
+      }
+    });
+  }
+
+  /* istanbul ignore else */
+  if (index > -1) {
+    el._listeners.splice(index, 1);
+  }
+  if (CAPTURE_EVENTS.indexOf(type) > -1) {
     capture = true;
   }
+
+  /* istanbul ignore else */
   if (window.removeEventListener) {
     el.removeEventListener(type, fn, capture);
-  } else if (window.detachEvent) {
-    el.detachEvent('on' + type, fn);
+  } else {
+    if (window.detachEvent) {
+      el.detachEvent('on' + type, fn);
+    }
   }
 };
 
@@ -388,31 +420,32 @@ var _off = function off(el, type, fn) {
  */
 var _on = function on(el, selector, type, fn, data, context) {
   var once = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : false;
-  var MOUSE_EVENTS = ['mouseenter', 'mouseleave'];
   var capture = false;
   var listener = function listener(evt) {
     var target = evt.target;
     // 通过 Element.matches 方法获得点击的目标元素
     var delegateTarget = closest(target, selector, el);
-    var overrideContext = el;
+    var overrideContext = context || el;
     evt.delegateTarget = delegateTarget;
-    if (context) {
-      if (context === true) {
-        overrideContext = data;
-      } else {
-        overrideContext = context;
-      }
+    if (context === true) {
+      overrideContext = data;
     }
+
+    /* istanbul ignore else */
     if (delegateTarget) {
+      /* istanbul ignore else */
       if (once === true) {
         _off(el, type, listener);
       }
+
+      // 直接过滤了点击对象，会阻止事件冒泡或者捕获
+      /* istanbul ignore else */
       if (target === delegateTarget) {
         fn.call(overrideContext, evt, data);
       }
     }
   };
-  if (MOUSE_EVENTS.includes(type)) {
+  if (CAPTURE_EVENTS.includes(type)) {
     capture = true;
   }
   if (!el._listeners) {
@@ -430,10 +463,14 @@ var _on = function on(el, selector, type, fn, data, context) {
     capture: capture
   });
   fn._delegateListener = listener;
+
+  /* istanbul ignore else */
   if (window.addEventListener) {
     el.addEventListener(type, listener, capture);
-  } else if (window.attachEvent) {
-    el.attachEvent('on' + type, listener);
+  } else {
+    if (window.attachEvent) {
+      el.attachEvent('on' + type, listener);
+    }
   }
 };
 

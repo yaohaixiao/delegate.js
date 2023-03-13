@@ -19,6 +19,7 @@ const closest = (el, selector, ctx, includeCTX) => {
   }
 
   do {
+    /* istanbul ignore else */
     if (
       (selector != null &&
         (selector[0] === '>'
@@ -29,6 +30,7 @@ const closest = (el, selector, ctx, includeCTX) => {
       return el
     }
 
+    /* istanbul ignore else */
     if (el === context) {
       break
     }

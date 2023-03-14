@@ -6,11 +6,11 @@ describe('isFunction() 方法', () => {
   })
 
   it('isFunction(function(){}), 返回：true', () => {
-    expect(isFunction(function(){})).toBe(true)
+    expect(isFunction(function () {})).toBe(true)
   })
 
   it('isFunction(class Foo{}), 返回：true', () => {
-    expect(isFunction(class Foo{})).toBe(true)
+    expect(isFunction(class Foo {})).toBe(true)
   })
 
   it('isFunction(new Function()), 返回：true', () => {
@@ -33,7 +33,7 @@ describe('isFunction() 方法', () => {
     expect(isFunction(Object.prototype)).toBe(false)
   })
 
-  it('isFunction(\'\'), 返回：true', () => {
+  it("isFunction(''), 返回：true", () => {
     expect(isFunction('')).toBe(false)
   })
 

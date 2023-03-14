@@ -82,20 +82,22 @@ const isIE = () => {
 }
 
 /**
- * 检测当前浏览器是否为 Webkit 内核
+ * 判断是否为 Apple 设备的 Safari 浏览器
  * ========================================================================
- * @method isWebkit
+ * @method isAppleSafari
  * @returns {Boolean}
  */
-const isWebkit = () => {
+const isAppleSafari = () => {
   const UA = navigator.userAgent
+  const platforms = /Mac|iPhone|iPod|iPad/i
+  const rejected = /Chrome|Android|CriOS|FxiOS|EdgiOS/i
+  const expected = /Safari/i
 
-  return (
-    /\b(iPad|iPhone|iPod)\b/.test(UA) &&
-    /WebKit/.test(UA) &&
-    !/Edge/.test(UA) &&
-    !window.MSStream
-  )
+  if (rejected.test(UA)) {
+    return false
+  }
+
+  return platforms.test(UA) && expected.test(UA)
 }
 
 /**
@@ -210,16 +212,14 @@ const getListeners = (el, type) => {
  * @return {Array} - 返回滚动信息的数组 [scrollTop, scrollLeft]
  */
 const getScroll = function () {
-  const dd = document.documentElement
-  const db = document.body
+  const $body = document.documentElement || document.body
+  let scrollXY = [0, 0]
 
-  if (dd && (dd.scrollTop || dd.scrollLeft)) {
-    return [dd.scrollTop, dd.scrollLeft]
-  } else if (db) {
-    return [db.scrollTop, db.scrollLeft]
-  } else {
-    return [0, 0]
+  if ($body && ($body.scrollTop || $body.scrollLeft)) {
+    scrollXY = [$body.scrollTop, $body.scrollLeft]
   }
+
+  return scrollXY
 }
 
 /**
@@ -252,6 +252,7 @@ const getScrollLeft = function () {
 const getPageX = function (evt) {
   let x = evt.pageX
 
+  /* istanbul ignore else */
   if (!x && 0 !== x) {
     x = evt.clientX || 0
 
@@ -273,6 +274,7 @@ const getPageX = function (evt) {
 const getPageY = function (evt) {
   let y = evt.pageY
 
+  /* istanbul ignore else */
   if (!y && 0 !== y) {
     y = evt.clientY || 0
 
@@ -303,7 +305,7 @@ const getPageXY = function (evt) {
  * @return {Number} - 返回事件的 charCode
  */
 const getCharCode = function (evt) {
-  let code = evt.keyCode || evt.charCode || 0
+  let code = evt.keyCode || evt.charCode
   // keycodes for webkit/safari
   const webkitKeymap = {
     63232: 38, // up
@@ -317,7 +319,7 @@ const getCharCode = function (evt) {
   }
 
   // webkit key normalization
-  if (isWebkit() && code in webkitKeymap) {
+  if (isAppleSafari() && code in webkitKeymap) {
     code = webkitKeymap[code]
   }
 
@@ -538,6 +540,7 @@ const once = (el, selector, type, fn, data, context) => {
  * })
  */
 const preventDefault = function (evt) {
+  /* istanbul ignore else */
   if (evt.preventDefault) {
     evt.preventDefault()
   } else {
@@ -574,6 +577,7 @@ const preventDefault = function (evt) {
  * })
  */
 const stopPropagation = function (evt) {
+  /* istanbul ignore else */
   if (evt.stopPropagation) {
     evt.stopPropagation()
   } else {

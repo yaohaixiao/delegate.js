@@ -11,6 +11,7 @@ import isIE from './isIE'
 const getPageY = function (evt) {
   let y = evt.pageY
 
+  /* istanbul ignore else */
   if (!y && 0 !== y) {
     y = evt.clientY || 0
 

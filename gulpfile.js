@@ -4,6 +4,7 @@ const plumber = require('gulp-plumber')
 const clean = require('gulp-clean')
 const connect = require('gulp-connect')
 const eslint = require('gulp-eslint')
+const prettier = require('gulp-prettier')
 const os = require('os')
 const open = require('gulp-open')
 const rename = require('gulp-rename')
@@ -21,6 +22,8 @@ const cleanDocs = () => {
 }
 
 const cleanAll = gulp.parallel(cleanDist, cleanDocs)
+
+const SOURCE_PATH = ['./src/**/*.js', './esm/**/*.js']
 
 const openDocs = () => {
   let browser
@@ -55,10 +58,16 @@ const reload = () => {
 
 const lint = () => {
   return gulp
-    .src('./src/**/*.js')
+    .src(SOURCE_PATH)
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failOnError())
+}
+
+const check = () => {
+  return gulp
+    .src(SOURCE_PATH)
+    .pipe(prettier.check())
 }
 
 const transpile = () => {
@@ -111,7 +120,7 @@ const watchDocs = () => {
 const watchAll = gulp.parallel(watchSource, watchDocs)
 
 const dev = gulp.parallel(lint, transpile, connectDocs, watchAll, openDocs)
-const build = gulp.series(lint, cleanAll, transpile)
+const build = gulp.series(lint, check, cleanAll, transpile)
 
 module.exports.start = dev
 module.exports.build = build
@@ -119,6 +128,7 @@ module.exports.cleanDist = cleanDist
 module.exports.cleanDocs = cleanDocs
 module.exports.clean = cleanAll
 module.exports.lint = lint
+module.exports.check = check
 module.exports.reload = reload
 module.exports.transpile = transpile
 module.exports.watchSource = watchSource

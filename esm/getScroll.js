@@ -7,16 +7,14 @@
  * @return {Array} - 返回滚动信息的数组 [scrollTop, scrollLeft]
  */
 const getScroll = function () {
-  const dd = document.documentElement
-  const db = document.body
+  const $body = document.documentElement || document.body
+  let scrollXY = [0, 0]
 
-  if (dd && (dd.scrollTop || dd.scrollLeft)) {
-    return [dd.scrollTop, dd.scrollLeft]
-  } else if (db) {
-    return [db.scrollTop, db.scrollLeft]
-  } else {
-    return [0, 0]
+  if ($body && ($body.scrollTop || $body.scrollLeft)) {
+    scrollXY = [$body.scrollTop, $body.scrollLeft]
   }
+
+  return scrollXY
 }
 
 export default getScroll

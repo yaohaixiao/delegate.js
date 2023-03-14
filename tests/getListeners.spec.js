@@ -42,13 +42,13 @@ describe('getListeners() 方法', () => {
   it('getListeners($list) 获取所有事件处理器：', () => {
     let callbacks = []
 
-    on($list, '.remove',  'click', removeItem)
+    on($list, '.remove', 'click', removeItem)
 
     callbacks = getListeners($list)
 
     expect(callbacks.length).toEqual(1)
 
-    on($list, '.remove',  'input', removeItem)
+    on($list, '.remove', 'input', removeItem)
 
     callbacks = getListeners($list)
 

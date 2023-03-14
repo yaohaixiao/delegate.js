@@ -1,4 +1,4 @@
-import isWebkit from './isWebkit'
+import isAppleSafari from './isAppleSafari'
 
 /**
  * 返回触发事件的 charCode
@@ -8,7 +8,7 @@ import isWebkit from './isWebkit'
  * @return {Number} - 返回事件的 charCode
  */
 const getCharCode = function (evt) {
-  let code = evt.keyCode || evt.charCode || 0
+  let code = evt.keyCode || evt.charCode
   // keycodes for webkit/safari
   const webkitKeymap = {
     63232: 38, // up
@@ -22,7 +22,7 @@ const getCharCode = function (evt) {
   }
 
   // webkit key normalization
-  if (isWebkit() && code in webkitKeymap) {
+  if (isAppleSafari() && code in webkitKeymap) {
     code = webkitKeymap[code]
   }
 

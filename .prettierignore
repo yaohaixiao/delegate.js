@@ -31,3 +31,5 @@ screenshot
 .eslintcache
 
 .husky
+delegate.js
+delegate.min.js

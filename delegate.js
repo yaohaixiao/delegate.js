@@ -91,14 +91,20 @@ var isIE = function isIE() {
 };
 
 /**
- * 检测当前浏览器是否为 Webkit 内核
+ * 判断是否为 Apple 设备的 Safari 浏览器
  * ========================================================================
- * @method isWebkit
+ * @method isAppleSafari
  * @returns {Boolean}
  */
-var isWebkit = function isWebkit() {
+var isAppleSafari = function isAppleSafari() {
   var UA = navigator.userAgent;
-  return /\b(iPad|iPhone|iPod)\b/.test(UA) && /WebKit/.test(UA) && !/Edge/.test(UA) && !window.MSStream;
+  var platforms = /Mac|iPhone|iPod|iPad/i;
+  var rejected = /Chrome|Android|CriOS|FxiOS|EdgiOS/i;
+  var expected = /Safari/i;
+  if (rejected.test(UA)) {
+    return false;
+  }
+  return platforms.test(UA) && expected.test(UA);
 };
 
 /**
@@ -201,15 +207,12 @@ var _getListeners = function getListeners(el, type) {
  * @return {Array} - 返回滚动信息的数组 [scrollTop, scrollLeft]
  */
 var getScroll = function getScroll() {
-  var dd = document.documentElement;
-  var db = document.body;
-  if (dd && (dd.scrollTop || dd.scrollLeft)) {
-    return [dd.scrollTop, dd.scrollLeft];
-  } else if (db) {
-    return [db.scrollTop, db.scrollLeft];
-  } else {
-    return [0, 0];
+  var $body = document.documentElement || document.body;
+  var scrollXY = [0, 0];
+  if ($body && ($body.scrollTop || $body.scrollLeft)) {
+    scrollXY = [$body.scrollTop, $body.scrollLeft];
   }
+  return scrollXY;
 };
 
 /**
@@ -241,6 +244,8 @@ var getScrollLeft = function getScrollLeft() {
  */
 var _getPageX = function getPageX(evt) {
   var x = evt.pageX;
+
+  /* istanbul ignore else */
   if (!x && 0 !== x) {
     x = evt.clientX || 0;
     if (isIE()) {
@@ -259,6 +264,8 @@ var _getPageX = function getPageX(evt) {
  */
 var _getPageY = function getPageY(evt) {
   var y = evt.pageY;
+
+  /* istanbul ignore else */
   if (!y && 0 !== y) {
     y = evt.clientY || 0;
     if (isIE()) {
@@ -287,7 +294,7 @@ var _getPageXY = function getPageXY(evt) {
  * @return {Number} - 返回事件的 charCode
  */
 var _getCharCode = function getCharCode(evt) {
-  var code = evt.keyCode || evt.charCode || 0;
+  var code = evt.keyCode || evt.charCode;
   // keycodes for webkit/safari
   var webkitKeymap = {
     63232: 38,
@@ -307,7 +314,7 @@ var _getCharCode = function getCharCode(evt) {
   };
 
   // webkit key normalization
-  if (isWebkit() && code in webkitKeymap) {
+  if (isAppleSafari() && code in webkitKeymap) {
     code = webkitKeymap[code];
   }
   return code;
@@ -520,6 +527,7 @@ var _once = function once(el, selector, type, fn, data, context) {
  * })
  */
 var _preventDefault = function preventDefault(evt) {
+  /* istanbul ignore else */
   if (evt.preventDefault) {
     evt.preventDefault();
   } else {
@@ -556,6 +564,7 @@ var _preventDefault = function preventDefault(evt) {
  * })
  */
 var _stopPropagation = function stopPropagation(evt) {
+  /* istanbul ignore else */
   if (evt.stopPropagation) {
     evt.stopPropagation();
   } else {

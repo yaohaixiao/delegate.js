@@ -1,11 +1,11 @@
 import isString from '../esm/isString'
 
 describe('isString() 方法', () => {
-  it('isString(\'ok\'), 返回：true', () => {
+  it("isString('ok'), 返回：true", () => {
     expect(isString('ok')).toBe(true)
   })
 
-  it('isString(\'\'), 返回：true', () => {
+  it("isString(''), 返回：true", () => {
     expect(isString('')).toBe(true)
   })
 
@@ -26,7 +26,7 @@ describe('isString() 方法', () => {
   })
 
   it('isString({}), 返回：false', () => {
-    expect(isString({ })).toBe(false)
+    expect(isString({})).toBe(false)
   })
 
   it('isString(1), 返回：false', () => {
@@ -34,6 +34,6 @@ describe('isString() 方法', () => {
   })
 
   it('isString(()=>{}), 返回：false', () => {
-    expect(isString(()=>{})).toBe(false)
+    expect(isString(() => {})).toBe(false)
   })
 })

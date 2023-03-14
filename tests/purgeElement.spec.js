@@ -32,7 +32,7 @@ describe('closest() 方法', () => {
 
     $item.parentNode.removeChild($item)
   }
-  const showLog = function(evt) {
+  const showLog = function (evt) {
     const $target = evt.delegateTarget
     const id = $target.getAttribute('data-id')
 

@@ -27,13 +27,13 @@ describe('closest() 方法', () => {
     const $support = document.querySelector('#item-support')
     const $match = closest($support, '.item-support')
 
-    it('el 不存在，返回： null',() => {
+    it('el 不存在，返回： null', () => {
       const $notFound = document.querySelector('#not-found')
 
       expect(closest($notFound, '.item-support')).toEqual(null)
     })
 
-    it('匹配到 \'.item-support\'，返回匹配 DOM 元素：', () => {
+    it("匹配到 '.item-support'，返回匹配 DOM 元素：", () => {
       expect($match.innerHTML).toEqual($support.innerHTML)
       expect($match.id).toEqual($support.id)
     })

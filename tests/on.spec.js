@@ -46,7 +46,7 @@ describe('on() 方法', () => {
 
     $item.parentNode.removeChild($item)
   }
-  const showLog = function(evt, evtData) {
+  const showLog = function (evt, evtData) {
     const $target = evt.delegateTarget
     const attrId = $target.getAttribute('data-id')
 
@@ -64,7 +64,7 @@ describe('on() 方法', () => {
     let addHandler = null
     let items
 
-    on($list, '.remove',  'click', removeItem)
+    on($list, '.remove', 'click', removeItem)
     $remove.click()
 
     items = document.querySelectorAll('.remove')
@@ -78,7 +78,7 @@ describe('on() 方法', () => {
     let items
 
     off($list, 'click')
-    on($list, '.remove',  'click', removeItem, { author: 'Robert' })
+    on($list, '.remove', 'click', removeItem, { author: 'Robert' })
     $remove.click()
 
     items = document.querySelectorAll('.remove')
@@ -93,7 +93,7 @@ describe('on() 方法', () => {
     let items
 
     off($list, 'click')
-    on($list, '.remove',  'click', removeItem, { author: 'Robert Yao' }, $remove)
+    on($list, '.remove', 'click', removeItem, { author: 'Robert Yao' }, $remove)
     $remove.click()
 
     items = document.querySelectorAll('.remove')
@@ -106,7 +106,7 @@ describe('on() 方法', () => {
     const $user = document.querySelector('a[data-id*="user"]')
 
     off($list, 'click')
-    on($list, '.remove',  'click', removeItem, { author: 'Robert Yao' }, true)
+    on($list, '.remove', 'click', removeItem, { author: 'Robert Yao' }, true)
     $user.click()
 
     items = document.querySelectorAll('.remove')
@@ -124,7 +124,15 @@ describe('on() 方法', () => {
     $context = null
 
     off($list, 'click')
-    on($list, '.remove',  'mouseenter', showLog, { author: 'Robert Yao' }, $remove, true)
+    on(
+      $list,
+      '.remove',
+      'mouseenter',
+      showLog,
+      { author: 'Robert Yao' },
+      $remove,
+      true
+    )
     $remove.dispatchEvent(new CustomEvent('mouseenter'))
 
     items = document.querySelectorAll('.remove')

@@ -11,7 +11,7 @@
  * @param {String} selector - （必须）匹配 DOM 元素的选择器
  * @returns {Boolean}
  */
-const matches = (el, selector= '') => {
+const matches = (el, selector = '') => {
   const sel = selector.replace(/^>/i, '')
 
   if (!selector || !sel || !el) {

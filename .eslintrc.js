@@ -14,7 +14,7 @@ module.exports = {
     commonjs: true,
     amd: true,
     es6: true,
-    mocha: true
+    jest: true
   },
   extends: ['prettier', 'eslint:recommended', 'plugin:import/errors'],
   plugins: ['import'],

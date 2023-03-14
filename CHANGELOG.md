@@ -1,3 +1,13 @@
+# [1.0.0](https://github.com/yaohaixiao/delegate.js/compare/0.8.0...1.0.0) (2023-03-14)
+
+
+### Features
+
+* 调整 off(), on(), purgeElement() 等方法，并添加主要功能函数的单测； ([cc329e5](https://github.com/yaohaixiao/delegate.js/commit/cc329e5bf378fca7b3b04c70a36bb6ffe73ab4d4))
+* 完成主要功能函数的单测编写，并根据单测结果调整其中部分方法； ([2d294bb](https://github.com/yaohaixiao/delegate.js/commit/2d294bb8e04f21cd661067992406909056ad95a2))
+
+
+
 # [0.8.0](https://github.com/yaohaixiao/delegate.js/compare/0.7.0...0.8.0) (2023-03-07)
 
 

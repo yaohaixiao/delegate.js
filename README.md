@@ -911,7 +911,7 @@ const showLog = function (evt) {
   console.log(`当前触发事件的 relatedTarget 为：${relatedTarget}`)
 }
 
-$emitter.on('.remove', 'click', showLog)
+$emitter.on('.remove', 'mouseenter', showLog)
 ```
 
 ### getTarget(evt)

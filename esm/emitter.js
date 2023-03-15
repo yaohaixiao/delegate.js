@@ -8,6 +8,8 @@ import getPageX from './getPageX'
 import getPageY from './getPageY'
 import getPageXY from './getPageXY'
 import getCharCode from './getCharCode'
+import getRelatedTarget from './getRelatedTarget'
+import getTarget from './getTarget'
 import purgeElement from './purgeElement'
 import preventDefault from './preventDefault'
 import stopPropagation from './stopPropagation'
@@ -97,6 +99,37 @@ class Emitter {
    */
   getCharCode(evt) {
     return getCharCode(evt)
+  }
+
+  /**
+   * 返回触发（鼠标）事件的 relatedTarget DOM 元素。
+   * ========================================================================
+   * MouseEvent.relatedTarget 只读属性是鼠标事件的次要目标（如果有）。相关的鼠标事件：
+   * mouseenter
+   * mouseleave
+   * mouseover
+   * mouseout
+   * dragenter
+   * dragleave
+   * ========================================================================
+   * @method getRelatedTarget
+   * @see https://developer.mozilla.org/en-US/docs/web/api/mouseevent/relatedtarget
+   * @param {Event} evt - Event 对象
+   * @return {HTMLElement} - Event 对象的 relatedTarget DOM 元素
+   */
+  getRelatedTarget(evt) {
+    return getRelatedTarget(evt)
+  }
+
+  /**
+   * 返回触发事件的 target DOM 元素
+   * ========================================================================
+   * @method getTarget
+   * @param {Event} evt - Event 对象
+   * @return {HTMLElement} - Event 对象的 target DOM 元素
+   */
+  getTarget(evt) {
+    return getTarget(evt)
   }
 
   /**

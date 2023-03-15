@@ -36,7 +36,7 @@ npm i -S @yaohaixiao/delegate.js
 #### CDN 调用 JS 文件
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/yaohaixiao/delegate.js/dist/delegate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/yaohaixiao/delegate.js/delegate.min.js"></script>
 ```
 
 #### 本地调用 JS 文件
@@ -55,7 +55,7 @@ const delegate = require('@yaohaixiao/delegate.js')
 
 ```js
 // 调用 delegate 实例对象
-import delegate from '@yaohaixiao/delegate.js'
+import delegate from '@yaohaixiao/esm/delegate'
 
 // 调用 Emitter 构造函数
 import Emitter from '@yaohaixiao/delegate.js/esm/Emitter'
@@ -862,6 +862,106 @@ const showLog = function (evt) {
 }
 
 $emitter.on('.input', 'keydown', showLog)
+```
+
+### getRelatedTarget(evt)
+
+#### Description
+
+返回触发事件的 relatedTarget DOM 元素。
+
+#### Parameters
+
+##### type
+
+Type: `Event`
+
+Default: ``
+
+（必须）事件对象。
+
+#### Returns
+
+Type: `HTMLElement`
+
+Event 对象的 relatedTarget DOM 元素。
+
+```html
+<ul id="list" class="list">
+  <li class="item" id="item-home">
+    <span>Home</span>
+    <a href="/sitemap#home" class="remove" data-id="home">删除</a>
+  </li>
+  <li class="item" id="item-support">
+    <span>Support</span>
+    <a href="/sitemap#support" class="remove" data-id="support">删除</a>
+  </li>
+  <li class="item" id="item-faqs">
+    <span>FAQs</span>
+    <a href="/sitemap#support" class="remove" data-id="faqs">删除</a>
+  </li>
+</ul>
+```
+
+```js
+const $emitter = delegate('#list')
+const showLog = function (evt) {
+  const relatedTarget = $emitter.getRelatedTarget(evt)
+
+  console.log(`当前触发事件的 relatedTarget 为：${relatedTarget}`)
+}
+
+$emitter.on('.remove', 'click', showLog)
+```
+
+### getTarget(evt)
+
+#### Description
+
+返回触发事件的 target DOM 元素。
+
+#### Parameters
+
+##### type
+
+Type: `Event`
+
+Default: ``
+
+（必须）事件对象。
+
+#### Returns
+
+Type: `HTMLElement`
+
+Event 对象的 target DOM 元素。
+
+```html
+<ul id="list" class="list">
+  <li class="item" id="item-home">
+    <span>Home</span>
+    <a href="/sitemap#home" class="remove" data-id="home">删除</a>
+  </li>
+  <li class="item" id="item-support">
+    <span>Support</span>
+    <a href="/sitemap#support" class="remove" data-id="support">删除</a>
+  </li>
+  <li class="item" id="item-faqs">
+    <span>FAQs</span>
+    <a href="/sitemap#support" class="remove" data-id="faqs">删除</a>
+  </li>
+</ul>
+```
+
+```js
+const $emitter = delegate('#list')
+const showLog = function (evt) {
+  const target = $emitter.getTarget(evt)
+
+  console.log(`当前触发事件的 target 为：${target}`)
+}
+
+$emitter.on('.remove', 'click', showLog)
 ```
 
 ## Example

@@ -184,6 +184,66 @@ const closest = (el, selector, ctx, includeCTX) => {
 }
 
 /**
+ * 在某些情况下，某些浏览器（例如：Safari 浏览器）会返回实际的目标元素内部的文本节点。
+ * resolveTextNode() 方法则会返回实际的目标节点，以保证浏览器行为一致。
+ * ========================================================================
+ * @method resolveTextNode
+ * @param {HTMLElement} el - 要解析的节点
+ * @return {HTMLElement} - 实际的目标 DOM 节点
+ */
+const resolveTextNode = function (el) {
+  if (el && el.nodeType === 3) {
+    return el.parentNode
+  }
+
+  return el
+}
+
+/**
+ * 返回触发（鼠标）事件的 relatedTarget DOM 元素。
+ * ========================================================================
+ * MouseEvent.relatedTarget 只读属性是鼠标事件的次要目标（如果有）。相关的鼠标事件：
+ * mouseenter
+ * mouseleave
+ * mouseover
+ * mouseout
+ * dragenter
+ * dragleave
+ * ========================================================================
+ * @method getRelatedTarget
+ * @see https://developer.mozilla.org/en-US/docs/web/api/mouseevent/relatedtarget
+ * @param {Event} evt - Event 对象
+ * @return {HTMLElement} - Event 对象的 relatedTarget DOM 元素
+ */
+const getRelatedTarget = function (evt) {
+  let target = evt.relatedTarget
+  const type = evt.type
+
+  if (!target) {
+    if (type === 'mouseout') {
+      target = evt.toElement
+    } else if (type === 'mouseover') {
+      target = evt.fromElement
+    }
+  }
+
+  return resolveTextNode(target)
+}
+
+/**
+ * 返回触发事件的 target DOM 元素
+ * ========================================================================
+ * @method getTarget
+ * @param {Event} evt - Event 对象
+ * @return {HTMLElement} - Event 对象的 target DOM 元素
+ */
+const getTarget = function (evt) {
+  const target = evt.target || evt.srcElement
+
+  return resolveTextNode(target)
+}
+
+/**
  * 获取 DOM 元素绑定的所有事件处理器
  * ========================================================================
  * @methods getListeners
@@ -437,7 +497,7 @@ const on = (el, selector, type, fn, data, context, once = false) => {
   let capture = false
 
   const listener = function (evt) {
-    const target = evt.target
+    const target = getTarget(evt)
     // 通过 Element.matches 方法获得点击的目标元素
     const delegateTarget = closest(target, selector, el)
     let overrideContext = context || el
@@ -515,7 +575,6 @@ const once = (el, selector, type, fn, data, context) => {
  * ========================================================================
  * @method preventDefault
  * @param {Event} evt - 事件对象
- *
  *
  * @example
  * <div id="nav" class="nav">
@@ -705,6 +764,28 @@ class Emitter {
   }
 
   /**
+   * 返回触发事件的 relatedTarget DOM 元素
+   * ========================================================================
+   * @method getRelatedTarget
+   * @param {Event} evt - Event 对象
+   * @return {HTMLElement} - Event 对象的 relatedTarget DOM 元素
+   */
+  getRelatedTarget(evt) {
+    return getRelatedTarget(evt)
+  }
+
+  /**
+   * 返回触发事件的 target DOM 元素
+   * ========================================================================
+   * @method getTarget
+   * @param {Event} evt - Event 对象
+   * @return {HTMLElement} - Event 对象的 target DOM 元素
+   */
+  getTarget(evt) {
+    return getTarget(evt)
+  }
+
+  /**
    * 销毁（type 类型的）代理事件绑定
    * ========================================================================
    * 1. 设置了事件类型 type，则销毁指定类型的事件绑定，否则清除所有代理事件绑定
@@ -785,7 +866,7 @@ class Emitter {
    * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
    * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
    * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
-   * @returns {Emitter} - Emitter 对象
+   *
    */
   once(selector, type, handler, data, context) {
     once(this.$el, selector, type, handler, data, context)

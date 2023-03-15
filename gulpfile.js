@@ -18,7 +18,7 @@ const cleanDist = () => {
 }
 
 const cleanDocs = () => {
-  return gulp.src('./docs/js/*.js').pipe(clean())
+  return gulp.src('./docs/lib/*.js').pipe(clean())
 }
 
 const cleanAll = gulp.parallel(cleanDist, cleanDocs)
@@ -65,9 +65,7 @@ const lint = () => {
 }
 
 const check = () => {
-  return gulp
-    .src(SOURCE_PATH)
-    .pipe(prettier.check())
+  return gulp.src(SOURCE_PATH).pipe(prettier.check({ editorconfig: true }))
 }
 
 const transpile = () => {
@@ -86,7 +84,7 @@ const transpile = () => {
       })
     )
     .pipe(gulp.dest('./'))
-    .pipe(gulp.dest('./docs/js'))
+    .pipe(gulp.dest('./docs/lib'))
     .pipe(uglify())
     .pipe(
       sourcemaps.init({
@@ -100,7 +98,7 @@ const transpile = () => {
     )
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./'))
-    .pipe(gulp.dest('docs/js'))
+    .pipe(gulp.dest('docs/lib'))
 }
 
 const watchSource = () => {

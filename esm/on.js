@@ -1,5 +1,6 @@
 import closest from './closest'
 import off from './off'
+import getTarget from './getTarget'
 
 /**
  * 绑定代理事件
@@ -26,7 +27,7 @@ const on = (el, selector, type, fn, data, context, once = false) => {
   let capture = false
 
   const listener = function (evt) {
-    const target = evt.target
+    const target = getTarget(evt)
     // 通过 Element.matches 方法获得点击的目标元素
     const delegateTarget = closest(target, selector, el)
     let overrideContext = context || el

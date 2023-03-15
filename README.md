@@ -870,6 +870,16 @@ $emitter.on('.input', 'keydown', showLog)
 
 返回触发事件的 relatedTarget DOM 元素。
 
+说明：MouseEvent.relatedTarget 只读属性是鼠标事件的次要目标（如果有）。
+
+相关的鼠标事件有：
+- mouseenter
+- mouseleave
+- mouseover
+- mouseout
+- dragenter
+- dragleave
+
 #### Parameters
 
 ##### type
@@ -885,16 +895,6 @@ Default: ``
 Type: `HTMLElement`
 
 Event 对象的 relatedTarget DOM 元素。
-
-MouseEvent.relatedTarget 只读属性是鼠标事件的次要目标（如果有）。
-
-相关的鼠标事件有：
-- mouseenter
-- mouseleave
-- mouseover
-- mouseout
-- dragenter
-- dragleave
 
 ```html
 <ul id="list" class="list">

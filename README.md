@@ -886,6 +886,16 @@ Type: `HTMLElement`
 
 Event 对象的 relatedTarget DOM 元素。
 
+MouseEvent.relatedTarget 只读属性是鼠标事件的次要目标（如果有）。
+
+相关的鼠标事件有：
+- mouseenter
+- mouseleave
+- mouseover
+- mouseout
+- dragenter
+- dragleave
+
 ```html
 <ul id="list" class="list">
   <li class="item" id="item-home">

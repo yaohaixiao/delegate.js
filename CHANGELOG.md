@@ -1,3 +1,12 @@
+# [1.1.0](https://github.com/yaohaixiao/delegate.js/compare/1.0.0...1.1.0) (2023-03-15)
+
+
+### Features
+
+* 添加 getTarget() 和 getRelatedTarget() 方法； ([e8237f1](https://github.com/yaohaixiao/delegate.js/commit/e8237f116282573bdaffe53bd8455e9117300eb7))
+
+
+
 # [1.0.0](https://github.com/yaohaixiao/delegate.js/compare/0.8.0...1.0.0) (2023-03-14)
 
 

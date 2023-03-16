@@ -27,12 +27,7 @@
  * })
  */
 const stopPropagation = function (evt) {
-  /* istanbul ignore else */
-  if (evt.stopPropagation) {
-    evt.stopPropagation()
-  } else {
-    evt.cancelBubble = true
-  }
+  evt.stopPropagation()
 }
 
 export default stopPropagation

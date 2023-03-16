@@ -28,12 +28,7 @@
  * })
  */
 const preventDefault = function (evt) {
-  /* istanbul ignore else */
-  if (evt.preventDefault) {
-    evt.preventDefault()
-  } else {
-    evt.returnValue = false
-  }
+  evt.preventDefault()
 }
 
 export default preventDefault

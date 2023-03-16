@@ -240,7 +240,7 @@ const getRelatedTarget = function (evt) {
  * @return {HTMLElement} - Event 对象的 target DOM 元素
  */
 const getTarget = function (evt) {
-  const target = evt.target || evt.srcElement
+  const target = evt.target
 
   return resolveTextNode(target)
 }
@@ -637,12 +637,7 @@ const focusout = function (el, selector, fn, data, context, once = false) {
  * })
  */
 const preventDefault = function (evt) {
-  /* istanbul ignore else */
-  if (evt.preventDefault) {
-    evt.preventDefault()
-  } else {
-    evt.returnValue = false
-  }
+  evt.preventDefault()
 }
 
 /**
@@ -674,12 +669,7 @@ const preventDefault = function (evt) {
  * })
  */
 const stopPropagation = function (evt) {
-  /* istanbul ignore else */
-  if (evt.stopPropagation) {
-    evt.stopPropagation()
-  } else {
-    evt.cancelBubble = true
-  }
+  evt.stopPropagation()
 }
 
 /**

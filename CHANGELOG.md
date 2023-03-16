@@ -1,4 +1,4 @@
-# [1.2.0](https://github.com/yaohaixiao/delegate.js/compare/1.1.0...1.2.0) (2023-03-16)
+# [1.3.0](https://github.com/yaohaixiao/delegate.js/compare/1.1.0...1.2.0) (2023-03-16)
 
 
 ### Bug Fixes

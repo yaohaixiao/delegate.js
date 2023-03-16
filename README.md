@@ -10,7 +10,7 @@ delegate.js 是一个轻量级的 JavaScript 事件委托库。delegate.js 中�
 
 ## 项目初衷
 
-编写 delegate.js 的主要是为初 JavaScript 的朋友了解事件委托的实现机制而开发。
+编写 delegate.js 的主要是为初学 JavaScript 的朋友了解事件委托的实现机制而开发。
 
 ## 特点
 

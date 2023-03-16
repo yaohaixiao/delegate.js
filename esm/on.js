@@ -6,7 +6,7 @@ import getTarget from './getTarget'
  * 绑定代理事件
  * ========================================================================
  * @method on
- * @param {HTMLElement|String} el - 绑定代理事件的 DOM 节点
+ * @param {HTMLElement|String} el - （必须）绑定代理事件的 DOM 节点
  * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
  * @param {String} type - （必须）事件类型
  * @param {Function} fn - （必须） 事件处理器回调函数
@@ -17,7 +17,9 @@ import getTarget from './getTarget'
  */
 const on = (el, selector, type, fn, data, context, once = false) => {
   const CAPTURE_EVENTS = [
+    'focusout',
     'blur',
+    'focusin',
     'focus',
     'load',
     'unload',

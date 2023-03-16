@@ -13,7 +13,9 @@ import isFunction from './isFunction'
  */
 const off = (el, type, fn) => {
   const CAPTURE_EVENTS = [
+    'focusout',
     'blur',
+    'focusin',
     'focus',
     'load',
     'unload',

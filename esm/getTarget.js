@@ -8,7 +8,7 @@ import resolveTextNode from './resolveTextNode'
  * @return {HTMLElement} - Event 对象的 target DOM 元素
  */
 const getTarget = function (evt) {
-  const target = evt.target || evt.srcElement
+  const target = evt.target
 
   return resolveTextNode(target)
 }

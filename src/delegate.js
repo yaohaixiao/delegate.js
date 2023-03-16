@@ -1,5 +1,7 @@
 const CAPTURE_EVENTS = [
+  'focusout',
   'blur',
+  'focusin',
   'focus',
   'load',
   'unload',
@@ -484,7 +486,7 @@ const off = (el, type, fn) => {
  * 绑定代理事件
  * ========================================================================
  * @method on
- * @param {HTMLElement} el - 绑定代理事件的 DOM 节点
+ * @param {HTMLElement} el - （必须）绑定代理事件的 DOM 节点
  * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
  * @param {String} type - （必须）事件类型
  * @param {Function} fn - （必须） 事件处理器回调函数
@@ -568,6 +570,42 @@ const on = (el, selector, type, fn, data, context, once = false) => {
  */
 const once = (el, selector, type, fn, data, context) => {
   on(el, selector, type, fn, data, context, true)
+}
+
+/**
+ * 绑定 focusin 或者 focus 代理事件
+ * ========================================================================
+ * @method focusin
+ * @param {HTMLElement} el - （必须）绑定代理事件的 DOM 节点
+ * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+ * @param {Function} fn - （必须） 事件处理器回调函数
+ * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+ * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
+ * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
+ * @param {Boolean} [once] - （可选）是否仅触发一次
+ */
+const focusin = function (el, selector, fn, data, context, once = false) {
+  const FOCUSIN = isIE() ? 'focusin' : 'focus'
+
+  return on(el, selector, FOCUSIN, fn, data, context, once)
+}
+
+/**
+ * 绑定 focusout 或者 blur 代理事件
+ * ========================================================================
+ * @method focusout
+ * @param {HTMLElement} el - （必须）绑定代理事件的 DOM 节点
+ * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+ * @param {Function} fn - （必须） 事件处理器回调函数
+ * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+ * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
+ * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
+ * @param {Boolean} [once] - （可选）是否仅触发一次
+ */
+const focusout = function (el, selector, fn, data, context, once = false) {
+  const FOCUSOUT = isIE() ? 'focusout' : 'blur'
+
+  on(el, selector, FOCUSOUT, fn, data, context, once)
 }
 
 /**
@@ -870,6 +908,40 @@ class Emitter {
    */
   once(selector, type, handler, data, context) {
     once(this.$el, selector, type, handler, data, context)
+
+    return this
+  }
+
+  /**
+   * 绑定 focusin 或者 focus 代理事件
+   * ========================================================================
+   * @method focusin
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
+   * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   */
+  focusin(selector, handler, data, context, once = false) {
+    focusin(this.$el, selector, handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 focusout 或者 blur 代理事件
+   * ========================================================================
+   * @method focusout
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
+   * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   */
+  focusout(selector, handler, data, context, once = false) {
+    focusout(this.$el, selector, handler, data, context, once)
 
     return this
   }

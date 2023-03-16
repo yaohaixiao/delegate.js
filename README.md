@@ -312,6 +312,137 @@ Type: `Emitter`
 
 返回 Emitter 对象（实例）。
 
+### focusin(selector, fn, data, context, once = false)
+
+#### Description
+
+focusin() 方法用来绑定 focusin（IE） 或者 focus（其它） 代理事件处理器，调用方法和 on() 一致。并且会根据浏览器自动添加事件类型。具体调用方法请参考 on() 方法。
+
+#### Parameters
+
+##### selector
+
+Type: `String`
+
+Default: ``
+
+（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。
+
+##### fn
+
+Type: `Function`
+
+Default: ``
+
+（必须）fn 为事件处理器回调函数。
+
+##### data
+
+Type: `Object`
+
+Default: ``
+
+（可选）给事件处理器回调函数传递的数据。
+
+##### context
+
+Type: `Object|Boolean`
+
+Default: ``
+
+（可选）context 指定事件处理器回调函数的 this 的指定上下文，默认指向 $el。可以指向其他 this 上下文，也可以设置为 true，此时为事件处理器的 this 上下文指向 data 对象。
+
+##### once
+
+Type: `Boolean`
+
+Default: `false`
+
+（可选）once 指定事件处理器回调函数是否仅执行一次。
+
+#### Returns
+
+Type: `Emitter`
+
+返回 Emitter 对象（实例）。
+
+```js
+const handler = function(evt) {
+  const $input = evt.delegateTarget
+  console.log(`输入框当前值为：${$input.value}`)
+}
+
+const $emitter = delegate('.el-input')
+
+// 类选择器
+$emitter.focusin('.el-input__inner', handler)
+```
+
+### focusout(selector, fn, data, context, once = false)
+
+#### Description
+
+focusout() 方法用来绑定 focusout（IE） 或者 blur（其它） 代理事件处理器，调用方法和 on() 一致。并且会根据浏览器自动添加事件类型。具体调用方法请参考 on() 方法。
+
+#### Parameters
+
+##### selector
+
+Type: `String`
+
+Default: ``
+
+（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。
+
+##### fn
+
+Type: `Function`
+
+Default: ``
+
+（必须）fn 为事件处理器回调函数。
+
+##### data
+
+Type: `Object`
+
+Default: ``
+
+（可选）给事件处理器回调函数传递的数据。
+
+##### context
+
+Type: `Object|Boolean`
+
+Default: ``
+
+（可选）context 指定事件处理器回调函数的 this 的指定上下文，默认指向 $el。可以指向其他 this 上下文，也可以设置为 true，此时为事件处理器的 this 上下文指向 data 对象。
+
+##### once
+
+Type: `Boolean`
+
+Default: `false`
+
+（可选）once 指定事件处理器回调函数是否仅执行一次。
+
+#### Returns
+
+Type: `Emitter`
+
+返回 Emitter 对象（实例）。
+
+```js
+const handler = function(evt) {
+  const $input = evt.delegateTarget
+  console.log(`输入框当前值为：${$input.value}`)
+}
+
+const $emitter = delegate('.el-input')
+
+// 类选择器
+$emitter.focusout('.el-input__inner', handler)
+```
 
 ### off(type, fn)
 
@@ -797,6 +928,7 @@ const showLog = function (evt) {
 
 $emitter.on('.item', 'click', showLog)
 ```
+
 ### getPageXY(evt)
 
 #### Description

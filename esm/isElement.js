@@ -6,7 +6,7 @@
  * @returns {Boolean}
  */
 const isElement = (el) => {
-  return el && el.nodeName && el.tagName && el.nodeType === 1
+  return !!(el && el.nodeName && el.tagName && el.nodeType === 1)
 }
 
 export default isElement

@@ -3,7 +3,7 @@
  * resolveTextNode() 方法则会返回实际的目标节点。
  * ========================================================================
  * @method resolveTextNode
- * @param {HTMLElement} el - 要解析的节点
+ * @param {HTMLElement|Text} el - 要解析的节点
  * @return {*|HTMLElement} - 实际的目标 DOM 节点
  */
 const resolveTextNode = function (el) {

@@ -8,12 +8,24 @@
 
 delegate.js 是一个轻量级的 JavaScript 事件委托库。delegate.js 中封装了：on()、once()、off() 等事件侦听相关的常用方法。delegate.js 的 API 借鉴了 jQuery 的链式调用模式，使得 delegate.js 的 API 使用起来非常灵活和方便。
 
+## 项目初衷
+
+编写 delegate.js 的初中主要是为初 JavaScript 的新手了解事件委托的实现机制而开发。
+
+项目中代码注释较为详细，遵循 jsdoc 风格，代码较为规范，并且采用了一些工程化的手段实现自动化的代码规范和 commit 规范校验，并使用工具实现自动生成 CHANGELOG 信息。希望对于初学者能够通过此项目了解标准的 JavaScript 编码规范以及如何通过工程化的配置实现自动化。
+
+项目中引入了 Jest 测试框架，编写了完整（覆盖了 jsdom 模拟，键盘事件模拟等一些正式工作环境常见的测试示例）的单元测试代码，希望初学者了解如何使用 Jest 测试框架编写单元测试提供了一定的参考和帮助。
+
+
 ## 特点
 
 - 支持 UMD 规范；
 - 原生 JavaScript 编写，无任何依赖；
 - 采用 jQuery 链式调用语法，调用语法简洁方便；
 - 文件体积小，加载速度快；
+- 详细的 jsdoc 风格代码注释；
+- 完整的 Jest 单测实例，并生成 HTML 报告文档；
+- 使用 husky + lint-staged 实现自动代码风格校验和 commit 规范校验；
 
 ## Browsers support
 
@@ -28,7 +40,11 @@ delegate.js 支持 AMD 和 CommonJS 规范的模块调用方式，可以直接�
 ### npm 安装
 
 ```sh
+# install from npmjs.com
 npm i -S @yaohaixiao/delegate.js
+
+# install from github.com
+npm i -S @yaohaixiao/delegate.js@1.1.0 --registry=https://npm.pkg.github.com
 ```
 
 ### 浏览器中调用

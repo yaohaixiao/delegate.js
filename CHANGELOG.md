@@ -1,3 +1,18 @@
+# [1.2.0](https://github.com/yaohaixiao/delegate.js/compare/1.1.0...1.2.0) (2023-03-16)
+
+
+### Bug Fixes
+
+* 修复 isElement() 方法检测 textNode 返回 true 的问题 ([67d2c46](https://github.com/yaohaixiao/delegate.js/commit/67d2c46c78c1ce96437194451d4309fcce7d5e64))
+
+
+### Features
+
+* 添加 focusin() 和 focusout() 方法 ([f2fd9ea](https://github.com/yaohaixiao/delegate.js/commit/f2fd9ead0340292159285342606d8ae1abc87a59))
+* 移除 getTarget(), preventDefault() 和 stopPropagation() 方法中已废弃的属性和方法 ([b0b11de](https://github.com/yaohaixiao/delegate.js/commit/b0b11de6a88e4e1b7399041ca8e8c1867335d792))
+
+
+
 # [1.1.0](https://github.com/yaohaixiao/delegate.js/compare/1.0.0...1.1.0) (2023-03-15)
 
 

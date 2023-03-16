@@ -1,6 +1,6 @@
 {
   "name": "@yaohaixiao/delegate.js",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "delegate.js 是一个轻量级的 JavaScript 事件委托库，封装了：on()、once()、off() 等事件侦听相关的常用方法，使用起来方便灵活。",
   "main": "delegate.min.js",
   "scripts": {
@@ -38,6 +38,8 @@
     "@babel/preset-env": "^7.14.8",
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
+    "@testing-library/dom": "^9.0.1",
+    "@testing-library/user-event": "^14.4.3",
     "babel-jest": "^29.5.0",
     "browserify": "^3.46.1",
     "commitlint": "^17.4.4",

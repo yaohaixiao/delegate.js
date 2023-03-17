@@ -393,15 +393,9 @@ var purgeElement = function purgeElement(el) {
   var $element = isString(el) ? document.querySelector(el) : el;
   var $childNodes = $element.childNodes;
   var listeners = _getListeners($element, type);
-  var i;
-
-  /* istanbul ignore else */
-  if (listeners) {
-    for (i = listeners.length - 1; i > -1; i -= 1) {
-      var listener = listeners[i];
-      _off($element, listener.type, listener.fn);
-    }
-  }
+  listeners.forEach(function (listener) {
+    _off($element, listener.type, listener.fn);
+  });
   if (recurse && $element && $childNodes) {
     $childNodes.forEach(function ($childNode) {
       purgeElement($childNode, type, recurse);

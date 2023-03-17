@@ -13,6 +13,10 @@ const umd = require('gulp-umd')
 const uglify = require('gulp-uglify')
 const watch = require('gulp-watch')
 
+
+const SOURCE_PATH = ['./src/**/*.js', './esm/**/*.js']
+
+/* ==================== 清理相关 gulp 任务 ==================== */
 const cleanDist = () => {
   return gulp.src('./dist/**/*.*').pipe(clean())
 }
@@ -23,8 +27,8 @@ const cleanDocs = () => {
 
 const cleanAll = gulp.parallel(cleanDist, cleanDocs)
 
-const SOURCE_PATH = ['./src/**/*.js', './esm/**/*.js']
 
+/* ==================== 文档查看相关的 gulp 任务 ==================== */
 const openDocs = () => {
   let browser
   if (os.platform() === 'darwin') {
@@ -56,6 +60,8 @@ const reload = () => {
   return connect.reload()
 }
 
+
+/* ==================== 代码规范校验相关的 gulp 任务 ==================== */
 const lint = () => {
   return gulp
     .src(SOURCE_PATH)
@@ -68,6 +74,8 @@ const check = () => {
   return gulp.src(SOURCE_PATH).pipe(prettier.check({ editorconfig: true }))
 }
 
+
+/* ==================== 编译 JavaScript 代码的 gulp 任务 ==================== */
 const transpile = () => {
   return gulp
     .src('./src/delegate.js')
@@ -101,6 +109,8 @@ const transpile = () => {
     .pipe(gulp.dest('docs/lib'))
 }
 
+
+/* ==================== 检测源代码变更相关的 gulp 任务 ==================== */
 const watchSource = () => {
   return watch(
     'src/**/*.js',
@@ -117,18 +127,13 @@ const watchDocs = () => {
 
 const watchAll = gulp.parallel(watchSource, watchDocs)
 
-const dev = gulp.parallel(lint, transpile, connectDocs, watchAll, openDocs)
+const start = gulp.parallel(lint, transpile, connectDocs, watchAll, openDocs)
 const build = gulp.series(lint, check, cleanAll, transpile)
+const test = gulp.series(lint, check)
 
-module.exports.start = dev
+module.exports.start = start
 module.exports.build = build
-module.exports.cleanDist = cleanDist
-module.exports.cleanDocs = cleanDocs
-module.exports.clean = cleanAll
 module.exports.lint = lint
 module.exports.check = check
-module.exports.reload = reload
-module.exports.transpile = transpile
-module.exports.watchSource = watchSource
-module.exports.watchDocs = watchDocs
+module.exports.test = test
 module.exports.watch = watchAll

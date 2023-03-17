@@ -17,16 +17,10 @@ const purgeElement = function (el, type = '', recurse = false) {
   const $element = isString(el) ? document.querySelector(el) : el
   const $childNodes = $element.childNodes
   const listeners = getListeners($element, type)
-  let i
 
-  /* istanbul ignore else */
-  if (listeners) {
-    for (i = listeners.length - 1; i > -1; i -= 1) {
-      let listener = listeners[i]
-
-      off($element, listener.type, listener.fn)
-    }
-  }
+  listeners.forEach((listener) => {
+    off($element, listener.type, listener.fn)
+  })
 
   if (recurse && $element && $childNodes) {
     $childNodes.forEach(($childNode) => {

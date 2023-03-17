@@ -15,116 +15,112 @@
   <a href="https://github.com/yaohaixiao/delegate.js/archive/refs/heads/main.zip" class="download">Download
     delegate.js</a>
 </header>
-<section class="project">
-  <p>
+<main class="main">
+  <div class="links">
     <a href="https://github.com/yaohaixiao/delegate.js">GitHub</a>
     <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
     <a href="https://github.com/yaohaixiao/delegate.js/issues">Issues</a>
-  </p>
-</section>
-<section class="container">
-  <h2 class="section-title">delegate.js</h2>
-  <section class="usage">delegate.js 是一个轻量级的 JavaScript 事件委托库。delegate.js 中封装了：on()、once()、off()
-    等事件侦听相关的常用方法。delegate.js 的 API 借鉴了 jQuery 的链式调用模式，使得 delegate.js 的 API 使用起来非常灵活和方便。
-  </section>
-  <h2 class="section-title">特点</h2>
-  <section class="usage">
+  </div>
+  <article class="article">
+    <h2>delegate.js 简介</h2>
+    <p>delegate.js 是一个轻量级的 JavaScript 事件委托库。delegate.js 中封装了：on()、once()、off() 等事件侦听相关的常用方法。
+    delegate.js 的 API 借鉴了 jQuery 的链式调用模式，使得 delegate.js 的 API 使用起来非常灵活和方便。</p>
+    <h2>项目初衷</h2>
+    <p>编写 delegate.js 的主要是为初学 JavaScript 的朋友了解事件委托的实现机制而开发。当然，delegate.js 也可以应用到实际的产品开发中。</p>
+    <h2>特点</h2>
     <ul>
       <li>1. 支持 UMD 规范；</li>
       <li>2. 原生 JavaScript 编写，无任何依赖；</li>
       <li>3. 采用 jQuery 链式调用语法，调用语法简洁方便；</li>
       <li>4. 文件体积小，加载速度快；</li>
     </ul>
-  </section>
-  <h2 class="section-title">安装说明</h2>
-  <p>delegate.js 支持 AMD 和 CommonJS 规范的模块调用方式，可以直接使用 npm 安装，也可以使用 script 标签引入到页面。</p>
-  <section class="usage">
-    <h3 class="usage-title">npm 安装</h3>
-    <pre class="code"><code>npm i -S @yaohaixiao/delegate.js</code></pre>
-    <h3 class="usage-title">CDN 调用 JS 文件</h3>
+    <h2 class="section-title">Browsers support</h2>
+    <table class="table">
+      <thead>
+      <tr>
+        <th><a href="https://github.com/yaohaixiao/delegate.js/" rel="nofollow"><img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" style="max-width: 100%;"></a><br>IE / Edge</th>
+        <th><a href="https://github.com/yaohaixiao/delegate.js/" rel="nofollow"><img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" style="max-width: 100%;"></a><br>Firefox</th>
+        <th><a href="https://github.com/yaohaixiao/delegate.js/" rel="nofollow"><img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" style="max-width: 100%;"></a><br>Chrome</th>
+        <th><a href="https://github.com/yaohaixiao/delegate.js/" rel="nofollow"><img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" style="max-width: 100%;"></a><br>Safari</th>
+        <th><a href="https://github.com/yaohaixiao/delegate.js/" rel="nofollow"><img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" style="max-width: 100%;"></a><br>Opera</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>IE11, Edge</td>
+        <td>last 10 versions</td>
+        <td>last 10 versions</td>
+        <td>last 10 versions</td>
+        <td>last 10 versions</td>
+      </tr>
+      </tbody>
+    </table>
+    <h2>安装说明</h2>
+    <p>delegate.js 支持 AMD 和 CommonJS 规范的模块调用方式，可以直接使用 npm 安装，也可以使用 script 标签引入到页面。</p>
+    <h3>npm 安装</h3>
+    <pre class="code"><code># install from npmjs.com
+npm i -S @yaohaixiao/delegate.js
+
+# install from github.com
+npm i -S @yaohaixiao/delegate.js@1.1.0 --registry=https://npm.pkg.github.com</code></pre>
+    <h3>CDN 调用 JS 文件</h3>
     <pre class="code"><code>&lt;script src="https://cdn.jsdelivr.net/gh/yaohaixiao/delegate.js/delegate.min.js"&gt;&lt;/script&gt;</code></pre>
-    <h3 class="usage-title">本地调用 JS 文件</h3>
+    <h3>本地调用 JS 文件</h3>
     <pre class="code"><code>&lt;script src="/path/to/delegate.js"&gt;&lt;/script&gt;</code></pre>
-  </section>
-  <h2 class="section-title">DEMO</h2>
-  <section class="demo">
-    <section class="demo-col">
-      <pre class="code"><code>&lt;ul id="list" class="list"&gt;
+    <h2>Examples</h2>
+    <p>事件代理最适用的场景就是下面示例中，需要动态创建 DOM 元素，并且还会频繁移除动态创建的 DOM 元素的应用场景。在该场景下，通常不方便，也不会为动态创建的 DOM 节点一一绑定事件处理器。因为在移除 DOM 节点时，如果没有（及时）销毁 DOM 节点绑定的事件处理函数，就是导致事件处理器一直占用内存资源无法释放，从而导致浏览器的内存溢出。通过事件代理就可以很好的解决前面提到的问题，因为只需要在一个 DOM 节点上绑定事件代理，所有动态创建的 DOM 节点就都可以通过事件冒泡机制触发父节点上绑定的事件。</p>
+    <h3>绑定和解除事件绑定</h3>
+    <div class="case">
+      <div class="preview">
+        <div class="toolbar">
+          <span id="action-item" class="action">解除 .item 绑定</span>
+          <span id="action-remove" class="action">解除 .remove 绑定</span>
+        </div>
+        <ul id="basic-list" class="list"></ul>
+        <div class="toolbar">
+          <span id="basic-append" class="action">添加行</span>
+        </div>
+        <div class="log">
+          <textarea id="basic-log" class="textarea"></textarea>
+        </div>
+      </div>
+      <div class="usage">
+        <pre class="code"><code>&lt;ul id="basic-list" class="list"&gt;
 &lt;/ul&gt;
+
 &lt;script src="lib/delegate.min.js"&gt;&lt;/script&gt;
+
 &lt;script&gt;
-// ...省略获取操作按钮的逻辑
-const $list = document.querySelector('#list')
+const $list = document.querySelector('#basic-list')
 const $emitter = delegate($list)
-const removeItem = function (evt) {
-  const $removeButton = evt.delegateTarget
-  const id = parseInt($removeButton.getAttribute('data-id'), 10)
-  const $textarea = document.querySelector('#log-textarea')
-  // 阻止事件冒泡，不触发执行 showLog() 回调函数
-  // 同时阻止删除链接的默认行为，页面不会跳转
-  $emitter.stopEvent(evt)
-  // 省略删除的逻辑
-  $textarea.value += `你删除的 li 节点的 id 为 item-${id}\r`
-}
-const showLog = function (evt) {
-  const $li = evt.delegateTarget
-  const $textarea = document.querySelector('#log-textarea')
-  $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
-}
-const onRemove = () => {
-  $emitter.on('.remove', 'click', removeItem)
-}
-const offRemove = () => {
-  $emitter.off('click', removeItem)
-}
-const onItem = () => {
-  $emitter.on('.item', 'click', showLog)
-}
-const offItem = () => {
-  $emitter.off('click', showLog)
-}
-const onAll = () => {
-  onRemove()
-  onItem()
-}
-const offAll = () => {
-  $emitter.destroy()
-}
-// 动态绘制 #list 的内容（实现代码省略）
-draw()
-onAll()
-// ...省略操作按钮的事件绑定逻辑
+
+// 通过 on() 方法绑定代理事件
+$emitter.on('.item', 'click', log)
+$emitter.on('.remove', 'click', remove)
+
+// 通过 off() 方法解除已绑定的代理事件
+$emitter.off('click', log)
+$emitter.off('click', remove)
+
+// 也可以通过 purge() 方法，解除事件绑定
+// 解除所有 click 类型事件绑定
+$emitter.purge('click')
+// 解除所有事件绑定
+$emitter.purge()
 &lt;/script&gt;</code></pre>
+      </div>
+    </div>
+    <h2 class="section-title">License</h2>
+    <section class="usage">
+      <p>Licensed under MIT License.</p>
     </section>
-    <section class="demo-col">
-      <div class="demo-actions">
-        <span class="demo-action" id="off-item">解除 .item 绑定</span>
-        <span class="demo-action" id="on-item">恢复 .item 绑定</span>
-        <span class="demo-action" id="off-remove">解除 .remove 绑定</span>
-        <span class="demo-action" id="on-remove">恢复 .remove 绑定</span>
-        <span class="demo-action" id="off-all">解除所有绑定</span>
-        <span class="demo-action" id="on-all">恢复所有绑定</span>
-      </div>
-      <ul id="list" class="list">
-      </ul>
-      <div class="demo-actions">
-        <span class="demo-action" id="add">添加行</span>
-      </div>
-      <div class="demo-log">
-        <textarea id="log-textarea" class="log-textarea"></textarea>
-      </div>
-    </section>
-  </section>
-  <h2 class="section-title">License</h2>
-  <section class="usage">
-    <p>Licensed under MIT License.</p>
-  </section>
-</section>
+  </article>
+</main>
 <footer class="footer">
   <p>Copyright &copy; 2008-2023 <a href="http://www.yaohaixiao.com/">Yaohaixiao</a>, all right reserved.
   </p>
 </footer>
 <script src="lib/delegate.min.js"></script>
-<script src="js/docs.js"></script>
+<script src="js/basic.js"></script>
 </body>
 </html>

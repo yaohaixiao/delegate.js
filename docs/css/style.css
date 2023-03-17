@@ -1,10 +1,7 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
 html,
 body {
+  margin: 0;
+  padding: 0;
   font-family: Georgia, Arial, sans-serif;
   font-size: 13px;
   color: #333;
@@ -20,7 +17,7 @@ a:hover {
 .header {
   margin: 0 auto;
   text-align: center;
-  padding: 2.5em 2em;
+  padding: 3em 2em;
   background: linear-gradient(45deg, rgba(1, 142, 170, 1) 0%, #43aa95 100%);
   box-shadow: 0 0 6px #ddd;
   color: #fff;
@@ -29,8 +26,8 @@ a:hover {
 
 .title {
   margin: 0 auto 1em;
-  line-height: 40px;
-  font-size: 2.6em;
+  line-height: 50px;
+  font-size: 3.6em;
   overflow: hidden;
 }
 
@@ -47,64 +44,107 @@ a:hover {
   padding: 5px 15px;
 }
 
-
 .download:hover {
   border-color: #43aa95;
   background-color: #f7f8f9;
   color: #01aa95;
 }
 
-.project {
-  margin: 0 2em;
-  text-align: right;
-  padding-top: 1em;
+.main{
+  margin:0 auto;
+  min-width: 960px;
+  overflow:hidden;
+}
+
+.links,
+.article{
+  margin: 2em 4em;
   overflow: hidden;
 }
 
-.container {
-  margin: 1em 2em 0;
-  padding: 2em;
-  box-sizing: border-box;
+.links {
+  text-align: right;
+}
+
+.article {
+  padding: 2em 4em;
   background-color: #fff;
+  font-size: 16px;
+  line-height: 1.6em;
   box-shadow: 0 0 10px #eee;
   overflow: hidden;
 }
 
-.section-title {
-  margin: 0 auto;
+.article h2,
+.article h3 {
+  margin: 1.3em auto;
+}
+
+.article h2 {
   height: 40px;
   line-height: 40px;
-  font-size: 18px;
+  font-size: 26px;
   overflow: hidden;
 }
 
-.usage,
-.demo {
-  padding: 10px 0;
-  overflow: hidden;
-}
-
-.usage-title {
-  margin: 10px auto;
+.article h3{
   height: 30px;
   line-height: 30px;
-  font-size: 14px;
+  font-size: 20px;
   overflow: hidden;
 }
 
-.demo {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
-.demo-col {
+.table {
   margin: 0 auto;
   width: 100%;
+  border: 1px solid #ddd;
   overflow: hidden;
 }
 
-.demo-actions {
+.table th{
+  padding: 2em 0;
+}
+
+.table th,
+.table td{
+  text-align:center;
+  border-left: 1px solid #ddd;
+}
+
+.table th:first-child,
+.table td:first-child {
+  border-left: none;
+}
+
+.table td {
+  border-top: 1px solid #ddd;
+  padding: 1em 0;
+}
+
+.code,
+.textarea{
+  font-family: "Courier New", Consolas, Georgia, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 150%;
+}
+
+.code {
+  margin: 0;
+  padding: 2em;
+  background-color: #f7f8f9;
+  height: 100%;
+  border-radius: 4px;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.case {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.toolbar {
   margin: 0 auto;
   height: 36px;
   line-height: 36px;
@@ -114,14 +154,14 @@ a:hover {
   overflow: hidden;
 }
 
-.demo-action,
+.action,
 .remove {
   cursor: pointer;
   color: #01aa95;
   user-select: none;
 }
 
-.demo-action {
+.action {
   padding-left: 10px;
 }
 
@@ -133,22 +173,20 @@ a:hover {
   float: right;
 }
 
-.demo-log {
-  margin: 10px auto;
+.log {
+  margin: 0 auto;
   height: 180px;
   border: 1px solid #e7e8e9;
   overflow: hidden;
 }
 
-.log-textarea {
+.textarea {
   margin: 0 auto;
   width: 100%;
   height: 100%;
   border: none;
   outline: none;
-  padding: 10px;
-  font-size: 13px;
-  line-height: 150%;
+  padding: 20px;
   box-sizing: border-box;
   overflow: auto;
 }
@@ -162,7 +200,7 @@ a:hover {
 }
 
 .list {
-  max-height: 684px;
+  height: 288px;
   border-top: 1px solid #e7e8e9;
   border-bottom: 1px solid #e7e8e9;
   overflow: auto;
@@ -177,17 +215,6 @@ a:hover {
 
 .item:hover {
   background-color: #f7f8f9;
-}
-
-.code {
-  margin: 0;
-  padding: 16px;
-  background-color: #f7f8f9;
-  font-family: "Courier New", Consolas, Georgia, Arial, sans-serif;
-  font-size: 13px;
-  line-height: 150%;
-  height: 100%;
-  overflow: auto;
 }
 
 .footer {

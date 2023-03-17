@@ -1,4 +1,13 @@
-# [1.3.0](https://github.com/yaohaixiao/delegate.js/compare/1.1.0...1.2.0) (2023-03-16)
+# [1.4.0](https://github.com/yaohaixiao/delegate.js/compare/1.3.0...1.4.0) (2023-03-17)
+
+
+### Features
+
+* 添加 hasEvent(), click(), mouseenter() 和 mouseleave() 方法 ([7cc06f0](https://github.com/yaohaixiao/delegate.js/commit/7cc06f0044199b7ff4647dda52cfecf9c6d78846))
+
+
+
+# [1.3.0](https://github.com/yaohaixiao/delegate.js/compare/1.2.0...1.3.0) (2023-03-16)
 
 
 ### Bug Fixes

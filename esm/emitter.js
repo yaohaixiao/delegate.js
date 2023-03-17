@@ -56,6 +56,19 @@ class Emitter {
   }
 
   /**
+   * 判断是否已经（指定类型的）绑定事件
+   * ========================================================================
+   * @method hasEvent
+   * @param {String} [type] - （可选）事件名称：
+   *                           指定 type，则判断是否绑定 type 类型事件；
+   *                           未指定 type，则判断是否绑定任意类型的事件；
+   * @returns {Boolean}
+   */
+  hasEvent(type) {
+    return this.getListeners(type).length > 0
+  }
+
+  /**
    * 获取事件触发时的 pageX 值
    * ========================================================================
    * @method getPageX
@@ -194,13 +207,14 @@ class Emitter {
    * @param {String} type - （必须）事件类型
    * @param {Function} handler - （必须） 事件处理器回调函数
    * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
-   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
-   * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向：
+   * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；
+   * 如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；
    * @param {Boolean} [once] - （可选）是否仅触发一次
    * @returns {Emitter} - Emitter 对象
    */
   on(selector, type, handler, data, context, once = false) {
-    on(this.$el, selector, type, handler, data, this, once)
+    on(this.$el, selector, type, handler, data, context || this, once)
 
     return this
   }
@@ -213,12 +227,62 @@ class Emitter {
    * @param {String} type - （必须）事件类型
    * @param {Function} handler - （必须） 事件处理器回调函数
    * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
-   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
-   * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
    * @returns {Emitter} - Emitter 对象
    */
   once(selector, type, handler, data, context) {
     once(this.$el, selector, type, handler, data, context)
+
+    return this
+  }
+
+  /**
+   * 绑定 click 代理事件
+   * ========================================================================
+   * @method click
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  click(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'click', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 mouseenter 代理事件
+   * ========================================================================
+   * @method mouseenter
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  mouseenter(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'mouseenter', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 mouseenter 代理事件
+   * ========================================================================
+   * @method mouseenter
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  mouseleave(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'mouseleave', handler, data, context, once)
 
     return this
   }
@@ -230,9 +294,9 @@ class Emitter {
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
    * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
-   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
-   * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
    * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
    */
   focusin(selector, handler, data, context, once = false) {
     focusin(this.$el, selector, handler, data, context, once)
@@ -247,9 +311,9 @@ class Emitter {
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
    * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
-   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
-   * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
    * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
    */
   focusout(selector, handler, data, context, once = false) {
     focusout(this.$el, selector, handler, data, context, once)
@@ -261,9 +325,9 @@ class Emitter {
    * 阻止事件的默认行为
    * ========================================================================
    * @method preventDefault
+   * @see preventDefault
    * @param {Event} evt - （必须）Event 对象
    * @returns {Emitter}  - Emitter 对象
-   * @see preventDefault
    */
   preventDefault(evt) {
     preventDefault(evt)
@@ -275,9 +339,9 @@ class Emitter {
    * 终止事件在传播过程的捕获或冒泡的事件流
    * ========================================================================
    * @method stopPropagation
+   * @see stopPropagation
    * @param {Event} evt - （必须）Event 对象
    * @returns {Emitter}  - Emitter 对象
-   * @see stopPropagation
    */
   stopPropagation(evt) {
     stopPropagation(evt)
@@ -289,9 +353,9 @@ class Emitter {
    * 停止事件（阻止默认行为和阻止事件的捕获或冒泡）
    * ========================================================================
    * @method stopEvent
+   * @see stopEvent
    * @param {Event} evt - （必须）Event 对象
    * @returns {Emitter}  - Emitter 对象
-   * @see stopEvent
    */
   stopEvent(evt) {
     stopEvent(evt)

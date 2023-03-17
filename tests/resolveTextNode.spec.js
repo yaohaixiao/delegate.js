@@ -33,7 +33,7 @@ describe('resolveTextNode() 方法', () => {
   const $list = document.querySelector('#list')
   const $home = document.querySelector('a[data-id="home"]')
 
-  it('el 参数为 HTMLElement 类型 DOM 元素，resolveTextNode() 方法返回：el',() => {
+  it('el 参数为 HTMLElement 类型 DOM 元素，resolveTextNode() 方法返回：el', () => {
     expect(isElement($list)).toBe(true)
     expect(resolveTextNode($list)).toEqual($list)
 

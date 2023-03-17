@@ -727,6 +727,21 @@ var Emitter = /*#__PURE__*/function () {
     }
 
     /**
+     * 判断是否已经（指定类型的）绑定事件
+     * ========================================================================
+     * @method hasEvent
+     * @param {String} [type] - （可选）事件名称：
+     *                           指定 type，则判断是否绑定 type 类型事件；
+     *                           未指定 type，则判断是否绑定任意类型的事件；
+     * @returns {Boolean}
+     */
+  }, {
+    key: "hasEvent",
+    value: function hasEvent(type) {
+      return this.getListeners(type).length > 0;
+    }
+
+    /**
      * 获取事件触发时的 pageX 值
      * ========================================================================
      * @method getPageX
@@ -870,8 +885,9 @@ var Emitter = /*#__PURE__*/function () {
      * @param {String} type - （必须）事件类型
      * @param {Function} handler - （必须） 事件处理器回调函数
      * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
-     * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
-     * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
+     * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向：
+     * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；
+     * 如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；
      * @param {Boolean} [once] - （可选）是否仅触发一次
      * @returns {Emitter} - Emitter 对象
      */
@@ -879,7 +895,7 @@ var Emitter = /*#__PURE__*/function () {
     key: "on",
     value: function on(selector, type, handler, data, context) {
       var once = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
-      _on(this.$el, selector, type, handler, data, this, once);
+      _on(this.$el, selector, type, handler, data, context || this, once);
       return this;
     }
 
@@ -891,14 +907,70 @@ var Emitter = /*#__PURE__*/function () {
      * @param {String} type - （必须）事件类型
      * @param {Function} handler - （必须） 事件处理器回调函数
      * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
-     * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
-     * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
-     *
+     * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+     * @returns {Emitter} - Emitter 对象
      */
   }, {
     key: "once",
     value: function once(selector, type, handler, data, context) {
       _once(this.$el, selector, type, handler, data, context);
+      return this;
+    }
+
+    /**
+     * 绑定 click 代理事件
+     * ========================================================================
+     * @method click
+     * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+     * @param {Function} handler - （必须） 事件处理器回调函数
+     * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+     * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+     * @param {Boolean} [once] - （可选）是否仅触发一次
+     * @returns {Emitter} - Emitter 对象
+     */
+  }, {
+    key: "click",
+    value: function click(selector, handler, data, context) {
+      var once = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
+      _on(this.$el, selector, 'click', handler, data, context, once);
+      return this;
+    }
+
+    /**
+     * 绑定 mouseenter 代理事件
+     * ========================================================================
+     * @method mouseenter
+     * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+     * @param {Function} handler - （必须） 事件处理器回调函数
+     * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+     * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+     * @param {Boolean} [once] - （可选）是否仅触发一次
+     * @returns {Emitter} - Emitter 对象
+     */
+  }, {
+    key: "mouseenter",
+    value: function mouseenter(selector, handler, data, context) {
+      var once = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
+      _on(this.$el, selector, 'mouseenter', handler, data, context, once);
+      return this;
+    }
+
+    /**
+     * 绑定 mouseenter 代理事件
+     * ========================================================================
+     * @method mouseenter
+     * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+     * @param {Function} handler - （必须） 事件处理器回调函数
+     * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+     * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+     * @param {Boolean} [once] - （可选）是否仅触发一次
+     * @returns {Emitter} - Emitter 对象
+     */
+  }, {
+    key: "mouseleave",
+    value: function mouseleave(selector, handler, data, context) {
+      var once = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
+      _on(this.$el, selector, 'mouseleave', handler, data, context, once);
       return this;
     }
 
@@ -909,9 +981,9 @@ var Emitter = /*#__PURE__*/function () {
      * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
      * @param {Function} handler - （必须） 事件处理器回调函数
      * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
-     * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
-     * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
+     * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
      * @param {Boolean} [once] - （可选）是否仅触发一次
+     * @returns {Emitter}  - Emitter 对象
      */
   }, {
     key: "focusin",
@@ -928,9 +1000,9 @@ var Emitter = /*#__PURE__*/function () {
      * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
      * @param {Function} handler - （必须） 事件处理器回调函数
      * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
-     * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，
-     * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
+     * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
      * @param {Boolean} [once] - （可选）是否仅触发一次
+     * @returns {Emitter}  - Emitter 对象
      */
   }, {
     key: "focusout",
@@ -944,9 +1016,9 @@ var Emitter = /*#__PURE__*/function () {
      * 阻止事件的默认行为
      * ========================================================================
      * @method preventDefault
+     * @see preventDefault
      * @param {Event} evt - （必须）Event 对象
      * @returns {Emitter}  - Emitter 对象
-     * @see preventDefault
      */
   }, {
     key: "preventDefault",
@@ -959,9 +1031,9 @@ var Emitter = /*#__PURE__*/function () {
      * 终止事件在传播过程的捕获或冒泡的事件流
      * ========================================================================
      * @method stopPropagation
+     * @see stopPropagation
      * @param {Event} evt - （必须）Event 对象
      * @returns {Emitter}  - Emitter 对象
-     * @see stopPropagation
      */
   }, {
     key: "stopPropagation",
@@ -974,9 +1046,9 @@ var Emitter = /*#__PURE__*/function () {
      * 停止事件（阻止默认行为和阻止事件的捕获或冒泡）
      * ========================================================================
      * @method stopEvent
+     * @see stopEvent
      * @param {Event} evt - （必须）Event 对象
      * @returns {Emitter}  - Emitter 对象
-     * @see stopEvent
      */
   }, {
     key: "stopEvent",

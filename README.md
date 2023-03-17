@@ -196,7 +196,10 @@ Type: `Object|Boolean`
 
 Default: ``
 
-（可选）context 指定事件处理器回调函数的 this 的指定上下文，默认指向 $el。可以指向其他 this 上下文，也可以设置为 true，此时为事件处理器的 this 上下文指向 data 对象。
+（可选）事件处理器回调函数的 this 上下文指向：
+
+- 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；
+- 如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；
 
 ##### once
 
@@ -303,7 +306,7 @@ Type: `Object|Boolean`
 
 Default: ``
 
-（可选）context 指定事件处理器回调函数的 this 的指定上下文，默认指向 $el。可以指向其他 this 上下文，也可以设置为 true，此时为事件处理器的 this 上下文指向 data 对象。
+（可选）事件处理器回调函数的 this 上下文指向，具体介绍请参考 on() 方法的 context 参数说明；
 
 
 #### Returns
@@ -311,6 +314,204 @@ Default: ``
 Type: `Emitter`
 
 返回 Emitter 对象（实例）。
+
+### click(selector, fn, data, context, once = false)
+
+#### Description
+
+绑定 click 代理事件，调用方法和 on() 一致。
+
+#### Parameters
+
+##### selector
+
+Type: `String`
+
+Default: ``
+
+（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。
+
+##### fn
+
+Type: `Function`
+
+Default: ``
+
+（必须）fn 为事件处理器回调函数。
+
+##### data
+
+Type: `Object`
+
+Default: ``
+
+（可选）给事件处理器回调函数传递的数据。
+
+##### context
+
+Type: `Object|Boolean`
+
+Default: ``
+
+（可选）事件处理器回调函数的 this 上下文指向，具体介绍请参考 on() 方法的 context 参数说明；
+
+##### once
+
+Type: `Boolean`
+
+Default: `false`
+
+（可选）once 指定事件处理器回调函数是否仅执行一次。
+
+#### Returns
+
+Type: `Emitter`
+
+返回 Emitter 对象（实例）。
+
+```js
+const handler = function(evt) {
+  const $target = evt.delegateTarget
+  console.log(`你点击的选项是：${$target.id}`)
+}
+
+const $emitter = delegate('#list')
+
+// 类选择器
+$emitter.click('.item', handler)
+```
+
+### mouseenter(selector, fn, data, context, once = false)
+
+#### Description
+
+绑定 mouseenter 代理事件，调用方法和 on() 一致。
+
+#### Parameters
+
+##### selector
+
+Type: `String`
+
+Default: ``
+
+（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。
+
+##### fn
+
+Type: `Function`
+
+Default: ``
+
+（必须）fn 为事件处理器回调函数。
+
+##### data
+
+Type: `Object`
+
+Default: ``
+
+（可选）给事件处理器回调函数传递的数据。
+
+##### context
+
+Type: `Object|Boolean`
+
+Default: ``
+
+（可选）事件处理器回调函数的 this 上下文指向，具体介绍请参考 on() 方法的 context 参数说明；
+
+##### once
+
+Type: `Boolean`
+
+Default: `false`
+
+（可选）once 指定事件处理器回调函数是否仅执行一次。
+
+#### Returns
+
+Type: `Emitter`
+
+返回 Emitter 对象（实例）。
+
+```js
+const handler = function(evt) {
+  const $target = evt.relatedTarget
+  console.log(`当前事件的 relatedTarget 是：${$target}`)
+}
+
+const $emitter = delegate('#list')
+
+// 类选择器
+$emitter.mouseenter('.item', handler)
+```
+
+### mouseleave(selector, fn, data, context, once = false)
+
+#### Description
+
+绑定 mouseleave 代理事件，调用方法和 on() 一致。
+
+#### Parameters
+
+##### selector
+
+Type: `String`
+
+Default: ``
+
+（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。
+
+##### fn
+
+Type: `Function`
+
+Default: ``
+
+（必须）fn 为事件处理器回调函数。
+
+##### data
+
+Type: `Object`
+
+Default: ``
+
+（可选）给事件处理器回调函数传递的数据。
+
+##### context
+
+Type: `Object|Boolean`
+
+Default: ``
+
+（可选）事件处理器回调函数的 this 上下文指向，具体介绍请参考 on() 方法的 context 参数说明；
+
+##### once
+
+Type: `Boolean`
+
+Default: `false`
+
+（可选）once 指定事件处理器回调函数是否仅执行一次。
+
+#### Returns
+
+Type: `Emitter`
+
+返回 Emitter 对象（实例）。
+
+```js
+const handler = function(evt) {
+  const $target = evt.relatedTarget
+  console.log(`当前事件的 relatedTarget 是：${$target}`)
+}
+
+const $emitter = delegate('#list')
+
+// 类选择器
+$emitter.mouseleave('.item', handler)
+```
 
 ### focusin(selector, fn, data, context, once = false)
 
@@ -350,7 +551,7 @@ Type: `Object|Boolean`
 
 Default: ``
 
-（可选）context 指定事件处理器回调函数的 this 的指定上下文，默认指向 $el。可以指向其他 this 上下文，也可以设置为 true，此时为事件处理器的 this 上下文指向 data 对象。
+（可选）事件处理器回调函数的 this 上下文指向，具体介绍请参考 on() 方法的 context 参数说明；
 
 ##### once
 
@@ -416,7 +617,7 @@ Type: `Object|Boolean`
 
 Default: ``
 
-（可选）context 指定事件处理器回调函数的 this 的指定上下文，默认指向 $el。可以指向其他 this 上下文，也可以设置为 true，此时为事件处理器的 this 上下文指向 data 对象。
+（可选）事件处理器回调函数的 this 上下文指向，具体介绍请参考 on() 方法的 context 参数说明；
 
 ##### once
 
@@ -580,6 +781,53 @@ $emitter.getListeners('click')
 //  context,
 //  capture
 // }]
+```
+
+### hasEvent(type)
+
+#### Description
+
+判断是否已经（指定类型的）绑定事件。
+
+#### Parameters
+
+##### type
+
+Type: `String`
+
+Default: ``
+
+（可选）事件名称:
+
+- 指定 type，则判断是否绑定 type 类型事件；
+- 未指定 type，则判断是否绑定任意类型的事件；
+
+#### Returns
+
+Type: `Boolean`
+
+Default: ``
+
+返回是否绑定（type类型的）事件处理器。
+
+```js
+const handler = function(evt) {
+  const $li = evt.delegateTarget
+  const $textarea = document.querySelector('#log-textarea')
+
+  $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
+}
+
+const $emitter = delegate('#list')
+
+// 绑定事件
+$emitter.on('li', 'click', handler)
+
+$emitter.hasEvent()
+// -> true
+
+$emitter.hasEvent('focus')
+// => false
 ```
 
 ### purge(type, recurse)

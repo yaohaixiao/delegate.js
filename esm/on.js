@@ -36,12 +36,15 @@ const on = (el, selector, type, fn, data, context, once = false) => {
 
     evt.delegateTarget = delegateTarget
 
+    // 当设置为 true 时，则事件处理器回调函数的
+    // this 上下文指向为 data 对象
     if (context === true) {
       overrideContext = data
     }
 
     /* istanbul ignore else */
     if (delegateTarget) {
+      // 仅触发一次
       /* istanbul ignore else */
       if (once === true) {
         off(el, type, listener)
@@ -55,6 +58,7 @@ const on = (el, selector, type, fn, data, context, once = false) => {
     }
   }
 
+  // CAPTURE_EVENTS 中的特殊事件，采用事件捕获模型
   if (CAPTURE_EVENTS.includes(type)) {
     capture = true
   }
@@ -74,6 +78,7 @@ const on = (el, selector, type, fn, data, context, once = false) => {
     capture
   })
 
+  // 缓存包装后的事件处理器
   fn._delegateListener = listener
 
   /* istanbul ignore else */

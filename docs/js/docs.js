@@ -111,7 +111,7 @@
   }
   const onItem = () => {
     $emitter.on('.item', 'click', showLog)
-    $emitter.on('.item', 'mouseenter', showMouseEventLog)
+    $emitter.mouseenter('.item', showMouseEventLog)
     isItemOn = true
     updateButtons()
   }
@@ -130,10 +130,17 @@
 
   }
   const offAll = () => {
+    const $textarea = document.querySelector('#log-textarea')
+
     $emitter.destroy()
     isRemoveOn = false
     isItemOn = false
+
     updateButtons()
+
+    if(!$emitter.hasEvent()){
+      $textarea.value += `已清除所有事件绑定\r`
+    }
   }
   const updateButtons = () => {
     if (isRemoveOn) {

@@ -10,6 +10,12 @@
 "use strict";
 
 function _typeof2(obj) { "@babel/helpers - typeof"; return _typeof2 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof2(obj); }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -494,6 +500,8 @@ var _on = function on(el, selector, type, fn, data, context) {
       if (once === true) {
         _off(el, type, listener);
       }
+      console.log('delegateTarget', delegateTarget);
+      console.log('target', target);
 
       // 直接过滤了点击对象，会阻止事件冒泡或者捕获
       /* istanbul ignore else */
@@ -721,6 +729,23 @@ var Emitter = /*#__PURE__*/function () {
     }
 
     /**
+     * 返回已绑定的事件类型的数组（去除名称重复的事件）
+     * ========================================================================
+     * @method getTypes
+     * @returns {Array}
+     */
+  }, {
+    key: "getTypes",
+    value: function getTypes() {
+      var listeners = this.getListeners();
+      var types = [];
+      listeners.forEach(function (listener) {
+        types.push(listener.type);
+      });
+      return _toConsumableArray(new Set(types));
+    }
+
+    /**
      * 判断是否已经（指定类型的）绑定事件
      * ========================================================================
      * @method hasEvent
@@ -732,7 +757,7 @@ var Emitter = /*#__PURE__*/function () {
   }, {
     key: "hasEvent",
     value: function hasEvent(type) {
-      return this.getListeners(type).length > 0;
+      return this.getTypes().indexOf(type) > -1;
     }
 
     /**

@@ -77,6 +77,8 @@
     draw()
 
     $log.value += `新添加的 li 节点的 id 为：'item-${id}'\r`
+
+    scroll()
   }
 
   const remove = function (evt) {
@@ -87,15 +89,20 @@
 
     draw()
 
-    $log.value += `删除的 li 节点的 id 为：'item-${id}'\r`
+    $log.value += `click 事件触发，事件的 delegateTarget 为：'${$target}'\r`
+    $log.value += `删除的 li 节点 id 为：'item-${id}'\r`
 
     $emitter.stopEvent(evt)
+
+    scroll()
   }
 
   const logMouseEnter = function(evt) {
     const $target = $emitter.getRelatedTarget(evt)
 
-    $log.value += `mouseenter 事件的 relatedTarget 为：'${$target}'\r`
+    $log.value += `mouseenter 事件触发，事件的 relatedTarget 为：'${$target}'\r`
+
+    scroll()
   }
 
   const logClick = function (evt) {
@@ -103,38 +110,54 @@
     const pageY = $emitter.getPageY(evt)
     const $target = evt.delegateTarget
 
-    $log.value += `当前点击的 li 节点的 id 为：'${$target.id}'\r`
-    $log.value += `点击处的 pageX 为：'${pageX}'\r`
-    $log.value += `点击处的 pageY 为：'${pageY}'\r`
+    $log.value += `click 事件触发，当前点击的 li 节点的 id 为：'${$target.id}'\r`
+    $log.value += `getPageX() 获取点击处的 pageX 为：'${pageX}'\r`
+    $log.value += `getPageY() 获取点点击处的 pageY 为：'${pageY}'\r`
+
+    scroll()
   }
 
   const toggleRemove = () => {
     isRemoveOn = !isRemoveOn
 
     if (isRemoveOn) {
-      $remove.innerHTML = '解除 .remove 绑定'
+      $log.value += `已恢复 .remove 事件代理绑定\r`
+      $remove.innerHTML = '解除 .remove 事件代理绑定'
       $emitter.click('.remove', remove)
     } else {
-      $remove.innerHTML = '恢复 .remove 绑定'
+      $log.value += `已解除 .remove 事件代理绑定\r`
+      $remove.innerHTML = '恢复 .remove 事件代理绑定'
       $emitter.off('click', remove)
     }
+
+    scroll()
   }
 
   const toggleLog = () => {
     isItemOn = !isItemOn
 
     if (isItemOn) {
-      $item.innerHTML = '解除 .remove 绑定'
+      $log.value += `已恢复 .item 事件代理绑定\r`
+      $item.innerHTML = '解除 .item 事件代理绑定'
       $emitter.mouseenter('.item', logMouseEnter)
       $emitter.on('.item', 'click', logClick)
     } else {
-      $item.innerHTML = '恢复 .remove 绑定'
+      $log.value += `已解除 .item 事件代理绑定\r`
+      $item.innerHTML = '恢复 .item 事件代理绑定'
       $emitter.purge('mouseenter')
       $emitter.off('click', logClick)
     }
+
+    scroll()
+  }
+
+  const scroll = () => {
+    $log.scrollTop = $log.scrollHeight
   }
 
   const setup = () => {
+    let types = []
+
     // 动态绘制 ul 中的列表项
     draw()
 
@@ -151,7 +174,9 @@
     // 动态创建列表项
     $append.addEventListener('click', append)
 
-    $emitter.destroy()
+    types = $emitter.getTypes()
+
+    $log.value += `getTypes() 以绑定事件：'${types}'\r`
   }
 
   setup()

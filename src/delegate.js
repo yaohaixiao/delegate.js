@@ -515,6 +515,9 @@ const on = (el, selector, type, fn, data, context, once = false) => {
         off(el, type, listener)
       }
 
+      console.log('delegateTarget', delegateTarget)
+      console.log('target', target)
+
       // 直接过滤了点击对象，会阻止事件冒泡或者捕获
       /* istanbul ignore else */
       if (target === delegateTarget) {
@@ -742,6 +745,23 @@ class Emitter {
   }
 
   /**
+   * 返回已绑定的事件类型的数组（去除名称重复的事件）
+   * ========================================================================
+   * @method getTypes
+   * @returns {Array}
+   */
+  getTypes() {
+    const listeners = this.getListeners()
+    const types = []
+
+    listeners.forEach((listener) => {
+      types.push(listener.type)
+    })
+
+    return [...new Set(types)]
+  }
+
+  /**
    * 判断是否已经（指定类型的）绑定事件
    * ========================================================================
    * @method hasEvent
@@ -751,7 +771,7 @@ class Emitter {
    * @returns {Boolean}
    */
   hasEvent(type) {
-    return this.getListeners(type).length > 0
+    return this.getTypes().indexOf(type) > -1
   }
 
   /**

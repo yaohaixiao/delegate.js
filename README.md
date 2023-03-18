@@ -749,7 +749,58 @@ Type: `Array`
 
 Default: `[]`
 
-返回全部或者指定 type 类型的事件处理器相关的（数组）数据。
+返回已绑定的事件类型的数组（去除名称重复的事件）。
+
+```js
+const handler = function(evt) {
+  const $li = evt.delegateTarget
+  const $textarea = document.querySelector('#log-textarea')
+
+  $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
+}
+
+const $emitter = delegate('#list')
+
+// 绑定事件
+$emitter.click('li', handler)
+$emitter.on('.remove', 'click', handler)
+$emitter.on('li', 'dbclick', handler)
+$emitter.mouseenter('li', handler)
+
+// 获取已绑定的所有类型的事件处理器
+$emitter.getTypes()
+// => [
+// 'click',
+// 'dbclick',
+// 'mouseenter'
+// ]
+```
+### hasTypes(type)
+
+#### Description
+
+反悔已绑定的事件类型的数组（去除名称重复的事件）。
+
+#### Parameters
+
+##### type
+
+Type: `String`
+
+Default: ``
+
+（可选）事件名称:
+
+- 指定 type，则返回以绑定 type 类型事件；
+- 未指定 type，则返回以绑定全部类型事件；
+
+#### Returns
+
+Type: `Boolean`
+
+Default: ``
+
+返回是否绑定（type类型的）事件处理器。
 
 ```js
 const handler = function(evt) {
@@ -764,20 +815,11 @@ const $emitter = delegate('#list')
 // 绑定事件
 $emitter.on('li', 'click', handler)
 
-// 获取已绑定的所有类型的事件处理器
-$emitter.getListeners()
+$emitter.hasEvent()
+// -> true
 
-// 获取所有 click 事件处理器
-$emitter.getListeners('click')
-// => [{
-//  el,
-//  selector,
-//  type,
-//  fn,
-//  data,
-//  context,
-//  capture
-// }]
+$emitter.hasEvent('focus')
+// => false
 ```
 
 ### hasEvent(type)

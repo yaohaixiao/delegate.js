@@ -841,7 +841,7 @@ Type: `String`
 
 Default: ``
 
-（可选）设置 type 时清除特定的事件类型（type）的事件处理器，默认清除所有类型的事件处理器。
+（必须）设置 type 时清除特定的事件类型（type）的事件处理器。
 
 ##### recurse
 
@@ -888,10 +888,8 @@ $emitter.getListeners('click')
 // 清除绑定的所有 click 事件处理器
 $emitter.purge('click')
 
-// 仅清除 $el 元素绑定的所有类型事件处理器
-$emitter.purge('click')
-
-// 清除 $el 元素以及其子节点绑定的所有类型事件处理器
+// 清除 $el 元素所有 click 事件处理器
+// 同时也清除其子节点绑定的所有类型事件处理器
 $emitter.purge('click', true)
 ```
 

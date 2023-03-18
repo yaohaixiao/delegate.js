@@ -154,7 +154,7 @@ class Emitter {
    * 2. recurse 设置为 true，递归销毁子节点全部事件绑定
    * ========================================================================
    * @method purge
-   * @param {String} [type]  - （可选）事件类型
+   * @param {String} type  - （可选）事件类型
    * @param {Boolean} [recurse]  - （可选）是否递归销毁子节点所有事件绑定
    * 元素绑定的全部事件处理器
    * @returns {Emitter} - Emitter 对象
@@ -172,13 +172,7 @@ class Emitter {
    * @returns {Emitter} - Emitter 对象
    */
   destroy() {
-    const $el = this.$el
-
-    this.purge(null, true)
-
-    if ($el && $el._listeners) {
-      $el._listeners = []
-    }
+    purgeElement(this.$el, true)
 
     return this
   }

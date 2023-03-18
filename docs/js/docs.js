@@ -19,19 +19,36 @@
     {
       id: 5,
       text: 'Item 5'
+    },
+    {
+      id: 6,
+      text: 'Item 6'
+    },
+    {
+      id: 7,
+      text: 'Item 7'
+    },
+    {
+      id: 8,
+      text: 'Item 8'
+    },
+    {
+      id: 9,
+      text: 'Item 9'
+    },
+    {
+      id: 10,
+      text: 'Item 10'
     }
   ]
   let isRemoveOn = true
   let isItemOn = true
 
-  const $buttonOnRemove = document.querySelector('#on-remove')
-  const $buttonOffRemove = document.querySelector('#off-remove')
-  const $buttonOnItem = document.querySelector('#on-item')
-  const $buttonOffItem = document.querySelector('#off-item')
-  const $buttonOnAll = document.querySelector('#on-all')
-  const $buttonOffAll = document.querySelector('#off-all')
-  const $buttonAdd = document.querySelector('#add')
+  const $remove = document.querySelector('#action-remove')
+  const $item = document.querySelector('#action-item')
+  const $append = document.querySelector('#append')
   const $list = document.querySelector('#list')
+  const $log = document.querySelector('#log')
   const $emitter = delegate($list)
 
   const draw = () => {
@@ -41,7 +58,7 @@
       const id = option.id
       const item = `<li id="${'item-' + id}" class="item">` +
         `<span class="label">${'Item-' + id}</span>` +
-        `<a href="#list" class="remove" data-id="${id}">删除</a>` +
+        `<a href="#basic" class="remove" data-id="${id}">删除</a>` +
         `</li>`
 
       items.push(item)
@@ -50,132 +67,92 @@
     $list.innerHTML = items.join('')
   }
 
-  const addItem = function (evt) {
+  const append = function () {
     const length = options.length
     const id = length > 0 ? options[length - 1].id + 1 : 1
     const option = { id: id, text: `Item-${id}` }
-    const $textarea = document.querySelector('#log-textarea')
 
     options.push(option)
 
     draw()
 
-    $textarea.value += `你添加的 li 节点的 id 为 item-${id}\r`
+    $log.value += `新添加的 li 节点的 id 为：'item-${id}'\r`
   }
 
-  const removeItem = function (evt) {
-    const $removeButton = evt.delegateTarget
-    const id = parseInt($removeButton.getAttribute('data-id'), 10)
-    const $textarea = document.querySelector('#log-textarea')
-
-    // 阻止删除链接的默认行为
-    $emitter.stopEvent(evt)
+  const remove = function (evt) {
+    const $target = evt.delegateTarget
+    const id = parseInt($target.getAttribute('data-id'), 10)
 
     options = options.filter((option) => id !== option.id)
 
     draw()
 
-    $textarea.value += `你删除的 li 节点的 id 为 item-${id}\r`
+    $log.value += `删除的 li 节点的 id 为：'item-${id}'\r`
+
+    $emitter.stopEvent(evt)
   }
 
-  const showLog = function (evt) {
+  const logMouseEnter = function(evt) {
+    const $target = $emitter.getRelatedTarget(evt)
+
+    $log.value += `mouseenter 事件的 relatedTarget 为：'${$target}'\r`
+  }
+
+  const logClick = function (evt) {
     const pageX = $emitter.getPageX(evt)
     const pageY = $emitter.getPageY(evt)
-    const $li = evt.delegateTarget
-    const $target = $emitter.getTarget(evt)
-    const $textarea = document.querySelector('#log-textarea')
+    const $target = evt.delegateTarget
 
-    $textarea.value += `当前触发事件的 target DOM 元素是 ${$target}\r`
-    $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
-    $textarea.value += `pageX 为：${pageX}\r`
-    $textarea.value += `pageY 为：${pageY}\r`
+    $log.value += `当前点击的 li 节点的 id 为：'${$target.id}'\r`
+    $log.value += `点击处的 pageX 为：'${pageX}'\r`
+    $log.value += `点击处的 pageY 为：'${pageY}'\r`
   }
 
-  const showMouseEventLog = function (evt) {
-    const $relatedTarget = $emitter.getRelatedTarget(evt)
-    const $textarea = document.querySelector('#log-textarea')
+  const toggleRemove = () => {
+    isRemoveOn = !isRemoveOn
 
-    $textarea.value += `当前触发事件的 relatedTarget DOM 元素是 ${$relatedTarget}\r`
-  }
-
-  const onRemove = () => {
-    // 强制使用事件捕获模型
-    $emitter.on('.remove', 'click', removeItem)
-    isRemoveOn = true
-    updateButtons()
-  }
-  const offRemove = () => {
-    $emitter.off('click', removeItem)
-    isRemoveOn = false
-    updateButtons()
-  }
-  const onItem = () => {
-    $emitter.on('.item', 'click', showLog)
-    $emitter.mouseenter('.item', showMouseEventLog)
-    isItemOn = true
-    updateButtons()
-  }
-  const offItem = () => {
-    $emitter.off('click', showLog)
-    $emitter.off('mouseenter', showMouseEventLog)
-    isItemOn = false
-    updateButtons()
-  }
-  const onAll = () => {
-    onRemove()
-    onItem()
-    isRemoveOn = true
-    isItemOn = true
-    updateButtons()
-
-  }
-  const offAll = () => {
-    const $textarea = document.querySelector('#log-textarea')
-
-    $emitter.destroy()
-    isRemoveOn = false
-    isItemOn = false
-
-    updateButtons()
-
-    if(!$emitter.hasEvent()){
-      $textarea.value += `已清除所有事件绑定\r`
-    }
-  }
-  const updateButtons = () => {
     if (isRemoveOn) {
-      $buttonOnRemove.style.display = 'none'
-      $buttonOffRemove.style.display = 'inline-block'
+      $remove.innerHTML = '解除 .remove 绑定'
+      $emitter.click('.remove', remove)
     } else {
-      $buttonOnRemove.style.display = 'inline-block'
-      $buttonOffRemove.style.display = 'none'
+      $remove.innerHTML = '恢复 .remove 绑定'
+      $emitter.off('click', remove)
     }
+  }
+
+  const toggleLog = () => {
+    isItemOn = !isItemOn
 
     if (isItemOn) {
-      $buttonOnItem.style.display = 'none'
-      $buttonOffItem.style.display = 'inline-block'
+      $item.innerHTML = '解除 .remove 绑定'
+      $emitter.mouseenter('.item', logMouseEnter)
+      $emitter.on('.item', 'click', logClick)
     } else {
-      $buttonOnItem.style.display = 'inline-block'
-      $buttonOffItem.style.display = 'none'
-    }
-
-    if (isItemOn || isRemoveOn) {
-      $buttonOnAll.style.display = 'none'
-      $buttonOffAll.style.display = 'inline-block'
-    } else {
-      $buttonOnAll.style.display = 'inline-block'
-      $buttonOffAll.style.display = 'none'
+      $item.innerHTML = '恢复 .remove 绑定'
+      $emitter.purge('mouseenter')
+      $emitter.off('click', logClick)
     }
   }
 
-  draw()
-  onAll()
+  const setup = () => {
+    // 动态绘制 ul 中的列表项
+    draw()
 
-  $buttonOnRemove.addEventListener('click', onRemove)
-  $buttonOffRemove.addEventListener('click', offRemove)
-  $buttonOnItem.addEventListener('click', onItem)
-  $buttonOffItem.addEventListener('click', offItem)
-  $buttonOnAll.addEventListener('click', onAll)
-  $buttonOffAll.addEventListener('click', offAll)
-  $buttonAdd.addEventListener('click', addItem)
+    // 取消或恢复 .item 元素的代理事件
+    $item.addEventListener('click', toggleLog)
+    // 取消或恢复 .remove 元素的代理事件
+    $remove.addEventListener('click', toggleRemove)
+
+    // 绑定不同元素的代理事件
+    $emitter.mouseenter('.item', logMouseEnter)
+    $emitter.on('.item', 'click', logClick)
+    $emitter.on('.remove', 'click', remove)
+
+    // 动态创建列表项
+    $append.addEventListener('click', append)
+
+    $emitter.destroy()
+  }
+
+  setup()
 })()

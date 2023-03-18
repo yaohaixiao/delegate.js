@@ -1,3 +1,5 @@
+import isString from './isString'
+
 /**
  * 获取 DOM 元素（type 事件类型）事件绑定信息
  * ========================================================================
@@ -11,7 +13,7 @@
 const getListeners = (el, type) => {
   let listeners = el._listeners || []
 
-  if (type) {
+  if (isString(type) && type) {
     listeners = listeners.filter((listener) => {
       return listener.type === type
     })

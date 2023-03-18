@@ -10,7 +10,7 @@ import off from './off'
  * ========================================================================
  * @method purgeElement
  * @param {HTMLElement|String} el - （必须）DOM 元素或者其选择器
- * @param {String} [type] - （可选）事件类型
+ * @param {String|Boolean} [type] - （可选）事件类型
  * @param {Boolean} [recurse] - （可选）是否递归销毁子节点所有事件绑定
  */
 const purgeElement = function (el, type = '', recurse = false) {
@@ -22,7 +22,11 @@ const purgeElement = function (el, type = '', recurse = false) {
     off($element, listener.type, listener.fn)
   })
 
-  if (recurse && $element && $childNodes) {
+  if (
+    (recurse || type === true || arguments.length === 1) &&
+    $element &&
+    $childNodes
+  ) {
     $childNodes.forEach(($childNode) => {
       purgeElement($childNode, type, recurse)
     })

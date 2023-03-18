@@ -256,7 +256,7 @@ const getTarget = function (evt) {
 const getListeners = (el, type) => {
   let listeners = el._listeners || []
 
-  if (type) {
+  if (isString(type) && type) {
     listeners = listeners.filter((listener) => {
       return listener.type === type
     })
@@ -376,7 +376,7 @@ const getCharCode = function (evt) {
     63235: 39, // right
     63276: 33, // page up
     63277: 34, // page down
-    25: 9 // SHIFT-TAB (Safari provides a different key code in
+    25: 9 // The SHIFT-TAB (Safari provides a different key code in
     // this case, even though the shiftKey modifier is set)
   }
 
@@ -396,7 +396,7 @@ const getCharCode = function (evt) {
  * ========================================================================
  * @method purgeElement
  * @param {HTMLElement|String} el - （必须）需要销毁绑定事件处理器的 DOM 元素或者其选择器
- * @param {String} [type] - （可选）事件类型
+ * @param {String|Boolean} [type] - （可选）事件类型
  * @param {Boolean} [recurse] - （可选）是否递归销毁 DOM 元素子节点所绑定的所有事件处理器
  */
 const purgeElement = function (el, type = '', recurse = false) {
@@ -408,7 +408,11 @@ const purgeElement = function (el, type = '', recurse = false) {
     off($element, listener.type, listener.fn)
   })
 
-  if (recurse && $element && $childNodes) {
+  if (
+    (recurse || type === true || arguments.length === 1) &&
+    $element &&
+    $childNodes
+  ) {
     $childNodes.forEach(($childNode) => {
       purgeElement($childNode, type, recurse)
     })
@@ -827,7 +831,7 @@ class Emitter {
    * 2. recurse 设置为 true，递归销毁子节点全部事件绑定
    * ========================================================================
    * @method purge
-   * @param {String} [type]  - （可选）事件类型
+   * @param {String} type  - （必须）事件类型
    * @param {Boolean} [recurse]  - （可选）是否递归销毁子节点所有事件绑定
    * 元素绑定的全部事件处理器
    * @returns {Emitter} - Emitter 对象
@@ -845,13 +849,7 @@ class Emitter {
    * @returns {Emitter} - Emitter 对象
    */
   destroy() {
-    const $el = this.$el
-
-    this.purge(null, true)
-
-    if ($el && $el._listeners) {
-      $el._listeners = []
-    }
+    purgeElement(this.$el, true)
 
     return this
   }

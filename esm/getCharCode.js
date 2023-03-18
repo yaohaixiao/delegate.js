@@ -17,7 +17,7 @@ const getCharCode = function (evt) {
     63235: 39, // right
     63276: 33, // page up
     63277: 34, // page down
-    25: 9 // SHIFT-TAB (Safari provides a different key code in
+    25: 9 // The SHIFT-TAB (Safari provides a different key code in
     // this case, even though the shiftKey modifier is set)
   }
 

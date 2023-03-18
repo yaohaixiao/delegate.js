@@ -13,7 +13,6 @@ const umd = require('gulp-umd')
 const uglify = require('gulp-uglify')
 const watch = require('gulp-watch')
 
-
 const SOURCE_PATH = ['./src/**/*.js', './esm/**/*.js']
 
 /* ==================== 清理相关 gulp 任务 ==================== */
@@ -26,7 +25,6 @@ const cleanDocs = () => {
 }
 
 const cleanAll = gulp.parallel(cleanDist, cleanDocs)
-
 
 /* ==================== 文档查看相关的 gulp 任务 ==================== */
 const openDocs = () => {
@@ -60,7 +58,6 @@ const reload = () => {
   return connect.reload()
 }
 
-
 /* ==================== 代码规范校验相关的 gulp 任务 ==================== */
 const lint = () => {
   return gulp
@@ -73,7 +70,6 @@ const lint = () => {
 const check = () => {
   return gulp.src(SOURCE_PATH).pipe(prettier.check({ editorconfig: true }))
 }
-
 
 /* ==================== 编译 JavaScript 代码的 gulp 任务 ==================== */
 const transpile = () => {
@@ -108,7 +104,6 @@ const transpile = () => {
     .pipe(gulp.dest('./'))
     .pipe(gulp.dest('docs/lib'))
 }
-
 
 /* ==================== 检测源代码变更相关的 gulp 任务 ==================== */
 const watchSource = () => {

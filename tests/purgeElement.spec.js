@@ -67,12 +67,14 @@ describe('closest() 方法', () => {
     expect(clickListeners.length).toEqual(0)
     expect(dbclickListeners.length).toEqual(1)
     expect(allListeners.length).toEqual(1)
-  })
 
-  it('仅传递 el 参数：purgeElement(el)', () => {
-    purgeElement($list)
+    purgeElement($list, true)
 
-    expect(getListeners($list).length).toEqual(0)
+    allListeners = getListeners($list)
+    dbclickListeners = getListeners($list, 'dbclick')
+
+    expect(dbclickListeners.length).toEqual(0)
+    expect(allListeners.length).toEqual(0)
   })
 
   it('传递 recurse 参数：purgeElement(el, type, recurse = true)', () => {
@@ -104,5 +106,11 @@ describe('closest() 方法', () => {
 
     expect(allListeners.length).toEqual(0)
     expect(count).toEqual(1)
+  })
+
+  it('仅传递 el 参数：purgeElement(el)', () => {
+    purgeElement($list)
+
+    expect(getListeners($list).length).toEqual(0)
   })
 })

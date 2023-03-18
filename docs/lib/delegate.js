@@ -246,7 +246,7 @@ var _getTarget = function getTarget(evt) {
  */
 var _getListeners = function getListeners(el, type) {
   var listeners = el._listeners || [];
-  if (type) {
+  if (isString(type) && type) {
     listeners = listeners.filter(function (listener) {
       return listener.type === type;
     });
@@ -365,7 +365,7 @@ var _getCharCode = function getCharCode(evt) {
     // page up
     63277: 34,
     // page down
-    25: 9 // SHIFT-TAB (Safari provides a different key code in
+    25: 9 // The SHIFT-TAB (Safari provides a different key code in
     // this case, even though the shiftKey modifier is set)
   };
 
@@ -384,7 +384,7 @@ var _getCharCode = function getCharCode(evt) {
  * ========================================================================
  * @method purgeElement
  * @param {HTMLElement|String} el - （必须）需要销毁绑定事件处理器的 DOM 元素或者其选择器
- * @param {String} [type] - （可选）事件类型
+ * @param {String|Boolean} [type] - （可选）事件类型
  * @param {Boolean} [recurse] - （可选）是否递归销毁 DOM 元素子节点所绑定的所有事件处理器
  */
 var purgeElement = function purgeElement(el) {
@@ -396,7 +396,7 @@ var purgeElement = function purgeElement(el) {
   listeners.forEach(function (listener) {
     _off($element, listener.type, listener.fn);
   });
-  if (recurse && $element && $childNodes) {
+  if ((recurse || type === true || arguments.length === 1) && $element && $childNodes) {
     $childNodes.forEach(function ($childNode) {
       purgeElement($childNode, type, recurse);
     });
@@ -824,7 +824,7 @@ var Emitter = /*#__PURE__*/function () {
      * 2. recurse 设置为 true，递归销毁子节点全部事件绑定
      * ========================================================================
      * @method purge
-     * @param {String} [type]  - （可选）事件类型
+     * @param {String} type  - （必须）事件类型
      * @param {Boolean} [recurse]  - （可选）是否递归销毁子节点所有事件绑定
      * 元素绑定的全部事件处理器
      * @returns {Emitter} - Emitter 对象
@@ -846,11 +846,7 @@ var Emitter = /*#__PURE__*/function () {
   }, {
     key: "destroy",
     value: function destroy() {
-      var $el = this.$el;
-      this.purge(null, true);
-      if ($el && $el._listeners) {
-        $el._listeners = [];
-      }
+      purgeElement(this.$el, true);
       return this;
     }
 

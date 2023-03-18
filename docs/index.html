@@ -69,44 +69,44 @@ npm i -S @yaohaixiao/delegate.js@1.1.0 --registry=https://npm.pkg.github.com</co
     <pre class="code"><code>&lt;script src="/path/to/delegate.js"&gt;&lt;/script&gt;</code></pre>
     <h2>Examples</h2>
     <p>事件代理最适用的场景就是下面示例中，需要动态创建 DOM 元素，并且还会频繁移除动态创建的 DOM 元素的应用场景。在该场景下，通常不方便，也不会为动态创建的 DOM 节点一一绑定事件处理器。因为在移除 DOM 节点时，如果没有（及时）销毁 DOM 节点绑定的事件处理函数，就是导致事件处理器一直占用内存资源无法释放，从而导致浏览器的内存溢出。通过事件代理就可以很好的解决前面提到的问题，因为只需要在一个 DOM 节点上绑定事件代理，所有动态创建的 DOM 节点就都可以通过事件冒泡机制触发父节点上绑定的事件。</p>
-    <h3>绑定和解除事件绑定</h3>
     <div class="case">
       <div class="preview">
         <div class="toolbar">
           <span id="action-item" class="action">解除 .item 绑定</span>
           <span id="action-remove" class="action">解除 .remove 绑定</span>
         </div>
-        <ul id="basic-list" class="list"></ul>
+        <ul id="list" class="list"></ul>
         <div class="toolbar">
-          <span id="basic-append" class="action">添加行</span>
+          <span id="append" class="action">添加行</span>
         </div>
         <div class="log">
-          <textarea id="basic-log" class="textarea"></textarea>
+          <textarea id="log" class="textarea"></textarea>
         </div>
       </div>
       <div class="usage">
-        <pre class="code"><code>&lt;ul id="basic-list" class="list"&gt;
+        <pre class="code"><code>&lt;ul id="list" class="list"&gt;
 &lt;/ul&gt;
-
 &lt;script src="lib/delegate.min.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
-const $list = document.querySelector('#basic-list')
+const $list = document.querySelector('#list')
 const $emitter = delegate($list)
 
 // 通过 on() 方法绑定代理事件
-$emitter.on('.item', 'click', log)
-$emitter.on('.remove', 'click', remove)
+$emitter.on('.item', 'click', logClick)
+// 通过 mouseenter() 方法绑定 mouseenter 代理事件
+$emitter.mouseenter('.item', logMouseEnter)
+// 通过 click() 方法绑定 click 代理事件
+$emitter.click('.remove', remove)
 
 // 通过 off() 方法解除已绑定的代理事件
 $emitter.off('click', log)
 $emitter.off('click', remove)
+// 也可以通过 purge() 方法，解除所有 mouseenter 类型事件绑定
+$emitter.purge('mouseenter')
 
-// 也可以通过 purge() 方法，解除事件绑定
-// 解除所有 click 类型事件绑定
-$emitter.purge('click')
 // 解除所有事件绑定
-$emitter.purge()
+$emitter.destroy()
 &lt;/script&gt;</code></pre>
       </div>
     </div>
@@ -121,6 +121,6 @@ $emitter.purge()
   </p>
 </footer>
 <script src="lib/delegate.min.js"></script>
-<script src="js/basic.js"></script>
+<script src="js/docs.js"></script>
 </body>
 </html>

@@ -1,3 +1,12 @@
+## [1.4.1](https://github.com/yaohaixiao/delegate.js/compare/1.4.0...1.4.1) (2023-03-18)
+
+
+### Bug Fixes
+
+* 修复 destroy() 无法删除所有事件的问题 ([2efeedb](https://github.com/yaohaixiao/delegate.js/commit/2efeedbf4647b89d62fc1df1020a556d5f218e73))
+
+
+
 # [1.4.0](https://github.com/yaohaixiao/delegate.js/compare/1.3.0...1.4.0) (2023-03-17)
 
 

@@ -1,3 +1,12 @@
+# [1.5.0](https://github.com/yaohaixiao/delegate.js/compare/1.4.1...1.5.0) (2023-03-18)
+
+
+### Features
+
+* 添加 getTypes() 方法 ([29aa710](https://github.com/yaohaixiao/delegate.js/commit/29aa7100b668ba487ba2da3167ca6f720a5c6466))
+
+
+
 ## [1.4.1](https://github.com/yaohaixiao/delegate.js/compare/1.4.0...1.4.1) (2023-03-18)
 
 

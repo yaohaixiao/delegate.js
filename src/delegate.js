@@ -515,9 +515,6 @@ const on = (el, selector, type, fn, data, context, once = false) => {
         off(el, type, listener)
       }
 
-      console.log('delegateTarget', delegateTarget)
-      console.log('target', target)
-
       // 直接过滤了点击对象，会阻止事件冒泡或者捕获
       /* istanbul ignore else */
       if (target === delegateTarget) {
@@ -709,7 +706,7 @@ const stopEvent = function (evt) {
 /**
  * Emitter 类 - JavaScript 事件代理对象
  * ========================================================================
- * @constructor
+ * @class
  */
 class Emitter {
   /**

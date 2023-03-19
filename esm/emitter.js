@@ -20,7 +20,7 @@ import stopEvent from './stopEvent'
 /**
  * Emitter 类 - JavaScript 事件代理对象
  * ========================================================================
- * @constructor
+ * @class
  */
 class Emitter {
   /**

@@ -4,7 +4,6 @@
  * @method preventDefault
  * @param {Event} evt - 事件对象
  *
- *
  * @example
  * <div id="nav" class="nav">
  *   <a id="service" class="anchor" href="https://www.yaohaixiao.com/serivce">Service</a>

@@ -642,6 +642,81 @@ const $emitter = delegate('.el-input')
 $emitter.focusout('.el-input__inner', handler)
 ```
 
+### trigger(type, selector)
+
+#### Description
+
+trigger() 方法用作手动触（自定义）事件。 trigger() 方法也可以用来手动触发内置的事件，例如 click, mouseenter 等事件，不过通常使用 trigger() 来手动触发用户自定义事件。
+
+另外，选择器 selector 的匹配使用 document.querySelector() 方法，因此仅事件触发一次。
+
+#### Parameters
+
+##### type
+
+Type: `String`
+
+Default: ``
+
+（必须）事件类型。
+
+##### selector
+
+Type: `String`
+
+Default: ``
+
+（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。
+
+
+#### Returns
+
+Type: `Emitter`
+
+返回 Emitter 对象（实例）。
+
+```html
+<ul id="list" class="list">
+  <li class="item">
+    <a href="/home" class="nav">Home</a>
+  </li>
+  <li class="item">
+    <a href="/support" class="nav">Support</a>
+  </li>
+  <li class="item">
+    <a href="/faqs" class="nav">FAQs</a>
+  </li>
+</ul>
+```
+
+```js
+const $list = document.querySelector('#list')
+const $emitter = delegate($list)
+const itemHandler = function(evt) {
+  // 其它逻辑
+  console.log(evt.type + ':' + evt.delegateTarget)
+}
+
+const navHandler = function(evt) {
+  // 其它逻辑
+  $emitter.stopEvent(evt)
+  console.log(evt.type + ':' + evt.delegateTarget)
+}
+
+// 绑定 alert 自定义事件
+$emitter.on('.item', 'alert', itemHandler)
+$emitter.on('.nav', 'log', navHandler)
+
+// 触发 $list 下匹配 '.item' 元素手动触发 alert 自定义事件
+$emitter.trigger('alert', '.item')
+// 可以使用伪类选择器，更精确的匹配元素
+$emitter.trigger('alert', '.item:last-child')
+
+// 触发 $list 下匹配 '.remove' 元素手动触发 alert 自定义事件
+$emitter.trigger('alert', '.nav')
+$emitter.trigger('alert', '.nav:nth-child(1)')
+```
+
 ### off(type, fn)
 
 #### Description

@@ -23,8 +23,6 @@ const matches = (el, selector = '') => {
     return el.matches(sel)
   } else if (el.msMatchesSelector) {
     return el.msMatchesSelector(sel)
-  } else if (el.webkitMatchesSelector) {
-    return el.webkitMatchesSelector(sel)
   } else {
     return false
   }

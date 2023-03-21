@@ -16,6 +16,7 @@ import purgeElement from './purgeElement'
 import preventDefault from './preventDefault'
 import stopPropagation from './stopPropagation'
 import stopEvent from './stopEvent'
+import trigger from './trigger'
 
 /**
  * Emitter 类 - JavaScript 事件代理对象
@@ -328,6 +329,20 @@ class Emitter {
    */
   focusout(selector, handler, data, context, once = false) {
     focusout(this.$el, selector, handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 触发代理自定义事件
+   * ========================================================================
+   * @method trigger
+   * @param {String} type - （必须）事件类型
+   * @param {String} selector - （必须）选择器
+   * @returns {Emitter} - Emitter 对象
+   */
+  trigger(type, selector) {
+    trigger(this.$el, type, selector)
 
     return this
   }

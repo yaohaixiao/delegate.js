@@ -107,6 +107,11 @@ $emitter.purge('mouseenter')
 
 // 解除所有事件绑定
 $emitter.destroy()
+
+// 绑定 log 自定义事件
+$emitter.on('.item','log', logTrigger)
+// 使用 trigger() 方法手动触发自定义的事件
+$emitter.trigger('log', '.item:nth-child(2)')
 &lt;/script&gt;</code></pre>
       </div>
     </div>

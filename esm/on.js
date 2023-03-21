@@ -16,6 +16,7 @@ import getTarget from './getTarget'
  * @param {Boolean} once - （可选）是否仅触发一次
  */
 const on = (el, selector, type, fn, data, context, once = false) => {
+  let capture = false
   const CAPTURE_EVENTS = [
     'focusout',
     'blur',
@@ -26,7 +27,6 @@ const on = (el, selector, type, fn, data, context, once = false) => {
     'mouseenter',
     'mouseleave'
   ]
-  let capture = false
 
   const listener = function (evt) {
     const target = getTarget(evt)
@@ -84,10 +84,8 @@ const on = (el, selector, type, fn, data, context, once = false) => {
   /* istanbul ignore else */
   if (window.addEventListener) {
     el.addEventListener(type, listener, capture)
-  } else {
-    if (window.attachEvent) {
-      el.attachEvent('on' + type, listener)
-    }
+  } else if (window.attachEvent) {
+    el.attachEvent('on' + type, listener)
   }
 }
 

@@ -42,11 +42,4 @@ describe('matches() 方法', () => {
 
     expect(matches($list, '.list')).toBe(true)
   })
-
-  it('模拟 el.webkitMatchesSelector, 返回：true', () => {
-    $list.webkitMatchesSelector = clone
-    $list.msMatchesSelector = null
-
-    expect(matches($list, '.list')).toBe(true)
-  })
 })

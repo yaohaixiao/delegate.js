@@ -37,21 +37,16 @@ const off = (el, type, fn) => {
     delete fn._delegateListener
   }
 
+  // 移除缓存的 _listeners 数据
   listeners.forEach((listener, i) => {
     if (listener.type === type) {
       index = i
-    }
-  })
 
-  // 移除缓存的 _listeners 数据
-  /* istanbul ignore else */
-  if (listeners.length > 0 && fn) {
-    listeners.forEach((listener, i) => {
-      if (listener.type === type && listener.fn === fn) {
+      if (fn && listener.fn === fn) {
         index = i
       }
-    })
-  }
+    }
+  })
 
   /* istanbul ignore else */
   if (index > -1) {
@@ -65,10 +60,8 @@ const off = (el, type, fn) => {
   /* istanbul ignore else */
   if (window.removeEventListener) {
     el.removeEventListener(type, fn, capture)
-  } else {
-    if (window.detachEvent) {
-      el.detachEvent('on' + type, fn)
-    }
+  } else if (window.detachEvent) {
+    el.detachEvent('on' + type, fn)
   }
 }
 

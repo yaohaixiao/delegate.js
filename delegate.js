@@ -149,8 +149,6 @@ var matches = function matches(el) {
     return el.matches(sel);
   } else if (el.msMatchesSelector) {
     return el.msMatchesSelector(sel);
-  } else if (el.webkitMatchesSelector) {
-    return el.webkitMatchesSelector(sel);
   } else {
     return false;
   }
@@ -434,21 +432,16 @@ var _off = function off(el, type, fn) {
     fn = fn._delegateListener;
     delete fn._delegateListener;
   }
+
+  // 移除缓存的 _listeners 数据
   listeners.forEach(function (listener, i) {
     if (listener.type === type) {
       index = i;
-    }
-  });
-
-  // 移除缓存的 _listeners 数据
-  /* istanbul ignore else */
-  if (listeners.length > 0 && fn) {
-    listeners.forEach(function (listener, i) {
-      if (listener.type === type && listener.fn === fn) {
+      if (fn && listener.fn === fn) {
         index = i;
       }
-    });
-  }
+    }
+  });
 
   /* istanbul ignore else */
   if (index > -1) {
@@ -461,10 +454,8 @@ var _off = function off(el, type, fn) {
   /* istanbul ignore else */
   if (window.removeEventListener) {
     el.removeEventListener(type, fn, capture);
-  } else {
-    if (window.detachEvent) {
-      el.detachEvent('on' + type, fn);
-    }
+  } else if (window.detachEvent) {
+    el.detachEvent('on' + type, fn);
   }
 };
 
@@ -500,8 +491,6 @@ var _on = function on(el, selector, type, fn, data, context) {
       if (once === true) {
         _off(el, type, listener);
       }
-      console.log('delegateTarget', delegateTarget);
-      console.log('target', target);
 
       // 直接过滤了点击对象，会阻止事件冒泡或者捕获
       /* istanbul ignore else */
@@ -532,10 +521,8 @@ var _on = function on(el, selector, type, fn, data, context) {
   /* istanbul ignore else */
   if (window.addEventListener) {
     el.addEventListener(type, listener, capture);
-  } else {
-    if (window.attachEvent) {
-      el.attachEvent('on' + type, listener);
-    }
+  } else if (window.attachEvent) {
+    el.attachEvent('on' + type, listener);
   }
 };
 
@@ -589,6 +576,50 @@ var _focusout = function focusout(el, selector, fn, data, context) {
   var once = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
   var FOCUSOUT = isIE() ? 'focusout' : 'blur';
   _on(el, selector, FOCUSOUT, fn, data, context, once);
+};
+
+/**
+ * 触发代理自定义事件
+ * ========================================================================
+ * trigger() 方法也可以用来手动触发内置的事件，例如 click, mouseenter 等事件，通常
+ * 使用 trigger() 来手动触发用户自定义事件。
+ *
+ * 另外，选择器 selector 的匹配使用 document.querySelector() 方法，因此仅事件触发一次。
+ * ========================================================================
+ * @method trigger
+ * @param {HTMLElement} el - （必须）绑定代理事件的 DOM 元素
+ * @param {String} type - （必须）事件类型
+ * @param {String} selector - （必须）选择器
+ *
+ * @example
+ * const $list = document.querySelector('#list')
+ * // 绑定 alert 自定义事件
+ * on($list, '.item', 'alert', itemHandler)
+ * on($list, '.remove', 'alert', removeHandler)
+ *
+ * // 触发 $list 下匹配 '.item' 元素手动触发 alert 自定义事件
+ * trigger('alert', '.item')
+ *
+ * // 可以使用伪类选择器，更精确的匹配元素
+ * trigger('alert', '.item:last-child')
+ *
+ * // 触发 $list 下匹配 '.remove' 元素手动触发 alert 自定义事件
+ * trigger('alert', '.remove')
+ * trigger('alert', '.remove:nth-child(2)')
+ */
+var _trigger = function trigger(el, type, selector) {
+  var $child;
+  if (!type || !selector) {
+    return false;
+  }
+  $child = el.querySelector(selector);
+  if (!$child) {
+    return false;
+  }
+  $child.dispatchEvent(new CustomEvent(type, {
+    bubbles: true,
+    cancelable: true
+  }));
 };
 
 /**
@@ -691,7 +722,7 @@ var _stopEvent = function stopEvent(evt) {
 /**
  * Emitter 类 - JavaScript 事件代理对象
  * ========================================================================
- * @constructor
+ * @class
  */
 var Emitter = /*#__PURE__*/function () {
   /**
@@ -929,6 +960,21 @@ var Emitter = /*#__PURE__*/function () {
     key: "once",
     value: function once(selector, type, handler, data, context) {
       _once(this.$el, selector, type, handler, data, context);
+      return this;
+    }
+
+    /**
+     * 触发代理自定义事件
+     * ========================================================================
+     * @method trigger
+     * @param {String} type - （必须）事件类型
+     * @param {String} [selector] - （必须）选择器
+     * @returns {Emitter} - Emitter 对象
+     */
+  }, {
+    key: "trigger",
+    value: function trigger(type, selector) {
+      _trigger(this.$el, type, selector);
       return this;
     }
 

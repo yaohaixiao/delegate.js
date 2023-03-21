@@ -117,6 +117,14 @@
     scroll()
   }
 
+  const logTrigger = function (evt) {
+    const $target = evt.delegateTarget
+
+    $log.value += `自定义 log 事件触发，事件的 delegateTarget 为节点的 id 为：'${$target.id}'\r`
+
+    scroll()
+  }
+
   const toggleRemove = () => {
     isRemoveOn = !isRemoveOn
 
@@ -168,8 +176,9 @@
 
     // 绑定不同元素的代理事件
     $emitter.mouseenter('.item', logMouseEnter)
-    $emitter.on('.item', 'click', logClick)
-    $emitter.on('.remove', 'click', remove)
+    $emitter.on('.item','click', logClick)
+    $emitter.on('.item','log', logTrigger)
+    $emitter.click('.remove', remove)
 
     // 动态创建列表项
     $append.addEventListener('click', append)
@@ -177,6 +186,8 @@
     types = $emitter.getTypes()
 
     $log.value += `getTypes() 以绑定事件：'${types}'\r`
+
+    $emitter.trigger('log', '.item:nth-child(2)')
   }
 
   setup()

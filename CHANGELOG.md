@@ -1,3 +1,12 @@
+# [1.6.0](https://github.com/yaohaixiao/delegate.js/compare/1.5.0...1.6.0) (2023-03-21)
+
+
+### Features
+
+* 添加 trigger() 方法，并且移除 matches() 方法中废弃的方法 ([a732d70](https://github.com/yaohaixiao/delegate.js/commit/a732d7031ced39572f30480a6f750b0efd30d954))
+
+
+
 # [1.5.0](https://github.com/yaohaixiao/delegate.js/compare/1.4.1...1.5.0) (2023-03-18)
 
 

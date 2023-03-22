@@ -1,3 +1,4 @@
+import createEvent from './createEvent'
 import off from './off'
 import on from './on'
 import once from './once'
@@ -16,6 +17,7 @@ import purgeElement from './purgeElement'
 import preventDefault from './preventDefault'
 import stopPropagation from './stopPropagation'
 import stopEvent from './stopEvent'
+import stopImmediate from './stopImmediate'
 import trigger from './trigger'
 
 /**
@@ -193,6 +195,20 @@ class Emitter {
     purgeElement(this.$el, true)
 
     return this
+  }
+
+  /**
+   * 创建自定义事件（CustomerEvent）
+   * ========================================================================
+   * @method createEvent
+   * @param {String} type - （必须）事件类型（名称）
+   * @param {Object} [detail] - （可选）传递给自定义事件的数据，默认为 null
+   * @param {Boolean} [bubbles] - （可选）是否支持冒泡，默认为 true
+   * @param {Boolean} [cancelable] - （可选）是否可以取消，默认为 true
+   * @returns {CustomEvent} - CustomerEvent 实例
+   */
+  createEvent(type, detail = null, bubbles = true, cancelable = true) {
+    return createEvent(type, detail, bubbles, cancelable)
   }
 
   /**
@@ -704,7 +720,7 @@ class Emitter {
    * 绑定 paste 代理事件
    * ========================================================================
    * @method paste
-   * @see
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/paste_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
    * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
@@ -859,6 +875,19 @@ class Emitter {
    */
   stopEvent(evt) {
     stopEvent(evt)
+
+    return this
+  }
+
+  /**
+   * 阻止监听同一事件的其他事件监听器被调用，并且阻止默认行为和事件冒泡。
+   * ========================================================================
+   * @method stopImmediate
+   * @see stopImmediate
+   * @param {Event} evt - （必须）Event 对象
+   */
+  stopImmediate(evt) {
+    stopImmediate(evt)
 
     return this
   }

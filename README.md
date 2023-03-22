@@ -970,6 +970,79 @@ $emitter.hasEvent('focus')
 // => false
 ```
 
+### createEvent(type, detail = null, bubbles = true, cancelable = true)
+
+#### Description
+
+创建自定义事件（CustomerEvent）。
+
+#### Parameters
+
+##### type
+
+Type: `String`
+
+Default: ``
+
+（必须）事件类型（名称）。
+
+##### detail
+
+Type: `Object`
+
+Default: `null`
+
+（可选）传递给自定义事件的数据，默认为 null。
+
+##### bubbles
+
+Type: `Boolean`
+
+Default: `true`
+
+（可选）是否支持冒泡，默认为 true。
+
+##### cancelable
+
+Type: `Boolean`
+
+Default: `true`
+
+（可选）是否可以取消，默认为 true。
+
+#### Returns
+
+Type: `CustomerEvent`
+
+CustomerEvent 实例。
+
+```html
+<div id="nav" class="nav">
+  <a id="service" class="anchor" href="https://www.yaohaixiao.com/serivce">Service</a>
+  <a id="help" class="anchor" href="https://www.yaohaixiao.com/help">Help</a>
+</div>
+```
+
+```js
+const $nav = document.querySelector('#nav')
+const $service = document.querySelector('#serivce')
+const $emitter = delegate($nav)
+const logEvent = $emitter.createEvent('log', {
+  name: 'Yao',
+  hi() {
+    console.log('hi！！！')
+  }
+})
+
+const logHandler = function(evt) {
+  console.log('detail', evt.detail)
+  console.log('type', evt.type)
+}
+
+// 或者
+$service.dispatchEvent(logEvent)
+```
+
 ### purge(type, recurse)
 
 #### Description
@@ -1247,6 +1320,84 @@ const showLog = function (evt) {
 // 点击删除，只会删除行，不会跳转页面，也不会触发事件冒泡，触发执行 showLog() 回调函数
 $emitter.on('.item-remove', 'click', removeItem)
 $emitter.on('.item', 'click', showLog)
+```
+
+### stopImmediate(evt)
+
+#### Description
+
+阻止监听同一事件的其他事件监听器被调用，并且阻止默认行为和事件冒泡。
+
+#### Parameters
+
+##### type
+
+Type: `Event`
+
+Default: ``
+
+（必须）事件对象。
+
+#### Returns
+
+Type: `Emitter`
+
+返回 Emitter 对象（实例）。
+
+```html
+<ul id="list" class="list">
+  <li class="item" id="item-home">
+    <span>Home</span>
+    <a href="/sitemap#home" class="item-remove" data-id="home">删除</a>
+  </li>
+  <li class="item" id="item-support">
+    <span>Support</span>
+    <a href="/sitemap#support" class="item-remove" data-id="support">删除</a>
+  </li>
+  <li class="item" id="item-faqs">
+    <span>FAQs</span>
+    <a href="/sitemap#support" class="item-remove" data-id="faqs">删除</a>
+  </li>
+</ul>
+```
+
+```js
+let logged = false
+let styled = false
+const $list = document.querySelector('#list')
+const $support = document.querySelector('#item-support')
+const $link = document.querySelector('a[data-id="support"]')
+const $emitter = delegate($support)
+const logHandler = function(evt) {
+  logged = true
+  console.log(evt.target)
+}
+const styleHandler = function(evt) {
+  styled = true
+  $list.classList.add('checked')
+}
+const serviceHandler = function(evt) {
+  alert(evt.target)
+  $emitter.stopImmediate(evt)
+}
+const removeHandler = function(evt) {
+  const $target = evt.target
+
+  $target.parentNode.removeChild($target)
+}
+
+$list.addEventListener('click', logHandler)
+$list.addEventListener('click', styleHandler)
+
+$emitter.on('.remove', 'click', serviceHandler)
+$emitter.on('.remove', 'click', removeHandler)
+
+// 不会触发 removeHandler，不会删除一行
+// 不会冒泡触发父节点 $list 上绑定的 click 事件
+trigger('click', '.remove')
+// -> logged = false
+// -> styled = false
+// document.querySelectorAll('.item').length = 3
 ```
 
 ### getPageX(evt)

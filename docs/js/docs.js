@@ -183,6 +183,17 @@
     scroll()
   }
 
+  const lastItemHandler = function(evt) {
+    const type = evt.type
+    const $target = evt.target
+
+    $emitter.stopImmediate(evt)
+
+    $log.value += `${$target} 触发 ${type} 事件\r`
+
+    scroll()
+  }
+
   const scroll = () => {
     $log.scrollTop = $log.scrollHeight
   }
@@ -204,6 +215,10 @@
     $emitter.on('.item','log', logTrigger)
     $emitter.click('.remove', remove)
 
+    $emitter.on('.item','alert', lastItemHandler)
+    $emitter.on('.item','alert', logClick)
+    $emitter.on('.item','alert', typeHandler)
+
     // 动态创建列表项
     $append.addEventListener('click', append)
 
@@ -221,6 +236,7 @@
     $log.value += `getTypes() 获取 $provider 绑定事件：'${types}'\r`
 
     $emitter.trigger('log', '.item:nth-child(2)')
+    $emitter.trigger('alert', '.item:last-child')
   }
 
   setup()

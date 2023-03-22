@@ -1,3 +1,5 @@
+import createEvent from './createEvent'
+
 /**
  * 触发代理自定义事件
  * ========================================================================
@@ -42,12 +44,7 @@ const trigger = (el, type, selector) => {
     return false
   }
 
-  $child.dispatchEvent(
-    new CustomEvent(type, {
-      bubbles: true,
-      cancelable: true
-    })
-  )
+  $child.dispatchEvent(createEvent(type))
 }
 
 export default trigger

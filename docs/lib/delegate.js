@@ -387,6 +387,50 @@ var _getCharCode = function getCharCode(evt) {
 };
 
 /**
+ * 创建自定义事件（CustomerEvent）
+ * ========================================================================
+ * @method createEvent
+ * @param {String} type - （必须）事件类型（名称）
+ * @param {Object} [detail] - （可选）传递给自定义事件的数据，默认为 null
+ * @param {Boolean} [bubbles] - （可选）是否支持冒泡，默认为 true
+ * @param {Boolean} [cancelable] - （可选）是否可以取消，默认为 true
+ * @returns {CustomEvent} - CustomerEvent 实例
+ *
+ * @example
+ * <div id="nav" class="nav">
+ *   <a id="service" class="anchor" href="https://www.yaohaixiao.com/serivce">Service</a>
+ *   <a id="help" class="anchor" href="https://www.yaohaixiao.com/help">Help</a>
+ * </div>
+ *
+ * const $nav = document.querySelector('#nav')
+ * const event = createEvent('log', {
+ *   name: 'Yao',
+ *   hi() {
+ *     console.log('hi！！！')
+ *   }
+ * })
+ *
+ * const logHandler = function(evt) {
+ *   console.log('detail', evt.detail)
+ *   console.log('type', evt.type)
+ * }
+ *
+ * $nav.addEventListener('log', logHandler)
+ *
+ * $nav.dispatchEvent(event)
+ */
+var _createEvent = function createEvent(type) {
+  var detail = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  var bubbles = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  var cancelable = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+  return new CustomEvent(type, {
+    detail: detail,
+    bubbles: bubbles,
+    cancelable: cancelable
+  });
+};
+
+/**
  * 销毁 DOM 元素绑定的事件处理器
  * ========================================================================
  * 1. 设置了 type 则清除指定类型的事件处理器，没有指定 type 则清除所有已绑定的事件处理器
@@ -628,10 +672,7 @@ var _trigger = function trigger(el, type, selector) {
   if (!$child) {
     return false;
   }
-  $child.dispatchEvent(new CustomEvent(type, {
-    bubbles: true,
-    cancelable: true
-  }));
+  $child.dispatchEvent(_createEvent(type));
 };
 
 /**
@@ -731,6 +772,54 @@ var _stopPropagation = function stopPropagation(evt) {
 var _stopEvent = function stopEvent(evt) {
   _stopPropagation(evt);
   _preventDefault(evt);
+};
+
+/**
+ * 阻止监听同一事件的其他事件监听器被调用，并且阻止默认行为和事件冒泡。
+ * ========================================================================
+ * @method stopImmediate
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Event/stopImmediatePropagation
+ * @param {Event} evt - （必须）Event 对象
+ *
+ * @example
+ * <div id="nav" class="nav">
+ *   <a id="service" class="anchor" href="https://www.yaohaixiao.com/serivce">Service</a>
+ *   <a id="help" class="anchor" href="https://www.yaohaixiao.com/help">Help</a>
+ * </div>
+ *
+ * const $nav = document.querySelector('#nav')
+ * const $service = document.querySelector('#service')
+ * const logHandler = function(evt) {
+ *   console.log(evt.target)
+ * }
+ * const styleHandler = function(evt) {
+ *   $nav.classList.add('checked')
+ * }
+ * const serviceHandler = function(evt) {
+ *   alert(evt.target)
+ *   stopImmediate(evt)
+ * }
+ * const removeHandler = function(evt) {
+ *   const $target = evt.target
+ *
+ *   $target.parentNode.removeChild($target)
+ * }
+ *
+ * on($nav, 'click', logHandler)
+ * on($nav, 'click', styleHandler)
+ * on($service, 'click', serviceHandler)
+ * on($service, 'click', removeHandler)
+ *
+ * $nav.click()
+ * // => 触发 logHandler 和 styleHandler
+ *
+ * $service.click()
+ * // => 仅触发 serviceHandler，不会触发 removeHandler
+ * // => 并且不会跳转页面，也不会冒泡到 $nav，不会触发 logHandler 和 styleHandler
+ */
+var _stopImmediate = function stopImmediate(evt) {
+  _stopEvent(evt);
+  evt.stopImmediatePropagation();
 };
 
 /**
@@ -927,6 +1016,26 @@ var Emitter = /*#__PURE__*/function () {
     value: function destroy() {
       purgeElement(this.$el, true);
       return this;
+    }
+
+    /**
+     * 创建自定义事件（CustomerEvent）
+     * ========================================================================
+     * @method createEvent
+     * @see createEvent
+     * @param {String} type - （必须）事件类型（名称）
+     * @param {Object} [detail] - （可选）传递给自定义事件的数据，默认为 null
+     * @param {Boolean} [bubbles] - （可选）是否支持冒泡，默认为 true
+     * @param {Boolean} [cancelable] - （可选）是否可以取消，默认为 true
+     * @returns {CustomEvent} - CustomerEvent 实例
+     */
+  }, {
+    key: "createEvent",
+    value: function createEvent(type) {
+      var detail = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      var bubbles = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+      var cancelable = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+      return _createEvent(type, detail, bubbles, cancelable);
     }
 
     /**
@@ -1492,7 +1601,7 @@ var Emitter = /*#__PURE__*/function () {
      * 绑定 paste 代理事件
      * ========================================================================
      * @method paste
-     * @see
+     * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/paste_event
      * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
      * @param {Function} handler - （必须） 事件处理器回调函数
      * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
@@ -1664,6 +1773,20 @@ var Emitter = /*#__PURE__*/function () {
     key: "stopEvent",
     value: function stopEvent(evt) {
       _stopEvent(evt);
+      return this;
+    }
+
+    /**
+     * 阻止监听同一事件的其他事件监听器被调用，并且阻止默认行为和事件冒泡。
+     * ========================================================================
+     * @method stopImmediate
+     * @see stopImmediate
+     * @param {Event} evt - （必须）Event 对象
+     */
+  }, {
+    key: "stopImmediate",
+    value: function stopImmediate(evt) {
+      _stopImmediate(evt);
       return this;
     }
   }]);

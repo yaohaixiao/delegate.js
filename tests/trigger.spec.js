@@ -55,7 +55,7 @@ describe('trigger() 方法', () => {
 
     console.log('当前事件目标是：', $target)
   }
-  const customHandler = function(evt) {
+  const customHandler = function (evt) {
     const $target = evt.delegateTarget
 
     id = $target.id
@@ -157,7 +157,7 @@ describe('trigger() 方法', () => {
       expect(mockFn).toBeCalled()
       expect(mockFn).toBeCalledTimes(3)
 
-      off($list,'log')
+      off($list, 'log')
       trigger($list, 'log', '.item')
 
       expect(id).toEqual('item-faqs')
@@ -179,7 +179,7 @@ describe('trigger() 方法', () => {
       expect(mockFn).toBeCalled()
       expect(mockFn).toBeCalledTimes(5)
 
-      off($list,'alert')
+      off($list, 'alert')
       trigger($list, 'alert', '.remove')
 
       expect(id).toEqual('remove-user')

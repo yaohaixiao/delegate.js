@@ -1,3 +1,12 @@
+# [1.8.0](https://github.com/yaohaixiao/delegate.js/compare/1.7.0...1.8.0) (2023-03-22)
+
+
+### Features
+
+* 添加 createEvent() 和 stopImmediate() 方法，并添加 stopImmediate() 方法的单测和相应的 API 实例 ([9978d9b](https://github.com/yaohaixiao/delegate.js/commit/9978d9b9ffb4524351b887b05fa9925437e7e8d5))
+
+
+
 # [1.7.0](https://github.com/yaohaixiao/delegate.js/compare/1.6.0...1.7.0) (2023-03-22)
 
 

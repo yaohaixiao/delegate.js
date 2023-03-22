@@ -1,5 +1,6 @@
 import purgeElement from './purgeElement'
 import isFunction from './isFunction'
+import { CAPTURE_EVENTS } from './enum'
 
 /**
  * 取消 type 类型的代理事件绑定
@@ -12,16 +13,6 @@ import isFunction from './isFunction'
  * @param {Function} [fn] - （可选）事件处理器回调函数
  */
 const off = (el, type, fn) => {
-  const CAPTURE_EVENTS = [
-    'focusout',
-    'blur',
-    'focusin',
-    'focus',
-    'load',
-    'unload',
-    'mouseenter',
-    'mouseleave'
-  ]
   const listeners = el._listeners
   let capture = false
   let index = -1

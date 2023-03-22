@@ -2,6 +2,7 @@
  * 阻止触发绑定事件 DOM 元素的默认行为
  * ========================================================================
  * @method preventDefault
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Event/preventDefault
  * @param {Event} evt - 事件对象
  *
  * @example

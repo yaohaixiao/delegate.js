@@ -1,6 +1,7 @@
 import closest from './closest'
 import off from './off'
 import getTarget from './getTarget'
+import { CAPTURE_EVENTS } from './enum'
 
 /**
  * 绑定代理事件
@@ -17,16 +18,6 @@ import getTarget from './getTarget'
  */
 const on = (el, selector, type, fn, data, context, once = false) => {
   let capture = false
-  const CAPTURE_EVENTS = [
-    'focusout',
-    'blur',
-    'focusin',
-    'focus',
-    'load',
-    'unload',
-    'mouseenter',
-    'mouseleave'
-  ]
 
   const listener = function (evt) {
     const target = getTarget(evt)

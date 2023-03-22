@@ -7,6 +7,8 @@
  * 另外，选择器 selector 的匹配使用 document.querySelector() 方法，因此仅事件触发一次。
  * ========================================================================
  * @method trigger
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/CustomEvent
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/dispatchEvent
  * @param {HTMLElement} el - （必须）绑定代理事件的 DOM 元素
  * @param {String} type - （必须）事件类型
  * @param {String} selector - （必须）选择器

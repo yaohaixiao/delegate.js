@@ -48,8 +48,10 @@
   const $item = document.querySelector('#action-item')
   const $append = document.querySelector('#append')
   const $list = document.querySelector('#list')
+  const $console = document.querySelector('#console')
   const $log = document.querySelector('#log')
   const $emitter = delegate($list)
+  const $provider = delegate($console)
 
   const draw = () => {
     let items = []
@@ -119,8 +121,10 @@
 
   const logTrigger = function (evt) {
     const $target = evt.delegateTarget
+    const type = evt.type
 
-    $log.value += `自定义 log 事件触发，事件的 delegateTarget 为节点的 id 为：'${$target.id}'\r`
+    $log.value += `trigger('log', '.item:nth-child(2)') 触发自定义 ${type} 事件\r`
+    $log.value += `事件的 delegateTarget 为节点的 id 为：'${$target.id}'\r`
 
     scroll()
   }
@@ -159,6 +163,26 @@
     scroll()
   }
 
+  const typeHandler = function(evt) {
+    const type = evt.type
+    const $target = evt.target
+
+    $log.value += `${$target} 触发 ${type} 事件\r`
+
+    scroll()
+  }
+
+  const keyboardHandler = function(evt) {
+    const type = evt.type
+    const $target = evt.target
+    const charCode = $provider.getCharCode(evt)
+
+    $log.value += `\r${$target} 触发 ${type} 事件\r`
+    $log.value += `事件的 charCode 是：${charCode}\r`
+
+    scroll()
+  }
+
   const scroll = () => {
     $log.scrollTop = $log.scrollHeight
   }
@@ -183,9 +207,18 @@
     // 动态创建列表项
     $append.addEventListener('click', append)
 
+    $provider.focusin('.textarea', typeHandler)
+    $provider.keyup('.textarea', keyboardHandler)
+    $provider.change('.textarea', typeHandler)
+    $provider.paste('.textarea', typeHandler)
+
     types = $emitter.getTypes()
 
-    $log.value += `getTypes() 以绑定事件：'${types}'\r`
+    $log.value += `getTypes() 获取 $emitter 绑定事件：'${types}'\r`
+
+    types = $provider.getTypes()
+
+    $log.value += `getTypes() 获取 $provider 绑定事件：'${types}'\r`
 
     $emitter.trigger('log', '.item:nth-child(2)')
   }

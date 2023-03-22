@@ -286,6 +286,7 @@ const getScroll = function () {
  * 获取 scrollTop 值
  * ========================================================================
  * @method getScrollTop
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/scrollTop
  * @return {Number} - 返回 getScrollTop 值
  */
 const getScrollTop = function () {
@@ -296,6 +297,7 @@ const getScrollTop = function () {
  * 获取 scrollTop 值
  * ========================================================================
  * @method getScrollLeft
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/scrollLeft
  * @return {Number} - 返回 scrollLeft 值
  */
 const getScrollLeft = function () {
@@ -306,6 +308,7 @@ const getScrollLeft = function () {
  * 获取事件触发时的 pageX 值
  * ========================================================================
  * @method getPageX
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/MouseEvent/pageX
  * @param {Event} evt - （必须）Event 对象
  * @return {Number} - 返回事件触发时的 pageX 值
  */
@@ -328,6 +331,7 @@ const getPageX = function (evt) {
  * 获取事件触发时的 pageY 值
  * ========================================================================
  * @method getPageY
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/MouseEvent/pageY
  * @param {Event} evt - （必须）Event 对象
  * @return {Number} - 返回事件触发时的 pageY 值
  */
@@ -361,6 +365,8 @@ const getPageXY = function (evt) {
  * 返回触发事件的 charCode
  * ========================================================================
  * @method getCharCode
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/KeyboardEvent/keyCode
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/KeyboardEvent/charCode
  * @param {Event} evt - Event 对象
  * @return {Number} - 返回事件的 charCode
  */
@@ -563,6 +569,8 @@ const once = (el, selector, type, fn, data, context) => {
  * 绑定 focusin 或者 focus 代理事件
  * ========================================================================
  * @method focusin
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/focus_event
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/focusin_event
  * @param {HTMLElement} el - （必须）绑定代理事件的 DOM 节点
  * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
  * @param {Function} fn - （必须） 事件处理器回调函数
@@ -581,6 +589,8 @@ const focusin = function (el, selector, fn, data, context, once = false) {
  * 绑定 focusout 或者 blur 代理事件
  * ========================================================================
  * @method focusout
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/blur_event
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/focusout_event
  * @param {HTMLElement} el - （必须）绑定代理事件的 DOM 节点
  * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
  * @param {Function} fn - （必须） 事件处理器回调函数
@@ -604,6 +614,8 @@ const focusout = function (el, selector, fn, data, context, once = false) {
  * 另外，选择器 selector 的匹配使用 document.querySelector() 方法，因此仅事件触发一次。
  * ========================================================================
  * @method trigger
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/CustomEvent
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/dispatchEvent
  * @param {HTMLElement} el - （必须）绑定代理事件的 DOM 元素
  * @param {String} type - （必须）事件类型
  * @param {String} selector - （必须）选择器
@@ -649,6 +661,7 @@ const trigger = (el, type, selector) => {
  * 阻止事件的默认行为
  * ========================================================================
  * @method preventDefault
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Event/preventDefault
  * @param {Event} evt - 事件对象
  *
  * @example
@@ -681,6 +694,7 @@ const preventDefault = function (evt) {
  * 终止事件在传播过程的捕获或冒泡的事件流
  * ========================================================================
  * @method stopPropagation
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Event/stopPropagation
  * @param {Event} evt - 事件对象
  *
  * @example
@@ -859,9 +873,18 @@ class Emitter {
   }
 
   /**
-   * 返回触发事件的 relatedTarget DOM 元素
+   * 返回触发（鼠标）事件的 relatedTarget DOM 元素。
+   * ========================================================================
+   * MouseEvent.relatedTarget 只读属性是鼠标事件的次要目标（如果有）。相关的鼠标事件：
+   * mouseenter
+   * mouseleave
+   * mouseover
+   * mouseout
+   * dragenter
+   * dragleave
    * ========================================================================
    * @method getRelatedTarget
+   * @see https://developer.mozilla.org/en-US/docs/web/api/mouseevent/relatedtarget
    * @param {Event} evt - Event 对象
    * @return {HTMLElement} - Event 对象的 relatedTarget DOM 元素
    */
@@ -887,7 +910,7 @@ class Emitter {
    * 2. recurse 设置为 true，递归销毁子节点全部事件绑定
    * ========================================================================
    * @method purge
-   * @param {String} type  - （必须）事件类型
+   * @param {String} type  - （可选）事件类型
    * @param {Boolean} [recurse]  - （可选）是否递归销毁子节点所有事件绑定
    * 元素绑定的全部事件处理器
    * @returns {Emitter} - Emitter 对象
@@ -964,23 +987,10 @@ class Emitter {
   }
 
   /**
-   * 触发代理自定义事件
-   * ========================================================================
-   * @method trigger
-   * @param {String} type - （必须）事件类型
-   * @param {String} [selector] - （必须）选择器
-   * @returns {Emitter} - Emitter 对象
-   */
-  trigger(type, selector) {
-    trigger(this.$el, type, selector)
-
-    return this
-  }
-
-  /**
    * 绑定 click 代理事件
    * ========================================================================
    * @method click
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/click_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
    * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
@@ -995,9 +1005,28 @@ class Emitter {
   }
 
   /**
+   * 绑定 dbclick 代理事件
+   * ========================================================================
+   * @method dbclick
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/dblclick_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  dbclick(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'dbclick', handler, data, context, once)
+
+    return this
+  }
+
+  /**
    * 绑定 mouseenter 代理事件
    * ========================================================================
    * @method mouseenter
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseenter_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
    * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
@@ -1012,9 +1041,10 @@ class Emitter {
   }
 
   /**
-   * 绑定 mouseenter 代理事件
+   * 绑定 mouseleave 代理事件
    * ========================================================================
-   * @method mouseenter
+   * @method mouseleave
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseleave_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
    * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
@@ -1029,15 +1059,269 @@ class Emitter {
   }
 
   /**
-   * 绑定 focusin 或者 focus 代理事件
+   * 绑定 mousedown 代理事件
    * ========================================================================
-   * @method focusin
+   * @method mousedown
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/mousedown_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
    * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
    * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
    * @param {Boolean} [once] - （可选）是否仅触发一次
-   * @returns {Emitter}  - Emitter 对象
+   * @returns {Emitter} - Emitter 对象
+   */
+  mousedown(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'mousedown', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 mouseup 代理事件
+   * ========================================================================
+   * @method mouseup
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseup_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  mouseup(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'mouseup', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 mouseover 代理事件
+   * ========================================================================
+   * @method mouseover
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseover_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  mouseover(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'mouseover', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 mousemove 代理事件
+   * ========================================================================
+   * @method mousemove
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/mousemove_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  mousemove(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'mousemove', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 mouseout 代理事件
+   * ========================================================================
+   * @method mouseout
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseout_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  mouseout(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'mouseout', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 drag 代理事件
+   * ========================================================================
+   * @method drag
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/drag_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  drag(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'drag', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 dragend 代理事件
+   * ========================================================================
+   * @method dragend
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/dragend_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  dragend(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'dragend', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 dragenter 代理事件
+   * ========================================================================
+   * @method dragenter
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/dragenter_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  dragenter(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'dragenter', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 dragleave 代理事件
+   * ========================================================================
+   * @method dragleave
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/dragleave_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  dragleave(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'dragleave', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 dragover 代理事件
+   * ========================================================================
+   * @method dragover
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/dragover_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  dragover(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'dragover', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 dragstart 代理事件
+   * ========================================================================
+   * @method dragstart
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/dragstart_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  dragstart(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'dragstart', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 drop 代理事件
+   * ========================================================================
+   * @method drop
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/drop_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  drop(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'drop', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 wheel 代理事件
+   * ========================================================================
+   * @method wheel
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  wheel(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'wheel', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 contextmenu 代理事件
+   * ========================================================================
+   * @method contextmenu
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/contextmenu_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  contextmenu(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'contextmenu', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 focusin 或者 focus 代理事件
+   * ========================================================================
+   * @method focusin
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/focus_event
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/focusin_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
    */
   focusin(selector, handler, data, context, once = false) {
     focusin(this.$el, selector, handler, data, context, once)
@@ -1049,15 +1333,228 @@ class Emitter {
    * 绑定 focusout 或者 blur 代理事件
    * ========================================================================
    * @method focusout
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/blur_event
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/focusout_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
    * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
    * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
    * @param {Boolean} [once] - （可选）是否仅触发一次
-   * @returns {Emitter}  - Emitter 对象
+   * @returns {Emitter} - Emitter 对象
    */
   focusout(selector, handler, data, context, once = false) {
     focusout(this.$el, selector, handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 change 代理事件
+   * ========================================================================
+   * @method change
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/change_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  change(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'change', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 input 代理事件
+   * ========================================================================
+   * @method input
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/input_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  input(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'input', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 compositionstart 代理事件
+   * ========================================================================
+   * @method compositionstart
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/compositionstart_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  compositionstart(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'compositionstart', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 compositionupdate 代理事件
+   * ========================================================================
+   * @method compositionupdate
+   * @see  https://developer.mozilla.org/zh-CN/docs/Web/API/Element/compositionupdate_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  compositionupdate(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'compositionupdate', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 compositionend 代理事件
+   * ========================================================================
+   * @method compositionend
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/compositionend_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  compositionend(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'compositionend', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 paste 代理事件
+   * ========================================================================
+   * @method paste
+   * @see
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  paste(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'paste', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 copy 代理事件
+   * ========================================================================
+   * @method copy
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/copy_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  copy(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'copy', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 cut 代理事件
+   * ========================================================================
+   * @method cut
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/cut_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  cut(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'cut', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 keydown 代理事件
+   * ========================================================================
+   * @method keydown
+   *
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  keydown(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'keydown', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 keyup 代理事件
+   * ========================================================================
+   * @method keyup
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  keyup(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'keyup', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 绑定 error 代理事件
+   * ========================================================================
+   * @method error
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/error_event
+   * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @param {Boolean} [once] - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  error(selector, handler, data, context, once = false) {
+    on(this.$el, selector, 'error', handler, data, context, once)
+
+    return this
+  }
+
+  /**
+   * 触发代理自定义事件
+   * ========================================================================
+   * @method trigger
+   * @param {String} type - （必须）事件类型
+   * @param {String} selector - （必须）选择器
+   * @returns {Emitter} - Emitter 对象
+   */
+  trigger(type, selector) {
+    trigger(this.$el, type, selector)
 
     return this
   }

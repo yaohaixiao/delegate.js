@@ -316,7 +316,34 @@ Type: `Emitter`
 
 #### Description
 
-绑定 click 代理事件，调用方法和 on() 一致。
+绑定 click 代理事件，其调用方法和 on() 一致。 除 click() 方法外，delegate.js 还提供了其它常用的事件方法：
+
+- dbclick(selector, handler, data, context, once = false)
+- mousedown(selector, handler, data, context, once = false)
+- mouseup(selector, handler, data, context, once = false)
+- mouseover(selector, handler, data, context, once = false)
+- mousemove(selector, handler, data, context, once = false)
+- mouseout(selector, handler, data, context, once = false)
+- drag(selector, handler, data, context, once = false)
+- dragend(selector, handler, data, context, once = false)
+- dragenter(selector, handler, data, context, once = false)
+- dragleave(selector, handler, data, context, once = false)
+- dragover(selector, handler, data, context, once = false)
+- dragstart(selector, handler, data, context, once = false)
+- drop(selector, handler, data, context, once = false)
+- wheel(selector, handler, data, context, once = false)
+- contextmenu(selector, handler, data, context, once = false)
+- change(selector, handler, data, context, once = false)
+- input(selector, handler, data, context, once = false)
+- compositionstart(selector, handler, data, context, once = false)
+- compositionupdate(selector, handler, data, context, once = false)
+- compositionend(selector, handler, data, context, once = false)
+- paste(selector, handler, data, context, once = false)
+- copy(selector, handler, data, context, once = false)
+- cut(selector, handler, data, context, once = false)
+- keydown(selector, handler, data, context, once = false)
+- keyup(selector, handler, data, context, once = false)
+- error(selector, handler, data, context, once = false)
 
 #### Parameters
 
@@ -374,8 +401,15 @@ const handler = function(evt) {
 
 const $emitter = delegate('#list')
 
-// 类选择器
+// click 事件方法
 $emitter.click('.item', handler)
+
+// 其它常用事件方法
+$emitter.change('select', handler)
+$emitter.error('.image', handler)
+$emitter.keydown('input', handler)
+$emitter.keyup('input', handler)
+$emitter.input('input', handler)
 ```
 
 ### mouseenter(selector, fn, data, context, once = false)

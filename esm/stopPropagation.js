@@ -2,6 +2,7 @@
  * 终止事件在传播过程的捕获或冒泡的事件流
  * ========================================================================
  * @method stopPropagation
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Event/stopPropagation
  * @param {Event} evt - 事件对象
  *
  * @example

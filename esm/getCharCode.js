@@ -4,6 +4,8 @@ import isAppleSafari from './isAppleSafari'
  * 返回触发事件的 charCode
  * ========================================================================
  * @method getCharCode
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/KeyboardEvent/keyCode
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/KeyboardEvent/charCode
  * @param {Event} evt - Event 对象
  * @return {Number} - 返回事件的 charCode
  */

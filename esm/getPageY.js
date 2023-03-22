@@ -5,6 +5,7 @@ import isIE from './isIE'
  * 获取事件触发时的 pageY 值
  * ========================================================================
  * @method getPageY
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/MouseEvent/pageY
  * @param {Event} evt - （必须）Event 对象
  * @return {Number} - 返回事件触发时的 pageY 值
  */

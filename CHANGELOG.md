@@ -1,3 +1,12 @@
+# [1.7.0](https://github.com/yaohaixiao/delegate.js/compare/1.6.0...1.7.0) (2023-03-22)
+
+
+### Features
+
+* 添加常用的内置事件方法：dbclick\mousedown\mouseup\change\keydown 等； ([a5990bc](https://github.com/yaohaixiao/delegate.js/commit/a5990bc39470f4715902fa6cf9caa36b9412690b))
+
+
+
 # [1.6.0](https://github.com/yaohaixiao/delegate.js/compare/1.5.0...1.6.0) (2023-03-21)
 
 

@@ -850,24 +850,11 @@ $emitter.getTypes()
 // 'mouseenter'
 // ]
 ```
-### hasTypes(type)
+### getTypes()
 
 #### Description
 
-反悔已绑定的事件类型的数组（去除名称重复的事件）。
-
-#### Parameters
-
-##### type
-
-Type: `String`
-
-Default: ``
-
-（可选）事件名称:
-
-- 指定 type，则返回以绑定 type 类型事件；
-- 未指定 type，则返回以绑定全部类型事件；
+返回已绑定的事件类型的数组（去除名称重复的事件）。
 
 #### Returns
 
@@ -875,7 +862,7 @@ Type: `Boolean`
 
 Default: ``
 
-返回是否绑定（type类型的）事件处理器。
+返回已绑定事件类型的数组。
 
 ```js
 const handler = function(evt) {
@@ -888,13 +875,15 @@ const handler = function(evt) {
 const $emitter = delegate('#list')
 
 // 绑定事件
-$emitter.on('li', 'click', handler)
+$emitter.on('item', 'click', handler)
+$emitter.click('.remove', handler)
+$emitter.mouseenter('.item', handler)
 
-$emitter.hasEvent()
-// -> true
+const types = $emitter.getTypes()
 
-$emitter.hasEvent('focus')
-// => false
+console.log(type)
+// 会去除重复的 click 事件
+// => ['click', 'mouseenter']
 ```
 
 ### hasEvent(type)

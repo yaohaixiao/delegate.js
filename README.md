@@ -838,16 +838,19 @@ const $emitter = delegate('#list')
 
 // 绑定事件
 $emitter.click('li', handler)
-$emitter.on('.remove', 'click', handler)
-$emitter.on('li', 'dbclick', handler)
-$emitter.mouseenter('li', handler)
 
 // 获取已绑定的所有类型的事件处理器
-$emitter.getTypes()
+$emitter.getListeners('click')
 // => [
-// 'click',
-// 'dbclick',
-// 'mouseenter'
+//   {
+//     el,
+//     selector,
+//     type,
+//     fn,
+//     data,
+//     context,
+//     capture
+//   }
 // ]
 ```
 ### getTypes()

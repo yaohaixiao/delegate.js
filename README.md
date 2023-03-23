@@ -1,7 +1,8 @@
 # delegate.js
 
 [![npm version](https://img.shields.io/npm/v/@yaohaixiao/delegate.js)](https://www.npmjs.com/package/@yaohaixiao/delegate.js)
-[![prettier code style](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://prettier.io)
+[![Github file size](https://img.shields.io/github/size/yaohaixiao/delegate.js/delegate.min.js.svg)](https://github.com/yaohaixiao/delegate.js/blob/master/delegate.min.js)
+[![prettier code style](https://img.shields.io/badge/code_style-prettier-07b759.svg)](https://prettier.io)
 [![Coverage](https://codecov.io/gh/yaohaixiao/delegate.js/branch/main/graph/badge.svg)](https://codecov.io/gh/yaohaixiao/delegate.js)
 [![npm downloads](https://img.shields.io/npm/dm/@yaohaixiao/delegate.js)](https://npmcharts.com/compare/@yaohaixiao/delegate.js?minimal=true)
 [![MIT License](https://img.shields.io/github/license/yaohaixiao/delegate.js.svg)](https://github.com/yaohaixiao/delegate.js/blob/master/LICENSE)
@@ -18,7 +19,7 @@ delegate.js 是一个轻量级的 JavaScript 事件委托库。delegate.js 中�
 - 支持创建和绑定自定义事件，并且可以手动触发自定义事件；
 - 原生 JavaScript 编写，无任何依赖；
 - 采用 jQuery 链式调用语法，调用语法简洁方便；
-- 文件体积小，加载速度快；
+- 文件体积小(Gzip：3KB)，加载速度快；
 
 ## Browsers support
 

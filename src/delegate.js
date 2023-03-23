@@ -887,6 +887,7 @@ class Emitter {
    * 返回已绑定的事件类型的数组（去除名称重复的事件）
    * ========================================================================
    * @method getTypes
+   * @since 1.5.0
    * @returns {Array}
    */
   getTypes() {
@@ -904,6 +905,7 @@ class Emitter {
    * 判断是否已经（指定类型的）绑定事件
    * ========================================================================
    * @method hasEvent
+   * @since 1.4.0
    * @param {String} [type] - （可选）事件名称：
    *                           指定 type，则判断是否绑定 type 类型事件；
    *                           未指定 type，则判断是否绑定任意类型的事件；
@@ -973,6 +975,7 @@ class Emitter {
    * dragleave
    * ========================================================================
    * @method getRelatedTarget
+   * @since 1.1.0
    * @see https://developer.mozilla.org/en-US/docs/web/api/mouseevent/relatedtarget
    * @param {Event} evt - Event 对象
    * @return {HTMLElement} - Event 对象的 relatedTarget DOM 元素
@@ -985,6 +988,7 @@ class Emitter {
    * 返回触发事件的 target DOM 元素
    * ========================================================================
    * @method getTarget
+   * @since 1.1.0
    * @param {Event} evt - Event 对象
    * @return {HTMLElement} - Event 对象的 target DOM 元素
    */
@@ -1026,6 +1030,7 @@ class Emitter {
    * 创建自定义事件（CustomerEvent）
    * ========================================================================
    * @method createEvent
+   * @since 1.8.0
    * @see createEvent
    * @param {String} type - （必须）事件类型（名称）
    * @param {Object} [detail] - （可选）传递给自定义事件的数据，默认为 null
@@ -1094,6 +1099,7 @@ class Emitter {
    * 绑定 click 代理事件
    * ========================================================================
    * @method click
+   * @since 1.4.0
    * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/click_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1112,6 +1118,7 @@ class Emitter {
    * 绑定 dbclick 代理事件
    * ========================================================================
    * @method dbclick
+   * @since 1.7.0
    * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/dblclick_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1130,6 +1137,7 @@ class Emitter {
    * 绑定 mouseenter 代理事件
    * ========================================================================
    * @method mouseenter
+   * @since 1.4.0
    * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseenter_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1148,6 +1156,7 @@ class Emitter {
    * 绑定 mouseleave 代理事件
    * ========================================================================
    * @method mouseleave
+   * @since 1.4.0
    * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseleave_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1166,6 +1175,7 @@ class Emitter {
    * 绑定 mousedown 代理事件
    * ========================================================================
    * @method mousedown
+   * @since 1.7.0
    * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/mousedown_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1184,6 +1194,7 @@ class Emitter {
    * 绑定 mouseup 代理事件
    * ========================================================================
    * @method mouseup
+   * @since 1.7.0
    * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseup_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1202,6 +1213,7 @@ class Emitter {
    * 绑定 mouseover 代理事件
    * ========================================================================
    * @method mouseover
+   * @since 1.7.0
    * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseover_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1220,6 +1232,7 @@ class Emitter {
    * 绑定 mousemove 代理事件
    * ========================================================================
    * @method mousemove
+   * @since 1.7.0
    * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/mousemove_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1238,6 +1251,7 @@ class Emitter {
    * 绑定 mouseout 代理事件
    * ========================================================================
    * @method mouseout
+   * @since 1.7.0
    * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseout_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1256,6 +1270,7 @@ class Emitter {
    * 绑定 drag 代理事件
    * ========================================================================
    * @method drag
+   * @since 1.7.0
    * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/drag_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1274,6 +1289,7 @@ class Emitter {
    * 绑定 dragend 代理事件
    * ========================================================================
    * @method dragend
+   * @since 1.7.0
    * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/dragend_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1292,6 +1308,7 @@ class Emitter {
    * 绑定 dragenter 代理事件
    * ========================================================================
    * @method dragenter
+   * @since 1.7.0
    * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/dragenter_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1310,6 +1327,7 @@ class Emitter {
    * 绑定 dragleave 代理事件
    * ========================================================================
    * @method dragleave
+   * @since 1.7.0
    * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/dragleave_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1328,6 +1346,7 @@ class Emitter {
    * 绑定 dragover 代理事件
    * ========================================================================
    * @method dragover
+   * @since 1.7.0
    * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/dragover_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1346,6 +1365,7 @@ class Emitter {
    * 绑定 dragstart 代理事件
    * ========================================================================
    * @method dragstart
+   * @since 1.7.0
    * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/dragstart_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1364,6 +1384,7 @@ class Emitter {
    * 绑定 drop 代理事件
    * ========================================================================
    * @method drop
+   * @since 1.7.0
    * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/drop_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1382,6 +1403,7 @@ class Emitter {
    * 绑定 wheel 代理事件
    * ========================================================================
    * @method wheel
+   * @since 1.7.0
    * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1400,6 +1422,7 @@ class Emitter {
    * 绑定 contextmenu 代理事件
    * ========================================================================
    * @method contextmenu
+   * @since 1.7.0
    * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/contextmenu_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1456,6 +1479,7 @@ class Emitter {
    * 绑定 change 代理事件
    * ========================================================================
    * @method change
+   * @since 1.7.0
    * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/change_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1474,6 +1498,7 @@ class Emitter {
    * 绑定 input 代理事件
    * ========================================================================
    * @method input
+   * @since 1.7.0
    * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/input_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1492,6 +1517,7 @@ class Emitter {
    * 绑定 compositionstart 代理事件
    * ========================================================================
    * @method compositionstart
+   * @since 1.7.0
    * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/compositionstart_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1510,6 +1536,7 @@ class Emitter {
    * 绑定 compositionupdate 代理事件
    * ========================================================================
    * @method compositionupdate
+   * @since 1.7.0
    * @see  https://developer.mozilla.org/zh-CN/docs/Web/API/Element/compositionupdate_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1528,6 +1555,7 @@ class Emitter {
    * 绑定 compositionend 代理事件
    * ========================================================================
    * @method compositionend
+   * @since 1.7.0
    * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/compositionend_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1546,6 +1574,7 @@ class Emitter {
    * 绑定 paste 代理事件
    * ========================================================================
    * @method paste
+   * @since 1.7.0
    * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/paste_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1564,6 +1593,7 @@ class Emitter {
    * 绑定 copy 代理事件
    * ========================================================================
    * @method copy
+   * @since 1.7.0
    * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/copy_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1582,6 +1612,7 @@ class Emitter {
    * 绑定 cut 代理事件
    * ========================================================================
    * @method cut
+   * @since 1.7.0
    * @see https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/cut_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1600,7 +1631,7 @@ class Emitter {
    * 绑定 keydown 代理事件
    * ========================================================================
    * @method keydown
-   *
+   * @since 1.7.0
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
    * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
@@ -1618,6 +1649,7 @@ class Emitter {
    * 绑定 keyup 代理事件
    * ========================================================================
    * @method keyup
+   * @since 1.7.0
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
    * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
@@ -1635,6 +1667,7 @@ class Emitter {
    * 绑定 error 代理事件
    * ========================================================================
    * @method error
+   * @since 1.7.0
    * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/error_event
    * @param {String} selector - （必须）事件代理目标 DOM 元素的选择器
    * @param {Function} handler - （必须） 事件处理器回调函数
@@ -1653,6 +1686,7 @@ class Emitter {
    * 触发代理自定义事件
    * ========================================================================
    * @method trigger
+   * @since 1.6.0
    * @param {String} type - （必须）事件类型
    * @param {String} selector - （必须）选择器
    * @returns {Emitter} - Emitter 对象
@@ -1709,6 +1743,7 @@ class Emitter {
    * 阻止监听同一事件的其他事件监听器被调用，并且阻止默认行为和事件冒泡。
    * ========================================================================
    * @method stopImmediate
+   * @since 1.8.0
    * @see stopImmediate
    * @param {Event} evt - （必须）Event 对象
    */

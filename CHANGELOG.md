@@ -1,3 +1,12 @@
+## [1.8.1](https://github.com/yaohaixiao/delegate.js/compare/1.8.0...1.8.1) (2023-03-24)
+
+
+### Bug Fixes
+
+* 修复 hasEvent() 未传递 type 参数结果错误和 destroy() 方法解除绑定不完全的问题； ([78a4e0c](https://github.com/yaohaixiao/delegate.js/commit/78a4e0c31fa98e6a6b68f80de8fc35069f0661f7))
+
+
+
 # [1.8.0](https://github.com/yaohaixiao/delegate.js/compare/1.7.0...1.8.0) (2023-03-22)
 
 

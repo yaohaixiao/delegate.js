@@ -13,7 +13,7 @@ import { CAPTURE_EVENTS } from './enum'
  * @param {Function} [fn] - （可选）事件处理器回调函数
  */
 const off = (el, type, fn) => {
-  const listeners = el._listeners
+  let listeners = el._listeners
   let capture = false
   let index = -1
 

@@ -52,8 +52,6 @@ describe('trigger() 方法', () => {
     const $target = evt.delegateTarget
 
     id = $target.id
-
-    console.log('当前事件目标是：', $target)
   }
   const customHandler = function (evt) {
     const $target = evt.delegateTarget
@@ -62,8 +60,6 @@ describe('trigger() 方法', () => {
     type = evt.type
 
     mockFn()
-
-    console.log(`当前事件类型是：${type}`)
   }
 
   on($list, '.item', 'click', itemHandler)

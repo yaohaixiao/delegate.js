@@ -10,17 +10,18 @@
 "use strict";
 
 function _typeof2(obj) { "@babel/helpers - typeof"; return _typeof2 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof2(obj); }
+var _this = void 0;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof2(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof2(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof2(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof2(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof2(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof2(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 var CAPTURE_EVENTS = ['focusout', 'blur', 'focusin', 'focus', 'load', 'unload', 'mouseenter', 'mouseleave'];
 
 /**
@@ -259,6 +260,46 @@ var _getListeners = function getListeners(el, type) {
 };
 
 /**
+ * 返回已绑定的事件类型的数组（去除名称重复的事件）
+ * ========================================================================
+ * @method getTypes
+ * @returns {Array}
+ */
+var _getTypes = function getTypes(el) {
+  var listeners = _getListeners(el);
+  var types = [];
+  listeners.forEach(function (listener) {
+    types.push(listener.type);
+  });
+  return _toConsumableArray(new Set(types));
+};
+
+/**
+ * 判断是否已经（指定类型的）绑定事件
+ * ========================================================================
+ * @method hasEvent
+ * @param {HTMLElement} el - 要检测是否绑定事件的 DOM 元素
+ * @param {String} [type] - （可选）事件名称：
+ *                           指定 type，则判断是否绑定 type 类型事件；
+ *                           未指定 type，则判断是否绑定任意类型的事件；
+ * @returns {Boolean}
+ */
+var _hasEvent = function hasEvent(el, type) {
+  var types = _getTypes(el);
+  var result;
+  if (types.length < 1) {
+    return false;
+  }
+  result = types.length > 0;
+
+  /* istanbul ignore else */
+  if (type && isString(type)) {
+    result = types.indexOf(type) > -1;
+  }
+  return result;
+};
+
+/**
  * 获取 scrollTop 和 scrollLeft 数组数据
  * ========================================================================
  * IE 浏览器种计算 pageX 和 pageY，需要包含 scrollTop 和 scrollLeft 的值
@@ -438,23 +479,39 @@ var _createEvent = function createEvent(type) {
  * ========================================================================
  * @method purgeElement
  * @param {HTMLElement|String} el - （必须）需要销毁绑定事件处理器的 DOM 元素或者其选择器
- * @param {String|Boolean} [type] - （可选）事件类型
+ * @param {String|Boolean} type - （必须）事件类型
  * @param {Boolean} [recurse] - （可选）是否递归销毁 DOM 元素子节点所绑定的所有事件处理器
  */
-var purgeElement = function purgeElement(el) {
-  var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+var purgeElement = function purgeElement(el, type) {
   var recurse = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
   var $element = isString(el) ? document.querySelector(el) : el;
-  var $childNodes = $element.childNodes;
+  var $children = $element.childNodes;
   var listeners = _getListeners($element, type);
   listeners.forEach(function (listener) {
     _off($element, listener.type, listener.fn);
   });
-  if ((recurse || type === true || arguments.length === 1) && $element && $childNodes) {
-    $childNodes.forEach(function ($childNode) {
-      purgeElement($childNode, type, recurse);
+  if ((recurse || type === true || arguments.length === 1) && $element && $children) {
+    $children.forEach(function ($child) {
+      if (isElement($child)) {
+        purgeElement($child, type, recurse);
+      }
     });
   }
+};
+
+/**
+ * 销毁所有已绑定的代理事件
+ * ========================================================================
+ * @method destroy
+ * @param {HTMLElement} el - 需要解除所有事件绑定的 DOM 元素
+ * @returns {Emitter} - Emitter 对象
+ */
+var _destroy = function destroy(el) {
+  var types = _getTypes(el);
+  types.forEach(function (type) {
+    purgeElement(el, type, true);
+  });
+  return _this;
 };
 
 /**
@@ -872,12 +929,7 @@ var Emitter = /*#__PURE__*/function () {
   }, {
     key: "getTypes",
     value: function getTypes() {
-      var listeners = this.getListeners();
-      var types = [];
-      listeners.forEach(function (listener) {
-        types.push(listener.type);
-      });
-      return _toConsumableArray(new Set(types));
+      return _getTypes(this.$el);
     }
 
     /**
@@ -893,7 +945,7 @@ var Emitter = /*#__PURE__*/function () {
   }, {
     key: "hasEvent",
     value: function hasEvent(type) {
-      return this.getTypes().indexOf(type) > -1;
+      return _hasEvent(this.$el, type);
     }
 
     /**
@@ -996,7 +1048,7 @@ var Emitter = /*#__PURE__*/function () {
      * 2. recurse 设置为 true，递归销毁子节点全部事件绑定
      * ========================================================================
      * @method purge
-     * @param {String} type  - （可选）事件类型
+     * @param {String} type  - （必须）事件类型
      * @param {Boolean} [recurse]  - （可选）是否递归销毁子节点所有事件绑定
      * 元素绑定的全部事件处理器
      * @returns {Emitter} - Emitter 对象
@@ -1018,7 +1070,7 @@ var Emitter = /*#__PURE__*/function () {
   }, {
     key: "destroy",
     value: function destroy() {
-      purgeElement(this.$el, true);
+      _destroy(this.$el);
       return this;
     }
 

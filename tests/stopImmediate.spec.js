@@ -35,19 +35,17 @@ describe('stopImmediate() 方法', () => {
   const $list = document.querySelector('#list')
   const $support = document.querySelector('#item-support')
   const $link = document.querySelector('a[data-id="support"]')
-  const logHandler = function (evt) {
+  const logHandler = function () {
     mockFn()
     logged = true
-    console.log(evt.target)
   }
-  const styleHandler = function (evt) {
+  const styleHandler = function () {
     mockFn()
     styled = true
     $list.classList.add('checked')
   }
   const serviceHandler = function (evt) {
     mockFn()
-    alert(evt.target)
     stopImmediate(evt)
   }
   const removeHandler = function (evt) {

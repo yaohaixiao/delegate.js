@@ -1,7 +1,8 @@
 /**
  * @jest-environment jsdom
  */
-import stopPropagation from '../esm/stopPropagation'
+import stopPropagation from 'esm/stopPropagation'
+import getCharCode from 'esm/getCharCode'
 
 describe('stopPropagation() 方法', () => {
   document.body.innerHTML =
@@ -11,6 +12,7 @@ describe('stopPropagation() 方法', () => {
     '</div>'
 
   let id = ''
+  let code = ''
   const mockResponse = jest.fn()
   const $nav = document.querySelector('#nav')
   const showLog = function (evt) {
@@ -38,7 +40,7 @@ describe('stopPropagation() 方法', () => {
   it('不调用 stopPropagation() 方法，执行事件冒泡：', () => {
     const $help = document.querySelector('#help')
     const handler = function (evt) {
-      console.log(evt.target)
+      code = getCharCode(evt)
     }
 
     $help.addEventListener('click', handler, false)

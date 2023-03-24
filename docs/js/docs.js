@@ -157,7 +157,7 @@
       $log.value += `已解除 .item 事件代理绑定\r`
       $item.innerHTML = '恢复 .item 事件代理绑定'
       $emitter.purge('mouseenter')
-      $emitter.off('click', logClick)
+      $emitter.off('click')
     }
 
     scroll()

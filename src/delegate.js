@@ -264,6 +264,51 @@ const getListeners = (el, type) => {
 }
 
 /**
+ * 返回已绑定的事件类型的数组（去除名称重复的事件）
+ * ========================================================================
+ * @method getTypes
+ * @returns {Array}
+ */
+const getTypes = (el) => {
+  const listeners = getListeners(el)
+  const types = []
+
+  listeners.forEach((listener) => {
+    types.push(listener.type)
+  })
+
+  return [...new Set(types)]
+}
+
+/**
+ * 判断是否已经（指定类型的）绑定事件
+ * ========================================================================
+ * @method hasEvent
+ * @param {HTMLElement} el - 要检测是否绑定事件的 DOM 元素
+ * @param {String} [type] - （可选）事件名称：
+ *                           指定 type，则判断是否绑定 type 类型事件；
+ *                           未指定 type，则判断是否绑定任意类型的事件；
+ * @returns {Boolean}
+ */
+const hasEvent = (el, type) => {
+  const types = getTypes(el)
+  let result
+
+  if (types.length < 1) {
+    return false
+  }
+
+  result = types.length > 0
+
+  /* istanbul ignore else */
+  if (type && isString(type)) {
+    result = types.indexOf(type) > -1
+  }
+
+  return result
+}
+
+/**
  * 获取 scrollTop 和 scrollLeft 数组数据
  * ========================================================================
  * IE 浏览器种计算 pageX 和 pageY，需要包含 scrollTop 和 scrollLeft 的值
@@ -446,12 +491,12 @@ const createEvent = (
  * ========================================================================
  * @method purgeElement
  * @param {HTMLElement|String} el - （必须）需要销毁绑定事件处理器的 DOM 元素或者其选择器
- * @param {String|Boolean} [type] - （可选）事件类型
+ * @param {String|Boolean} type - （必须）事件类型
  * @param {Boolean} [recurse] - （可选）是否递归销毁 DOM 元素子节点所绑定的所有事件处理器
  */
-const purgeElement = function (el, type = '', recurse = false) {
+const purgeElement = function (el, type, recurse = false) {
   const $element = isString(el) ? document.querySelector(el) : el
-  const $childNodes = $element.childNodes
+  const $children = $element.childNodes
   const listeners = getListeners($element, type)
 
   listeners.forEach((listener) => {
@@ -461,12 +506,31 @@ const purgeElement = function (el, type = '', recurse = false) {
   if (
     (recurse || type === true || arguments.length === 1) &&
     $element &&
-    $childNodes
+    $children
   ) {
-    $childNodes.forEach(($childNode) => {
-      purgeElement($childNode, type, recurse)
+    $children.forEach(($child) => {
+      if (isElement($child)) {
+        purgeElement($child, type, recurse)
+      }
     })
   }
+}
+
+/**
+ * 销毁所有已绑定的代理事件
+ * ========================================================================
+ * @method destroy
+ * @param {HTMLElement} el - 需要解除所有事件绑定的 DOM 元素
+ * @returns {Emitter} - Emitter 对象
+ */
+const destroy = (el) => {
+  const types = getTypes(el)
+
+  types.forEach((type) => {
+    purgeElement(el, type, true)
+  })
+
+  return this
 }
 
 /**
@@ -480,7 +544,7 @@ const purgeElement = function (el, type = '', recurse = false) {
  * @param {Function} [fn] - （可选）事件处理器回调函数
  */
 const off = (el, type, fn) => {
-  const listeners = el._listeners
+  let listeners = el._listeners
   let capture = false
   let index = -1
 
@@ -891,14 +955,7 @@ class Emitter {
    * @returns {Array}
    */
   getTypes() {
-    const listeners = this.getListeners()
-    const types = []
-
-    listeners.forEach((listener) => {
-      types.push(listener.type)
-    })
-
-    return [...new Set(types)]
+    return getTypes(this.$el)
   }
 
   /**
@@ -912,7 +969,7 @@ class Emitter {
    * @returns {Boolean}
    */
   hasEvent(type) {
-    return this.getTypes().indexOf(type) > -1
+    return hasEvent(this.$el, type)
   }
 
   /**
@@ -1003,7 +1060,7 @@ class Emitter {
    * 2. recurse 设置为 true，递归销毁子节点全部事件绑定
    * ========================================================================
    * @method purge
-   * @param {String} type  - （可选）事件类型
+   * @param {String} type  - （必须）事件类型
    * @param {Boolean} [recurse]  - （可选）是否递归销毁子节点所有事件绑定
    * 元素绑定的全部事件处理器
    * @returns {Emitter} - Emitter 对象
@@ -1021,7 +1078,7 @@ class Emitter {
    * @returns {Emitter} - Emitter 对象
    */
   destroy() {
-    purgeElement(this.$el, true)
+    destroy(this.$el)
 
     return this
   }

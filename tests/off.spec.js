@@ -40,7 +40,6 @@ describe('closest() 方法', () => {
 
     id = $target.id
     count += 1
-    console.log('你点击的 DOM 元素 id 为：', id)
   }
 
   it('基础调用：of(el, type, fn)', () => {

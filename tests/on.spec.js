@@ -54,14 +54,10 @@ describe('on() 方法', () => {
     id = attrId
     data = evtData
     $context = this
-
-    console.log('当前的事件目标是：', $target)
-    console.log('事件触发次数：', count)
   }
 
   it('基础调用：on(el, selector, type, fn)', () => {
     const $remove = document.querySelector('a[data-id*="home"]')
-    let addHandler = null
     let items
 
     on($list, '.remove', 'click', removeItem)

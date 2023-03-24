@@ -7,6 +7,8 @@ import focusout from './focusout'
 import isElement from './isElement'
 import isString from './isString'
 import getListeners from './getListeners'
+import getTypes from './getTypes'
+import hasEvent from './hasEvent'
 import getPageX from './getPageX'
 import getPageY from './getPageY'
 import getPageXY from './getPageXY'
@@ -14,6 +16,7 @@ import getCharCode from './getCharCode'
 import getRelatedTarget from './getRelatedTarget'
 import getTarget from './getTarget'
 import purgeElement from './purgeElement'
+import destroy from './destroy'
 import preventDefault from './preventDefault'
 import stopPropagation from './stopPropagation'
 import stopEvent from './stopEvent'
@@ -66,14 +69,7 @@ class Emitter {
    * @returns {Array}
    */
   getTypes() {
-    const listeners = this.getListeners()
-    const types = []
-
-    listeners.forEach((listener) => {
-      types.push(listener.type)
-    })
-
-    return [...new Set(types)]
+    return getTypes(this.$el)
   }
 
   /**
@@ -87,7 +83,7 @@ class Emitter {
    * @returns {Boolean}
    */
   hasEvent(type) {
-    return this.getTypes().indexOf(type) > -1
+    return hasEvent(this.$el, type)
   }
 
   /**
@@ -178,7 +174,7 @@ class Emitter {
    * 2. recurse 设置为 true，递归销毁子节点全部事件绑定
    * ========================================================================
    * @method purge
-   * @param {String} type  - （可选）事件类型
+   * @param {String} type  - （必须）事件类型
    * @param {Boolean} [recurse]  - （可选）是否递归销毁子节点所有事件绑定
    * 元素绑定的全部事件处理器
    * @returns {Emitter} - Emitter 对象
@@ -196,7 +192,7 @@ class Emitter {
    * @returns {Emitter} - Emitter 对象
    */
   destroy() {
-    purgeElement(this.$el, true)
+    destroy(this.$el)
 
     return this
   }

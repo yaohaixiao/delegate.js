@@ -1,4 +1,5 @@
 import isString from './isString'
+import isElement from './isElement'
 import getListeners from './getListeners'
 import off from './off'
 
@@ -10,12 +11,12 @@ import off from './off'
  * ========================================================================
  * @method purgeElement
  * @param {HTMLElement|String} el - （必须）DOM 元素或者其选择器
- * @param {String|Boolean} [type] - （可选）事件类型
+ * @param {String|Boolean} type - （必须）事件类型
  * @param {Boolean} [recurse] - （可选）是否递归销毁子节点所有事件绑定
  */
-const purgeElement = function (el, type = '', recurse = false) {
+const purgeElement = function (el, type, recurse = false) {
   const $element = isString(el) ? document.querySelector(el) : el
-  const $childNodes = $element.childNodes
+  const $children = $element.childNodes
   const listeners = getListeners($element, type)
 
   listeners.forEach((listener) => {
@@ -25,10 +26,12 @@ const purgeElement = function (el, type = '', recurse = false) {
   if (
     (recurse || type === true || arguments.length === 1) &&
     $element &&
-    $childNodes
+    $children
   ) {
-    $childNodes.forEach(($childNode) => {
-      purgeElement($childNode, type, recurse)
+    $children.forEach(($child) => {
+      if (isElement($child)) {
+        purgeElement($child, type, recurse)
+      }
     })
   }
 }

@@ -71,9 +71,7 @@
   },
   "lint-staged": {
     "src/**/*.js": [
-      "npm run lint:fix",
-      "prettier --write",
-      "npm run test:unit"
+      "npm run test"
     ]
   }
 }

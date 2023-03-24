@@ -11,7 +11,7 @@
     "lint:fix": "npm run lint --cache --fix",
     "prettier:check": "npx prettier --check \"**/**/*.js\"",
     "prettier:write": "npx prettier --write \"**/**/*.js\"",
-    "test:unit": "jest --config ./jest.config.json",
+    "test:unit": "jest --config jest.config.js",
     "test": "npm run lint:fix && npm run prettier:write && npm run test:unit",
     "prepare": "husky install",
     "watch": "gulp watch"
@@ -72,7 +72,8 @@
   "lint-staged": {
     "src/**/*.js": [
       "npm run lint:fix",
-      "prettier --write"
+      "prettier --write",
+      "npm run test:unit"
     ]
   }
 }

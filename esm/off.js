@@ -1,5 +1,6 @@
 import purgeElement from './purgeElement'
 import isFunction from './isFunction'
+import _delete from './_delete'
 import { CAPTURE_EVENTS } from './enum'
 
 /**
@@ -13,9 +14,7 @@ import { CAPTURE_EVENTS } from './enum'
  * @param {Function} [fn] - （可选）事件处理器回调函数
  */
 const off = (el, type, fn) => {
-  let listeners = el._listeners
   let capture = false
-  let index = -1
 
   // 如果不设置 fn 参数，默认清除 el 元素上绑定的所有事件处理器
   if (!isFunction(fn)) {
@@ -29,20 +28,7 @@ const off = (el, type, fn) => {
   }
 
   // 移除缓存的 _listeners 数据
-  listeners.forEach((listener, i) => {
-    if (listener.type === type) {
-      index = i
-
-      if (fn && listener.fn === fn) {
-        index = i
-      }
-    }
-  })
-
-  /* istanbul ignore else */
-  if (index > -1) {
-    el._listeners.splice(index, 1)
-  }
+  _delete(el, type, fn)
 
   if (CAPTURE_EVENTS.indexOf(type) > -1) {
     capture = true

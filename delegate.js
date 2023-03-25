@@ -515,6 +515,37 @@ var _destroy = function destroy(el) {
 };
 
 /**
+ * 删除 DOM 元素缓存的 listener 数据
+ * ========================================================================
+ * @method _delete
+ * @param {HTMLElement} el - 要删除 listener 的 DOM 元素
+ * @param {String} type - 事件类型（名称）
+ * @param {Function} [fn] - 事件处理器回调函数
+ */
+var _delete = function _delete(el, type, fn) {
+  var listeners = el._listeners;
+  var index = -1;
+  if (listeners.length < 1) {
+    return false;
+  }
+
+  // 移除缓存的 _listeners 数据
+  listeners.forEach(function (listener, i) {
+    if (type === listener.type) {
+      index = i;
+      if (fn === listener.fn) {
+        index = i;
+      }
+    }
+  });
+
+  /* istanbul ignore else */
+  if (index > -1) {
+    listeners.splice(index, 1);
+  }
+};
+
+/**
  * 取消 type 类型的代理事件绑定
  * ========================================================================
  * 如果没有设置 handler，则销毁 this.$el 绑定的所有符合 type 事件类型的事件绑定
@@ -525,9 +556,7 @@ var _destroy = function destroy(el) {
  * @param {Function} [fn] - （可选）事件处理器回调函数
  */
 var _off = function off(el, type, fn) {
-  var listeners = el._listeners;
   var capture = false;
-  var index = -1;
 
   // 如果不设置 fn 参数，默认清除 el 元素上绑定的所有事件处理器
   if (!isFunction(fn)) {
@@ -541,19 +570,7 @@ var _off = function off(el, type, fn) {
   }
 
   // 移除缓存的 _listeners 数据
-  listeners.forEach(function (listener, i) {
-    if (listener.type === type) {
-      index = i;
-      if (fn && listener.fn === fn) {
-        index = i;
-      }
-    }
-  });
-
-  /* istanbul ignore else */
-  if (index > -1) {
-    el._listeners.splice(index, 1);
-  }
+  _delete(el, type, fn);
   if (CAPTURE_EVENTS.indexOf(type) > -1) {
     capture = true;
   }

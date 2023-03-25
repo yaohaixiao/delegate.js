@@ -134,11 +134,11 @@
 
     if (isRemoveOn) {
       $log.value += `已恢复 .remove 事件代理绑定\r`
-      $remove.innerHTML = '解除 .remove 事件代理绑定'
+      $remove.innerHTML = '解除 .remove 绑定'
       $emitter.click('.remove', remove)
     } else {
       $log.value += `已解除 .remove 事件代理绑定\r`
-      $remove.innerHTML = '恢复 .remove 事件代理绑定'
+      $remove.innerHTML = '恢复 .remove 绑定'
       $emitter.off('click', remove)
     }
 
@@ -150,14 +150,14 @@
 
     if (isItemOn) {
       $log.value += `已恢复 .item 事件代理绑定\r`
-      $item.innerHTML = '解除 .item 事件代理绑定'
-      $emitter.mouseenter('.item', logMouseEnter)
+      $item.innerHTML = '解除 .item 绑定'
+      // $emitter.mouseenter('.item', logMouseEnter)
       $emitter.on('.item', 'click', logClick)
     } else {
       $log.value += `已解除 .item 事件代理绑定\r`
-      $item.innerHTML = '恢复 .item 事件代理绑定'
-      $emitter.purge('mouseenter')
-      $emitter.off('click')
+      $item.innerHTML = '恢复 .item 绑定'
+      // $emitter.purge('mouseenter')
+      $emitter.off('click', logClick)
     }
 
     scroll()
@@ -216,7 +216,6 @@
     $emitter.click('.remove', remove)
 
     $emitter.on('.item','alert', lastItemHandler)
-    $emitter.on('.item','alert', logClick)
     $emitter.on('.item','alert', typeHandler)
 
     // 动态创建列表项
@@ -224,8 +223,6 @@
 
     $provider.focusin('.textarea', typeHandler)
     $provider.keyup('.textarea', keyboardHandler)
-    $provider.change('.textarea', typeHandler)
-    $provider.paste('.textarea', typeHandler)
 
     types = $emitter.getTypes()
 

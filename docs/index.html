@@ -57,25 +57,40 @@
       </tbody>
     </table>
     <h2>安装说明</h2>
-    <p>delegate.js 支持 AMD 和 CommonJS 规范的模块调用方式，可以直接使用 npm 安装，也可以使用 script 标签引入到页面。</p>
+    <p>delegate.js 支持 UMD 规范和 ES6 的模块调用方式，可以在 Node.js 环境中使用 npm 安装，也可以在浏览器中使用 script 标签引入到页面。</p>
     <h3>npm 安装</h3>
     <pre class="code"><code># install from npmjs.com
 npm i -S @yaohaixiao/delegate.js
 
 # install from github.com
-npm i -S @yaohaixiao/delegate.js@1.1.0 --registry=https://npm.pkg.github.com</code></pre>
-    <h3>CDN 调用 JS 文件</h3>
+npm i -S @yaohaixiao/delegate.js --registry=https://npm.pkg.github.com</code></pre>
+    <h3>浏览器中调用</h3>
+    <p>在浏览器中调用 delegate.js，可以选择调用 jsdelivr 提供的 CDN 服务中的文件，也可以使用本地的 delegate.js 文件。</p>
+    <h4>CDN 调用 JS 文件</h4>
     <pre class="code"><code>&lt;script src="https://cdn.jsdelivr.net/gh/yaohaixiao/delegate.js/delegate.min.js"&gt;&lt;/script&gt;</code></pre>
-    <h3>本地调用 JS 文件</h3>
+    <h4>本地调用 JS 文件</h4>
     <pre class="code"><code>&lt;script src="/path/to/delegate.js"&gt;&lt;/script&gt;</code></pre>
+    <h3>ES6 模块中调用</h3>
+    <pre class="code"><code>// 调用 delegate 实例对象
+import delegate from '@yaohaixiao/esm/delegate'
+
+// 调用 Emitter 构造函数
+import Emitter from '@yaohaixiao/delegate.js/esm/Emitter'
+
+// 调用单个（on/once/off）方法
+import on from '@yaohaixiao/delegate.js/esm/on'
+import once from '@yaohaixiao/delegate.js/esm/once'
+import off from '@yaohaixiao/delegate.js/esm/off'</code></pre>
+    <h3>Node.js 中调用</h3>
+    <pre class="code"><code>const delegate = require('@yaohaixiao/delegate.js')</code></pre>
     <h2>Examples</h2>
     <p>事件代理最适用的场景就是下面示例中，需要动态创建 DOM 元素，并且还会频繁移除动态创建的 DOM 元素的应用场景。在该场景下，通常不方便，也不会为动态创建的 DOM 节点一一绑定事件处理器。因为在移除 DOM 节点时，如果没有（及时）销毁 DOM 节点绑定的事件处理函数，就会导致事件处理器一直占用内存资源无法释放，从而导致浏览器的内存溢出。</p>
     <p>通过事件代理就可以很好的解决前面提到的问题，事件代理是将事件侦听器添加到一个父级元素上，这样就只用添加一次事件侦听器，可以避免向 （父级元素内）很多特定的 DOM 节点添加多个事件侦听器，减少了内存消耗，从而优化程序性能。而这个添加在父元素上的事件侦听器通过事件冒泡的事件流机制以分析查找子元素（选择器）的匹配项。</p>
     <div class="case">
       <div class="preview">
         <div class="toolbar">
-          <span id="action-item" class="action">解除 .item 事件代理绑定</span>
-          <span id="action-remove" class="action">解除 .remove 事件代理绑定</span>
+          <span id="action-item" class="action">解除 .item 绑定</span>
+          <span id="action-remove" class="action">解除 .remove 绑定</span>
         </div>
         <ul id="list" class="list"></ul>
         <div class="toolbar">
@@ -89,7 +104,6 @@ npm i -S @yaohaixiao/delegate.js@1.1.0 --registry=https://npm.pkg.github.com</co
         <pre class="code"><code>&lt;ul id="list" class="list"&gt;
 &lt;/ul&gt;
 &lt;script src="lib/delegate.min.js"&gt;&lt;/script&gt;
-
 &lt;script&gt;
 const $list = document.querySelector('#list')
 const $emitter = delegate($list)

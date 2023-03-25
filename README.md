@@ -29,7 +29,7 @@ delegate.js 是一个轻量级的 JavaScript 事件委托库。delegate.js 中�
 
 ## 安装说明
 
-delegate.js 支持 AMD 和 CommonJS 规范的模块调用方式，可以直接使用 npm 安装，也可以使用 script 标签引入到页面。
+delegate.js 支持 UMD 规范和 ES6 的模块调用方式，可以在 Node.js 环境中使用 npm 安装，也可以在浏览器中使用 script 标签引入到页面。
 
 ### npm 安装
 
@@ -38,7 +38,7 @@ delegate.js 支持 AMD 和 CommonJS 规范的模块调用方式，可以直接�
 npm i -S @yaohaixiao/delegate.js
 
 # install from github.com
-npm i -S @yaohaixiao/delegate.js@1.1.0 --registry=https://npm.pkg.github.com
+npm i -S @yaohaixiao/delegate.js --registry=https://npm.pkg.github.com
 ```
 
 ### 浏览器中调用

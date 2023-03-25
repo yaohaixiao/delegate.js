@@ -1,7 +1,7 @@
 import _typeof from 'esm/_typeof'
 
 describe('_typeof() 方法', () => {
-  it('_typeof(\'ok\'), 返回：[object String]', () => {
+  it("_typeof('ok'), 返回：[object String]", () => {
     expect(_typeof('ok')).toBe('[object String]')
   })
 
@@ -34,8 +34,7 @@ describe('_typeof() 方法', () => {
   })
 
   it('_typeof(()=>{}), 返回：[object Function]', () => {
-    expect(_typeof(() => {
-    })).toBe('[object Function]')
+    expect(_typeof(() => {})).toBe('[object Function]')
   })
 
   it('_typeof(new Set()), 返回：[object Set]', () => {

@@ -5,12 +5,8 @@
  * Update: 2023.3.24
  */
 module.exports = {
-  moduleFileExtensions: [
-    'js'
-  ],
-  testMatch: [
-    '**/tests/**/*.spec.(js)'
-  ],
+  moduleFileExtensions: ['js'],
+  testMatch: ['**/tests/**/*.spec.(js)'],
   transform: {
     '^.+\\.js$': '<rootDir>/node_modules/babel-jest'
   },

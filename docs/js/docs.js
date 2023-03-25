@@ -151,12 +151,12 @@
     if (isItemOn) {
       $log.value += `已恢复 .item 事件代理绑定\r`
       $item.innerHTML = '解除 .item 绑定'
-      // $emitter.mouseenter('.item', logMouseEnter)
+      $emitter.mouseenter('.item', logMouseEnter)
       $emitter.on('.item', 'click', logClick)
     } else {
       $log.value += `已解除 .item 事件代理绑定\r`
       $item.innerHTML = '恢复 .item 绑定'
-      // $emitter.purge('mouseenter')
+      $emitter.purge('mouseenter')
       $emitter.off('click', logClick)
     }
 

@@ -50,14 +50,14 @@ a:hover {
   color: #01aa95;
 }
 
-.main{
-  margin:0 auto;
+.main {
+  margin: 0 auto;
   min-width: 960px;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 .links,
-.article{
+.article {
   margin: 2em 4em;
   overflow: hidden;
 }
@@ -88,7 +88,7 @@ a:hover {
   overflow: hidden;
 }
 
-.article h3{
+.article h3 {
   height: 30px;
   line-height: 30px;
   font-size: 20px;
@@ -102,13 +102,13 @@ a:hover {
   overflow: hidden;
 }
 
-.table th{
+.table th {
   padding: 2em 0;
 }
 
 .table th,
-.table td{
-  text-align:center;
+.table td {
+  text-align: center;
   border-left: 1px solid #ddd;
 }
 
@@ -123,8 +123,7 @@ a:hover {
 }
 
 .code,
-.textarea{
-  font-family: "Courier New", Consolas, Georgia, Arial, sans-serif;
+.textarea {
   font-size: 13px;
   line-height: 150%;
 }
@@ -139,13 +138,33 @@ a:hover {
   overflow: auto;
 }
 
+.code,
+.code code,
+.textarea {
+  font-family: "Courier New", Consolas, Georgia, Arial, sans-serif;
+}
+
 .case {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
+  gap: 40px;
   padding: 1em;
   border-radius: 4px;
   box-shadow: 0 0 4px #ddd;
+  overflow: hidden;
+}
+
+.case:after {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  width: 0;
+  border-left: 1px solid #ddd;
   overflow: hidden;
 }
 
@@ -154,7 +173,7 @@ a:hover {
   height: 36px;
   line-height: 36px;
   font-size: 14px;
-  padding: 0 10px;
+  padding: 0 16px;
   text-align: right;
   overflow: hidden;
 }
@@ -217,7 +236,7 @@ a:hover {
   height: 36px;
   line-height: 36px;
   cursor: pointer;
-  padding: 0 10px;
+  padding: 0 16px;
 }
 
 .item:hover {

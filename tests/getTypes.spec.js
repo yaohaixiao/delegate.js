@@ -6,6 +6,7 @@ import hasEvent from 'esm/hasEvent'
 import on from 'esm/on'
 import off from 'esm/off'
 import destroy from 'esm/destroy'
+import _delete from 'esm/_delete'
 
 describe('getTypes() 方法', () => {
   // Set up our document body
@@ -57,9 +58,15 @@ describe('getTypes() 方法', () => {
   })
 
   it('getTypes() 无法获取到事件信息：', () => {
+    // 加除所有绑定事件
     destroy($list)
 
     expect(getTypes($list).length).toEqual(0)
     expect(hasEvent($list, 'getTypes')).toBe(false)
+
+    const result =  _delete($list, 'click')
+
+    // 无任何事件绑定，_delete() 方法返回 false
+    expect(result).toBe(false)
   })
 })

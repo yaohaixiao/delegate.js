@@ -36,5 +36,12 @@ module.exports = {
       objectLiteralDuplicateProperties: false,
       modules: true
     }
+  },
+  settings: {
+    'import/resolver': {
+      jest: {
+        jestConfigFile: './jest.config.js'
+      }
+    }
   }
 }

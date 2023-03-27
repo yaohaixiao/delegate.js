@@ -2,43 +2,43 @@
   let options = [
     {
       id: 1,
-      text: 'Item 1'
+      text: 'Item-1'
     },
     {
       id: 2,
-      text: 'Item 2'
+      text: 'Item-2'
     },
     {
       id: 3,
-      text: 'Item 3'
+      text: 'Item-3'
     },
     {
       id: 4,
-      text: 'Item 4'
+      text: 'Item-4'
     },
     {
       id: 5,
-      text: 'Item 5'
+      text: 'Item-5'
     },
     {
       id: 6,
-      text: 'Item 6'
+      text: 'Item-6'
     },
     {
       id: 7,
-      text: 'Item 7'
+      text: 'Item-7'
     },
     {
       id: 8,
-      text: 'Item 8'
+      text: 'Item-8'
     },
     {
       id: 9,
-      text: 'Item 9'
+      text: 'Item-9'
     },
     {
       id: 10,
-      text: 'Item 10'
+      text: 'Item-10'
     }
   ]
   let isRemoveOn = true
@@ -48,9 +48,9 @@
   const $item = document.querySelector('#action-item')
   const $append = document.querySelector('#append')
   const $list = document.querySelector('#list')
+  const $emitter = delegate($list)
   const $console = document.querySelector('#console')
   const $log = document.querySelector('#log')
-  const $emitter = delegate($list)
   const $provider = delegate($console)
 
   const draw = () => {
@@ -58,9 +58,10 @@
 
     options.forEach((option) => {
       const id = option.id
+      const name = encodeURIComponent(option.text)
       const item = `<li id="${'item-' + id}" class="item">` +
-        `<span class="label">${'Item-' + id}</span>` +
-        `<a href="#basic" class="remove" data-id="${id}">删除</a>` +
+        `<span class="label">${name}</span>` +
+        `<a href="#list?id=${id}&amp;name=${name}" class="remove" data-id="${id}">删除</a>` +
         `</li>`
 
       items.push(item)
@@ -123,7 +124,7 @@
     const $target = evt.delegateTarget
     const type = evt.type
 
-    $log.value += `trigger('log', '.item:nth-child(2)') 触发自定义 ${type} 事件\r`
+    $log.value += `$emitter.trigger('log', '.item:nth-child(2)') 触发自定义 ${type} 事件\r`
     $log.value += `事件的 delegateTarget 为节点的 id 为：'${$target.id}'\r`
 
     scroll()
@@ -189,7 +190,8 @@
 
     $emitter.stopImmediate(evt)
 
-    $log.value += `${$target} 触发 ${type} 事件\r`
+    $log.value += `$emitter.trigger('alert', '.item:last-child') 触发自定义 ${type} 事件\r`
+    $log.value += `事件的 delegateTarget 为节点的 id 为：'${$target.id}'\r`
 
     scroll()
   }
@@ -221,19 +223,19 @@
     // 动态创建列表项
     $append.addEventListener('click', append)
 
-    $provider.focusin('.textarea', typeHandler)
-    $provider.keyup('.textarea', keyboardHandler)
-
     types = $emitter.getTypes()
 
     $log.value += `getTypes() 获取 $emitter 绑定事件：'${types}'\r`
 
+    $emitter.trigger('log', '.item:nth-child(2)')
+    $emitter.trigger('alert', '.item:last-child')
+
+    $provider.focusin('.textarea', typeHandler)
+    $provider.keyup('.textarea', keyboardHandler)
+
     types = $provider.getTypes()
 
     $log.value += `getTypes() 获取 $provider 绑定事件：'${types}'\r`
-
-    $emitter.trigger('log', '.item:nth-child(2)')
-    $emitter.trigger('alert', '.item:last-child')
   }
 
   setup()

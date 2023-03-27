@@ -96,13 +96,12 @@ import off from '@yaohaixiao/delegate.js/esm/off'</code></pre>
         <div class="toolbar">
           <span id="append" class="action">添加行</span>
         </div>
-        <div class="log" id="console">
+        <div id="console" class="console">
           <textarea id="log" class="textarea"></textarea>
         </div>
       </div>
       <div class="usage">
-        <pre class="code"><code>&lt;ul id="list" class="list"&gt;
-&lt;/ul&gt;
+        <pre class="code"><code>&lt;ul id="list" class="list"&gt;&lt;/ul&gt;
 &lt;script src="lib/delegate.min.js"&gt;&lt;/script&gt;
 &lt;script&gt;
 const $list = document.querySelector('#list')
@@ -128,6 +127,9 @@ $emitter.destroy()
 $emitter.on('.item','log', logTrigger)
 // 使用 trigger() 方法手动触发自定义的事件
 $emitter.trigger('log', '.item:nth-child(2)')
+
+$provider.focusin('.textarea', typeHandler)
+$provider.keyup('.textarea', keyboardHandler)
 &lt;/script&gt;</code></pre>
       </div>
     </div>

@@ -556,7 +556,7 @@ var _delete = function _delete(el, type, fn) {
  * @param {Function} [fn] - （可选）事件处理器回调函数
  */
 var _off = function off(el, type, fn) {
-  var capture = false;
+  var capture = CAPTURE_EVENTS.indexOf(type) > -1;
 
   // 如果不设置 fn 参数，默认清除 el 元素上绑定的所有事件处理器
   if (!isFunction(fn)) {
@@ -571,16 +571,7 @@ var _off = function off(el, type, fn) {
 
   // 移除缓存的 _listeners 数据
   _delete(el, type, fn);
-  if (CAPTURE_EVENTS.indexOf(type) > -1) {
-    capture = true;
-  }
-
-  /* istanbul ignore else */
-  if (window.removeEventListener) {
-    el.removeEventListener(type, fn, capture);
-  } else if (window.detachEvent) {
-    el.detachEvent('on' + type, fn);
-  }
+  el.removeEventListener(type, fn, capture);
 };
 
 /**
@@ -598,7 +589,8 @@ var _off = function off(el, type, fn) {
  */
 var _on = function on(el, selector, type, fn, data, context) {
   var once = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : false;
-  var capture = false;
+  // CAPTURE_EVENTS 中的特殊事件，采用事件捕获模型
+  var capture = CAPTURE_EVENTS.indexOf(type) > -1;
   var listener = function listener(evt) {
     var target = _getTarget(evt);
     // 通过 Element.matches 方法获得点击的目标元素
@@ -615,17 +607,9 @@ var _on = function on(el, selector, type, fn, data, context) {
       if (once === true) {
         _off(el, type, listener);
       }
-
-      // 直接过滤了点击对象，会阻止事件冒泡或者捕获
-      /* istanbul ignore else */
-      if (target === delegateTarget) {
-        fn.call(overrideContext, evt, data);
-      }
+      fn.call(overrideContext, evt, data);
     }
   };
-  if (CAPTURE_EVENTS.includes(type)) {
-    capture = true;
-  }
   if (!el._listeners) {
     el._listeners = [];
   }
@@ -641,13 +625,7 @@ var _on = function on(el, selector, type, fn, data, context) {
     capture: capture
   });
   fn._delegateListener = listener;
-
-  /* istanbul ignore else */
-  if (window.addEventListener) {
-    el.addEventListener(type, listener, capture);
-  } else if (window.attachEvent) {
-    el.attachEvent('on' + type, listener);
-  }
+  el.addEventListener(type, listener, capture);
 };
 
 /**

@@ -17,7 +17,8 @@ import { CAPTURE_EVENTS } from './enum'
  * @param {Boolean} once - （可选）是否仅触发一次
  */
 const on = (el, selector, type, fn, data, context, once = false) => {
-  let capture = false
+  // CAPTURE_EVENTS 中的特殊事件，采用事件捕获模型
+  const capture = CAPTURE_EVENTS.indexOf(type) > -1
 
   const listener = function (evt) {
     const target = getTarget(evt)
@@ -41,17 +42,8 @@ const on = (el, selector, type, fn, data, context, once = false) => {
         off(el, type, listener)
       }
 
-      // 直接过滤了点击对象，会阻止事件冒泡或者捕获
-      /* istanbul ignore else */
-      if (target === delegateTarget) {
-        fn.call(overrideContext, evt, data)
-      }
+      fn.call(overrideContext, evt, data)
     }
-  }
-
-  // CAPTURE_EVENTS 中的特殊事件，采用事件捕获模型
-  if (CAPTURE_EVENTS.includes(type)) {
-    capture = true
   }
 
   if (!el._listeners) {
@@ -72,12 +64,7 @@ const on = (el, selector, type, fn, data, context, once = false) => {
   // 缓存包装后的事件处理器
   fn._delegateListener = listener
 
-  /* istanbul ignore else */
-  if (window.addEventListener) {
-    el.addEventListener(type, listener, capture)
-  } else if (window.attachEvent) {
-    el.attachEvent('on' + type, listener)
-  }
+  el.addEventListener(type, listener, capture)
 }
 
 export default on

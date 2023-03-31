@@ -4,6 +4,7 @@
 import off from 'esm/off'
 import on from 'esm/on'
 import getListeners from 'esm/getListeners'
+import stopImmediate from 'esm/stopImmediate'
 
 describe('closest() 方法', () => {
   // Set up our document body
@@ -34,6 +35,8 @@ describe('closest() 方法', () => {
     $item = document.querySelector(`#item-${id}`)
 
     $item.parentNode.removeChild($item)
+
+    stopImmediate(evt)
   }
   const showLog = function (evt) {
     const $target = evt.delegateTarget

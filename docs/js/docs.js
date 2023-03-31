@@ -95,7 +95,7 @@
     $log.value += `click 事件触发，事件的 delegateTarget 为：'${$target}'\r`
     $log.value += `删除的 li 节点 id 为：'item-${id}'\r`
 
-    $emitter.stopEvent(evt)
+    $emitter.stopImmediate(evt)
 
     scroll()
   }
@@ -206,6 +206,8 @@
     // 动态绘制 ul 中的列表项
     draw()
 
+    $list.addEventListener('click', logClick)
+
     // 取消或恢复 .item 元素的代理事件
     $item.addEventListener('click', toggleLog)
     // 取消或恢复 .remove 元素的代理事件
@@ -213,9 +215,9 @@
 
     // 绑定不同元素的代理事件
     $emitter.mouseenter('.item', logMouseEnter)
+    $emitter.click('.remove', remove)
     $emitter.on('.item','click', logClick)
     $emitter.on('.item','log', logTrigger)
-    $emitter.click('.remove', remove)
 
     $emitter.on('.item','alert', lastItemHandler)
     $emitter.on('.item','alert', typeHandler)

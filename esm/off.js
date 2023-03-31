@@ -14,7 +14,7 @@ import { CAPTURE_EVENTS } from './enum'
  * @param {Function} [fn] - （可选）事件处理器回调函数
  */
 const off = (el, type, fn) => {
-  let capture = false
+  const capture = CAPTURE_EVENTS.indexOf(type) > -1
 
   // 如果不设置 fn 参数，默认清除 el 元素上绑定的所有事件处理器
   if (!isFunction(fn)) {
@@ -30,16 +30,7 @@ const off = (el, type, fn) => {
   // 移除缓存的 _listeners 数据
   _delete(el, type, fn)
 
-  if (CAPTURE_EVENTS.indexOf(type) > -1) {
-    capture = true
-  }
-
-  /* istanbul ignore else */
-  if (window.removeEventListener) {
-    el.removeEventListener(type, fn, capture)
-  } else if (window.detachEvent) {
-    el.detachEvent('on' + type, fn)
-  }
+  el.removeEventListener(type, fn, capture)
 }
 
 export default off

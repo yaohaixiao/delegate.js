@@ -1,3 +1,12 @@
+## [1.8.2](https://github.com/yaohaixiao/delegate.js/compare/1.8.1...1.8.2) (2023-03-31)
+
+
+### Bug Fixes
+
+* 修改 on() 方法中 IE11不知道吃的 Array.prototype.includes 为 indexOf；并且去掉 on() 方法中 target === delegateTarget 的判断； ([feac774](https://github.com/yaohaixiao/delegate.js/commit/feac774dd1c5827bf1c933cc303b2dcea11f3735))
+
+
+
 ## [1.8.1](https://github.com/yaohaixiao/delegate.js/compare/1.8.0...1.8.1) (2023-03-24)
 
 

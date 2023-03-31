@@ -64,7 +64,7 @@ describe('getTypes() 方法', () => {
     expect(getTypes($list).length).toEqual(0)
     expect(hasEvent($list, 'getTypes')).toBe(false)
 
-    const result =  _delete($list, 'click')
+    const result = _delete($list, 'click')
 
     // 无任何事件绑定，_delete() 方法返回 false
     expect(result).toBe(false)

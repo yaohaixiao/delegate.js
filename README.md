@@ -121,7 +121,7 @@ $emitter.$el // => 获取到 list 列表 DOM 元素
 
 delegate.js 体积虽然小（Gzip 压缩后仅 3KB），却提供了十分丰富的事件代理相关的操作方法：
 
-### on(selector, type, fn, data, context, once = false)
+### on(selector, type, fn[, data, context, once = false])
 
 #### Description
 
@@ -231,7 +231,7 @@ Type: `Emitter`
 
 返回 Emitter 对象（实例）。
 
-### once(selector, type, fn, data, context)
+### once(selector, type, fn[, data, context])
 
 #### Description
 
@@ -316,7 +316,7 @@ Type: `Emitter`
 
 返回 Emitter 对象（实例）。
 
-### off(type, fn)
+### off(type[, fn])
 
 #### Description
 
@@ -401,7 +401,7 @@ $emitter.off($list, 'click', callback)
 $emitter.off($list, 'click')
 ```
 
-### click(selector, fn, data, context, once = false)
+### click(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -471,7 +471,7 @@ const $emitter = delegate('#list')
 $emitter.click('.item', handler)
 ```
 
-### dbclick(selector, fn, data, context, once = false)
+### dbclick(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -541,7 +541,7 @@ const $emitter = delegate('#list')
 $emitter.dbclick('.item', handler)
 ```
 
-### mouseenter(selector, fn, data, context, once = false)
+### mouseenter(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -611,7 +611,7 @@ const $emitter = delegate('#list')
 $emitter.mouseenter('.item', handler)
 ```
 
-### mouseleave(selector, fn, data, context, once = false)
+### mouseleave(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -681,7 +681,7 @@ const $emitter = delegate('#list')
 $emitter.mouseleave('.item', handler)
 ```
 
-### mousedown(selector, fn, data, context, once = false)
+### mousedown(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -751,7 +751,7 @@ const $emitter = delegate('#list')
 $emitter.mousedown('.item', handler)
 ```
 
-### mouseup(selector, fn, data, context, once = false)
+### mouseup(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -821,7 +821,7 @@ const $emitter = delegate('#list')
 $emitter.mouseup('.item', handler)
 ```
 
-### mouseover(selector, fn, data, context, once = false)
+### mouseover(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -891,7 +891,7 @@ const $emitter = delegate('#list')
 $emitter.mouseover('.item', handler)
 ```
 
-### mousemove(selector, fn, data, context, once = false)
+### mousemove(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -961,7 +961,7 @@ const $emitter = delegate('#list')
 $emitter.mousemove('.item', handler)
 ```
 
-### mouseout(selector, fn, data, context, once = false)
+### mouseout(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -1031,7 +1031,7 @@ const $emitter = delegate('#list')
 $emitter.mouseout('.item', handler)
 ```
 
-### drag(selector, fn, data, context, once = false)
+### drag(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -1101,7 +1101,7 @@ const $emitter = delegate('#list')
 $emitter.drag('.item', handler)
 ```
 
-### dragend(selector, fn, data, context, once = false)
+### dragend(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -1171,7 +1171,7 @@ const $emitter = delegate('#list')
 $emitter.dragend('.item', handler)
 ```
 
-### dragenter(selector, fn, data, context, once = false)
+### dragenter(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -1241,7 +1241,7 @@ const $emitter = delegate('#list')
 $emitter.dragenter('.item', handler)
 ```
 
-### dragleave(selector, fn, data, context, once = false)
+### dragleave(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -1311,7 +1311,7 @@ const $emitter = delegate('#list')
 $emitter.dragleave('.item', handler)
 ```
 
-### dragover(selector, fn, data, context, once = false)
+### dragover(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -1381,7 +1381,7 @@ const $emitter = delegate('#list')
 $emitter.dragover('.item', handler)
 ```
 
-### dragstart(selector, fn, data, context, once = false)
+### dragstart(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -1451,7 +1451,7 @@ const $emitter = delegate('#list')
 $emitter.dragstart('.item', handler)
 ```
 
-### drop(selector, fn, data, context, once = false)
+### drop(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -1521,7 +1521,7 @@ const $emitter = delegate('#list')
 $emitter.drop('.item', handler)
 ```
 
-### wheel(selector, fn, data, context, once = false)
+### wheel(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -1591,7 +1591,7 @@ const $emitter = delegate('#list')
 $emitter.wheel('.item', handler)
 ```
 
-### contextmenu(selector, fn, data, context, once = false)
+### contextmenu(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -1661,7 +1661,7 @@ const $emitter = delegate('#list')
 $emitter.contextmenu('.item', handler)
 ```
 
-### focusin(selector, fn, data, context, once = false)
+### focusin(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -1731,7 +1731,7 @@ const $emitter = delegate('.el-input')
 $emitter.focusin('.el-input__inner', handler)
 ```
 
-### focusout(selector, fn, data, context, once = false)
+### focusout(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -1801,7 +1801,7 @@ const $emitter = delegate('.el-input')
 $emitter.focusout('.el-input__inner', handler)
 ```
 
-### change(selector, fn, data, context, once = false)
+### change(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -1871,7 +1871,7 @@ const $emitter = delegate('#form')
 $emitter.change('.input', handler)
 ```
 
-### input(selector, fn, data, context, once = false)
+### input(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -1941,7 +1941,7 @@ const $emitter = delegate('#form')
 $emitter.input('.input', handler)
 ```
 
-### compositionstart(selector, fn, data, context, once = false)
+### compositionstart(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -2011,7 +2011,7 @@ const $emitter = delegate('#form')
 $emitter.compositionstart('.input', handler)
 ```
 
-### compositionupdate(selector, fn, data, context, once = false)
+### compositionupdate(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -2081,7 +2081,7 @@ const $emitter = delegate('#form')
 $emitter.compositionupdate('.input', handler)
 ```
 
-### compositionend(selector, fn, data, context, once = false)
+### compositionend(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -2151,7 +2151,7 @@ const $emitter = delegate('#form')
 $emitter.contextmenu('.input', handler)
 ```
 
-### paste(selector, fn, data, context, once = false)
+### paste(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -2221,7 +2221,7 @@ const $emitter = delegate('#form')
 $emitter.paste('.input', handler)
 ```
 
-### copy(selector, fn, data, context, once = false)
+### copy(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -2291,7 +2291,7 @@ const $emitter = delegate('#list')
 $emitter.copy('.item', handler)
 ```
 
-### cut(selector, fn, data, context, once = false)
+### cut(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -2361,7 +2361,7 @@ const $emitter = delegate('#form')
 $emitter.cut('.textarea', handler)
 ```
 
-### keydown(selector, fn, data, context, once = false)
+### keydown(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -2431,7 +2431,7 @@ const $emitter = delegate('#form')
 $emitter.keydown('.input', handler)
 ```
 
-### keyup(selector, fn, data, context, once = false)
+### keyup(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -2501,7 +2501,7 @@ const $emitter = delegate('#form')
 $emitter.keyup('.input', handler)
 ```
 
-### error(selector, fn, data, context, once = false)
+### error(selector, fn[, data, context, once = false])
 
 #### Description
 
@@ -2571,7 +2571,7 @@ const $emitter = delegate('#albums')
 $emitter.error('.image', handler)
 ```
 
-### createEvent(type, detail = null, bubbles = true, cancelable = true)
+### createEvent(type[, detail = null, bubbles = true, cancelable = true])
 
 #### Description
 
@@ -2727,7 +2727,7 @@ $emitter.trigger('alert', '.nav')
 $emitter.trigger('alert', '.nav:nth-child(1)')
 ```
 
-### purge(type, recurse)
+### purge(type[, recurse])
 
 #### Description
 
@@ -3088,7 +3088,7 @@ trigger('click', '.remove')
 // document.querySelectorAll('.item').length = 3
 ```
 
-### getListeners(type)
+### getListeners([type])
 
 #### Description
 
@@ -3180,7 +3180,7 @@ console.log(type)
 // => ['click', 'mouseenter']
 ```
 
-### hasEvent(type)
+### hasEvent([type])
 
 #### Description
 

@@ -1,3 +1,4 @@
+const path = require('path')
 const gulp = require('gulp')
 const babel = require('gulp-babel')
 const plumber = require('gulp-plumber')
@@ -7,6 +8,11 @@ const eslint = require('gulp-eslint')
 const prettier = require('gulp-prettier')
 const os = require('os')
 const open = require('gulp-open')
+const pug = require('gulp-pug')
+const less = require('gulp-less')
+const LessAutoPrefix = require('less-plugin-autoprefix')
+const autoprefixer = new LessAutoPrefix({ browsers: ['last 2 versions'] })
+const cssmin = require('gulp-cssmin')
 const rename = require('gulp-rename')
 const sourcemaps = require('gulp-sourcemaps')
 const umd = require('gulp-umd')
@@ -20,11 +26,19 @@ const cleanDist = () => {
   return gulp.src('./dist/**/*.*').pipe(clean())
 }
 
-const cleanDocs = () => {
+const cleanDocsHtml = () => {
+  return gulp.src('./docs/**/index.html').pipe(clean())
+}
+
+const cleanDocsStyle = () => {
+  return gulp.src('./docs/css/*.css').pipe(clean())
+}
+
+const cleanDocsScript = () => {
   return gulp.src('./docs/lib/*.js').pipe(clean())
 }
 
-const cleanAll = gulp.parallel(cleanDist, cleanDocs)
+const cleanDocs = gulp.parallel(cleanDocsHtml, cleanDocsStyle, cleanDocsScript)
 
 /* ==================== 文档查看相关的 gulp 任务 ==================== */
 const openDocs = () => {
@@ -72,7 +86,7 @@ const check = () => {
 }
 
 /* ==================== 编译 JavaScript 代码的 gulp 任务 ==================== */
-const transpile = () => {
+const buildScript = () => {
   return gulp
     .src('./src/delegate.js')
     .pipe(plumber())
@@ -105,6 +119,39 @@ const transpile = () => {
     .pipe(gulp.dest('docs/lib'))
 }
 
+const buildPug = () => {
+  return gulp.src('api/pug/index.pug')
+    .pipe(
+      pug({
+        verbose: true
+      })
+    )
+    .pipe(gulp.dest('docs'))
+}
+
+const buildStyle = () => {
+  return gulp.src('./api/less/docs.less')
+    .pipe(sourcemaps.init())
+    .pipe(less({
+      paths: [ path.join(__dirname, 'less', 'includes') ],
+      plugins: [autoprefixer]
+    }))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('./docs/css'))
+}
+
+const minifyStyle = () => {
+  return gulp.src('./docs/**/*.css')
+    .pipe(sourcemaps.init())
+    .pipe(cssmin())
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('./docs'));
+}
+
+const buildDocs = gulp.series(buildPug, buildStyle, minifyStyle, buildScript)
+const docs = gulp.series(cleanDocs, buildDocs)
+
 /* ==================== 检测源代码变更相关的 gulp 任务 ==================== */
 const watchSource = () => {
   return watch(
@@ -112,21 +159,31 @@ const watchSource = () => {
     {
       ignoreInitial: false
     },
-    gulp.series(lint, transpile)
-  ).pipe(reload())
+    gulp.series(lint, buildScript)
+  )
+    .pipe(reload())
+}
+
+const watchAPI = () => {
+  return watch(
+    'api/**/*.*',
+    docs()
+  )
+    .pipe(reload())
 }
 
 const watchDocs = () => {
-  return watch('docs/**/*.*').pipe(reload())
+  return watch('docs/**/*.*')
+    .pipe(reload())
 }
 
-const watchAll = gulp.parallel(watchSource, watchDocs)
-
-const start = gulp.parallel(lint, transpile, connectDocs, watchAll, openDocs)
-const build = gulp.series(lint, check, cleanAll, transpile)
+const watchAll = gulp.parallel(watchSource, watchAPI, watchDocs)
 const test = gulp.series(lint, check)
+const start = gulp.series(docs, test, buildScript, connectDocs, watchAll, openDocs)
+const build = gulp.series(test, cleanDist, buildScript)
 
 module.exports.start = start
+module.exports.docs = docs
 module.exports.build = build
 module.exports.lint = lint
 module.exports.check = check

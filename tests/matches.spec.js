@@ -28,7 +28,7 @@ describe('matches() 方法', () => {
     expect(matches($list)).toBe(false)
   })
 
-  it('el 参数为空，selector 参数为：.list，返回：false', () => {
+  it('options 参数为空，selector 参数为：.list，返回：false', () => {
     expect(matches(null, 'selector')).toBe(false)
   })
 
@@ -36,7 +36,7 @@ describe('matches() 方法', () => {
     expect(matches($list, '.list')).toBe(true)
   })
 
-  it('模拟 el.msMatchesSelector, 返回：true', () => {
+  it('模拟 options.msMatchesSelector, 返回：true', () => {
     $list.msMatchesSelector = clone
     $list.matches = null
 

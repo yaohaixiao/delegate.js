@@ -7,7 +7,7 @@
 [![npm downloads](https://img.shields.io/npm/dm/@yaohaixiao/delegate.js)](https://npmcharts.com/compare/@yaohaixiao/delegate.js?minimal=true)
 [![MIT License](https://img.shields.io/github/license/yaohaixiao/delegate.js.svg)](https://github.com/yaohaixiao/delegate.js/blob/master/LICENSE)
 
-delegate.js 是一个轻量级的 JavaScript 事件委托库。delegate.js 中封装了：on()、once()、off() 等事件侦听相关的常用方法。delegate.js 的 API 借鉴了 jQuery 的链式调用模式，使得 delegate.js 的 API 使用起来非常灵活和方便。
+delegate.js 一个轻量级的 JavaScript 事件委托库。
 
 ## 项目初衷
 
@@ -1725,10 +1725,10 @@ const handler = function(evt) {
   console.log(`输入框当前值为：${$input.value}`)
 }
 
-const $emitter = delegate('.el-input')
+const $emitter = delegate('.options-input')
 
 // 类选择器
-$emitter.focusin('.el-input__inner', handler)
+$emitter.focusin('.options-input__inner', handler)
 ```
 
 ### focusout(selector, fn[, data, context, once = false])
@@ -1795,10 +1795,10 @@ const handler = function(evt) {
   console.log(`输入框当前值为：${$input.value}`)
 }
 
-const $emitter = delegate('.el-input')
+const $emitter = delegate('.options-input')
 
 // 类选择器
-$emitter.focusout('.el-input__inner', handler)
+$emitter.focusout('.options-input__inner', handler)
 ```
 
 ### change(selector, fn[, data, context, once = false])
@@ -2147,8 +2147,8 @@ const handler = function(evt) {
 
 const $emitter = delegate('#form')
 
-// 绑定 contextmenu 代理事件
-$emitter.contextmenu('.input', handler)
+// 绑定 compositionend 代理事件
+$emitter.compositionend('.input', handler)
 ```
 
 ### paste(selector, fn[, data, context, once = false])
@@ -2357,7 +2357,7 @@ const handler = function(evt) {
 
 const $emitter = delegate('#form')
 
-// 绑定 contextmenu 代理事件
+// 绑定 cut 代理事件
 $emitter.cut('.textarea', handler)
 ```
 
@@ -2776,7 +2776,7 @@ $emitter.getListeners()
 // 获取所有 click 事件处理器
 $emitter.getListeners('click')
 // => [{
-// el,
+// options,
 // selector,
 // type,
 // fn,
@@ -2788,7 +2788,7 @@ $emitter.getListeners('click')
 // 清除绑定的所有 click 事件处理器
 $emitter.purge('click')
 
-// 清除 $el 元素所有 click 事件处理器
+// 清除 $options 元素所有 click 事件处理器
 // 同时也清除其子节点绑定的所有类型事件处理器
 $emitter.purge('click', true)
 ```
@@ -3129,7 +3129,7 @@ $emitter.click('li', handler)
 $emitter.getListeners('click')
 // => [
 //   {
-//     el,
+//     options,
 //     selector,
 //     type,
 //     fn,
@@ -3152,7 +3152,7 @@ $emitter.getListeners('click')
 
 #### Returns
 
-Type: `Boolean`
+Type: `Array`
 
 Default: ``
 
@@ -3497,7 +3497,7 @@ $emitter.on('.remove', 'click', showLog)
 
 ## Example
 
-https://yaohaixiao.github.io/delegate.js/
+https://yaohaixiao.github.io/delegate.js/#example
 
 ## License
 

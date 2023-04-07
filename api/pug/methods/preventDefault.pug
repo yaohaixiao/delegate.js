@@ -1,0 +1,46 @@
+section#method-preventDefault.section
+  header.section__header
+    h3.section__h3 preventDefault(evt)
+  div.section__content
+    h4.section__h4 Description
+    p 阻止触发绑定事件 DOM 元素的默认行为。
+    h4.section__h4 Parameters
+    h5.section__h4 evt
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd Event
+    p （必须）事件对象。
+    h4.section__h4 Returns
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd Emitter。
+    p 返回 Emitter 对象（实例）。
+    pre.section__pre
+      code.section__code.
+        &lt;ul id="list" class="list"&gt;
+          &lt;li class="item"&gt;
+            &lt;a href="/home" class="nav"&gt;Home&lt;/a&gt;
+          &lt;/li&gt;
+          &lt;li class="item"&gt;
+            &lt;a href="/support" class="nav"&gt;Support&lt;/a&gt;
+          &lt;/li&gt;
+          &lt;li class="item"&gt;
+            &lt;a href="/faqs" class="nav"&gt;FAQs&lt;/a&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+
+        const handler = function(evt) {
+          const $link = evt.delegateTarget
+          const $textarea = document.querySelector('#log-textarea')
+
+          // preventDefault() 方法会阻止点击链接后默认跳转页面的行为发生
+          $emitter.preventDefault(evt)
+
+          $textarea.value += `你点击了导航菜单 ${$link.innerHTML},但它不会跳转到${$link.href}页面\r`
+        }
+
+        const $emitter = delegate('#list')
+
+        // 点击导航菜单，不会跳转页面
+        $emitter.on('a.nav', 'click', handler)
+        // => 点击 li 元素将不会执行 handler 事件处理器

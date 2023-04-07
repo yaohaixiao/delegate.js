@@ -33,7 +33,7 @@ describe('resolveTextNode() 方法', () => {
   const $list = document.querySelector('#list')
   const $home = document.querySelector('a[data-id="home"]')
 
-  it('el 参数为 HTMLElement 类型 DOM 元素，resolveTextNode() 方法返回：el', () => {
+  it('options 参数为 HTMLElement 类型 DOM 元素，resolveTextNode() 方法返回：options', () => {
     expect(isElement($list)).toBe(true)
     expect(resolveTextNode($list)).toEqual($list)
 
@@ -41,7 +41,7 @@ describe('resolveTextNode() 方法', () => {
     expect(resolveTextNode($home)).toEqual($home)
   })
 
-  it('el 参数为文本节点类型 DOM 元素，resolveTextNode() 方法返回：el.parentNode', () => {
+  it('options 参数为文本节点类型 DOM 元素，resolveTextNode() 方法返回：options.parentNode', () => {
     const $text = $home.firstChild
 
     expect(isElement($text)).toBe(false)

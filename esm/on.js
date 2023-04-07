@@ -50,7 +50,7 @@ const on = (el, selector, type, fn, data, context, once = false) => {
     el._listeners = []
   }
 
-  // 缓存 el 元素绑定的事件处理器
+  // 缓存 options 元素绑定的事件处理器
   el._listeners.push({
     el,
     selector,

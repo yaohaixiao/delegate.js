@@ -1,116 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="keywords" content="delegate.js,JavaScript,Event,Delegate">
-  <meta name="description"
-        content="delegate.js 是一个轻量级的 JavaScript 事件委托库。delegate.js 中封装了：on()、once()、off() 等事件侦听相关的常用方法。delegate.js 的 API 借鉴了 jQuery 的链式调用模式，使得 delegate.js 的 API 使用起来非常灵活和方便。">
-  <title>delegate.js</title>
-  <link href="css/style.css" type="text/css" rel="stylesheet">
-</head>
-<body>
-<header class="header">
-  <h1 class="title">delegate.js</h1>
-  <a href="https://github.com/yaohaixiao/delegate.js/archive/refs/heads/main.zip" class="download">Download
-    delegate.js</a>
-</header>
-<main class="main">
-  <div class="links">
-    <a href="https://github.com/yaohaixiao/delegate.js">GitHub</a>
-    <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-    <a href="https://github.com/yaohaixiao/delegate.js/issues">Issues</a>
-  </div>
-  <article class="article">
-    <h2>delegate.js 简介</h2>
-    <p>delegate.js 是一个轻量级的 JavaScript 事件委托库。delegate.js 中封装了：on()、once()、off() 等事件侦听相关的常用方法。
-    delegate.js 的 API 借鉴了 jQuery 的链式调用模式，使得 delegate.js 的 API 使用起来非常灵活和方便。</p>
-    <h2>项目初衷</h2>
-    <p>编写 delegate.js 的主要是为初学 JavaScript 的朋友了解事件委托的实现机制而开发。当然，delegate.js 也可以应用到实际的产品开发中。</p>
-    <h2>特点</h2>
-    <ul>
-      <li>1. 支持 UMD 规范，同时也提供 ES6 模块调用；</li>
-      <li>2. 支持创建和绑定自定义事件，并且可以手动触发自定义事件；</li>
-      <li>3. 原生 JavaScript 编写，无任何依赖；</li>
-      <li>4. 采用 jQuery 链式调用语法，调用语法简洁方便；</li>
-      <li>5. 文件体积小(Gzip：3KB)，加载速度快；</li>
-    </ul>
-    <h2 class="section-title">Browsers support</h2>
-    <table class="table">
-      <thead>
-      <tr>
-        <th><a href="https://github.com/yaohaixiao/delegate.js/" rel="nofollow"><img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" style="max-width: 100%;"></a><br>IE / Edge</th>
-        <th><a href="https://github.com/yaohaixiao/delegate.js/" rel="nofollow"><img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" style="max-width: 100%;"></a><br>Firefox</th>
-        <th><a href="https://github.com/yaohaixiao/delegate.js/" rel="nofollow"><img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" style="max-width: 100%;"></a><br>Chrome</th>
-        <th><a href="https://github.com/yaohaixiao/delegate.js/" rel="nofollow"><img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" style="max-width: 100%;"></a><br>Safari</th>
-        <th><a href="https://github.com/yaohaixiao/delegate.js/" rel="nofollow"><img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" style="max-width: 100%;"></a><br>Opera</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>IE11, Edge</td>
-        <td>last 10 versions</td>
-        <td>last 10 versions</td>
-        <td>last 10 versions</td>
-        <td>last 10 versions</td>
-      </tr>
-      </tbody>
-    </table>
-    <h2>安装说明</h2>
-    <p>delegate.js 支持 UMD 规范和 ES6 的模块调用方式，可以在 Node.js 环境中使用 npm 安装，也可以在浏览器中使用 script 标签引入到页面。</p>
-    <h3>npm 安装</h3>
-    <pre class="code"><code># install from npmjs.com
-npm i -S @yaohaixiao/delegate.js
-
-# install from github.com
-npm i -S @yaohaixiao/delegate.js --registry=https://npm.pkg.github.com</code></pre>
-    <h3>浏览器中调用</h3>
-    <p>在浏览器中调用 delegate.js，可以选择调用 jsdelivr 提供的 CDN 服务中的文件，也可以使用本地的 delegate.js 文件。</p>
-    <h4>CDN 调用 JS 文件</h4>
-    <pre class="code"><code>&lt;script src="https://cdn.jsdelivr.net/gh/yaohaixiao/delegate.js/delegate.min.js"&gt;&lt;/script&gt;</code></pre>
-    <h4>本地调用 JS 文件</h4>
-    <pre class="code"><code>&lt;script src="/path/to/delegate.js"&gt;&lt;/script&gt;</code></pre>
-    <h3>ES6 模块中调用</h3>
-    <pre class="code"><code>// 调用 delegate 实例对象
-import delegate from '@yaohaixiao/esm/delegate'
-
-// 调用 Emitter 构造函数
-import Emitter from '@yaohaixiao/delegate.js/esm/Emitter'
-
-// 调用单个（on/once/off）方法
-import on from '@yaohaixiao/delegate.js/esm/on'
-import once from '@yaohaixiao/delegate.js/esm/once'
-import off from '@yaohaixiao/delegate.js/esm/off'</code></pre>
-    <h3>Node.js 中调用</h3>
-    <pre class="code"><code>const delegate = require('@yaohaixiao/delegate.js')</code></pre>
-    <h2>Examples</h2>
-    <p>事件代理最适用的场景就是下面示例中，需要动态创建 DOM 元素，并且还会频繁移除动态创建的 DOM 元素的应用场景。在该场景下，通常不方便，也不会为动态创建的 DOM 节点一一绑定事件处理器。因为在移除 DOM 节点时，如果没有（及时）销毁 DOM 节点绑定的事件处理函数，就会导致事件处理器一直占用内存资源无法释放，从而导致浏览器的内存溢出。</p>
-    <p>通过事件代理就可以很好的解决前面提到的问题，事件代理是将事件侦听器添加到一个父级元素上，这样就只用添加一次事件侦听器，可以避免向 （父级元素内）很多特定的 DOM 节点添加多个事件侦听器，减少了内存消耗，从而优化程序性能。而这个添加在父元素上的事件侦听器通过事件冒泡的事件流机制以分析查找子元素（选择器）的匹配项。</p>
-    <div class="case">
-      <div class="preview">
-        <div class="toolbar">
-          <span id="action-item" class="action">解除 .item 绑定</span>
-          <span id="action-remove" class="action">解除 .remove 绑定</span>
-        </div>
-        <ul id="list" class="list"></ul>
-        <div class="toolbar">
-          <span id="append" class="action">添加行</span>
-        </div>
-        <div id="console" class="console">
-          <textarea id="log" class="textarea"></textarea>
-        </div>
-      </div>
-      <div class="usage">
-        <pre class="code"><code>&lt;ul id="list" class="list"&gt;&lt;/ul&gt;
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="keywords" content="delegate.js,JavaScript,Event,Delegate"><meta name="description" content="delegate.js 一个轻量级的 JavaScript 事件委托库。"><title>delegate.js | 一个轻量级的 JavaScript 事件委托库。</title><link href="css/docs.min.css" rel="stylesheet" type="text/css"></head><body><div class="docs" id="docs"><aside class="aside"><header class="aside__header"><h2 class="aside__h2">API Docs</h2></header><nav class="aside__nav"><h3 class="aside__h3">Options</h3><ul class="aside__list"><li class="aside__item"><a class="aside__anchor" href="#option-el">el</a></li></ul><h3 class="aside__h3">Properties</h3><ul class="aside__list"><li class="aside__item"><a class="aside__anchor" href="#property-el">$el</a></li></ul><h3 class="aside__h3">Methods</h3><ul class="aside__list"><li class="aside__item"><a class="aside__anchor" href="#method-on">on()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-once">once()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-off">off()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-click">click()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-dbclick">dbclick()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-mouseenter">mouseenter()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-mouseleave">mouseleave()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-mousedown">mousedown()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-mouseup">mouseup()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-mouseover">mouseover()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-mousemove">mousemove()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-mouseout">mouseout()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-drag">drag()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-dragend">dragend()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-dragenter">dragenter()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-dragleave">dragleave()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-dragover">dragover()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-dragstart">dragstart()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-drop">drop()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-wheel">wheel()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-contextmenu">contextmenu()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-focusin">focusin()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-focusout">focusout()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-change">change()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-input">input()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-compositionstart">compositionstart()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-compositionupdate">compositionupdate()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-compositionend">compositionend()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-paste">paste()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-copy">copy()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-cut">cut()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-keydown">keydown()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-keyup">keyup()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-error">error()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-createEvent">createEvent()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-trigger">trigger()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-purge">purge()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-destroy">destroy()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-preventDefault">preventDefault()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-stopPropagation">stopPropagation()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-stopEvent">stopEvent()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-stopImmediate">stopImmediate()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-getListeners">getListeners()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-getTypes">getTypes()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-hasEvent">hasEvent()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-getPageX">getPageX()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-getPageY">getPageY()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-getPageXY">getPageXY()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-getCharCode">getCharCode()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-getRelatedTarget">getRelatedTarget()</a></li><li class="aside__item"><a class="aside__anchor" href="#method-getTarget">getTarget()</a></li></ul></nav></aside><main class="main" id="main"><div class="main__header" id="header"><h1 class="main__h1"><strong class="main__name">delegate.</strong>js</h1><p class="main__tagline">delegate.js 一个轻量级的 JavaScript 事件委托库。</p></div><div class="main__cdn"><pre class="main__pre"><code>&lt;script type="text/javascript" src="https://cdn.jsdelivr.net/gh/yaohaixiao/delegate.js/dist/delegate.min.js"&gt;&lt;/script&gt;</code></pre></div><div class="main__download"><a class="main__button" href="https://github.com/yaohaixiao/delegate.js" target="_blank">View on GitHub</a></div><section class="section" id="example"><header class="section__header"><h2 class="section__title">Example</h2></header><div class="section__content"><p>事件代理最适用的场景就是下面示例中，需要动态创建 DOM 元素，并且还会频繁移除动态创建的 DOM 元素的应用场景。在该场景下，通常不方便，也不会为动态创建的 DOM 节点一一绑定事件处理器。因为在移除 DOM 节点时，如果没有（及时）销毁 DOM 节点绑定的事件处理函数，就会导致事件处理器一直占用内存资源无法释放，从而导致浏览器的内存溢出。</p><p>通过事件代理就可以很好的解决前面提到的问题，事件代理是将事件侦听器添加到一个父级元素上，这样就只用添加一次事件侦听器，可以避免向 （父级元素内）很多特定的 DOM 节点添加多个事件侦听器，减少了内存消耗，从而优化程序性能。而这个添加在父元素上的事件侦听器通过事件冒泡的事件流机制以分析查找子元素（选择器）的匹配项。</p></div><div class="case"><div class="case__preview"><div class="case__toolbar"><span class="case__action" id="action-item">解除 .case__item 绑定</span><span class="case__action" id="action-remove">解除 .case__remove 绑定</span></div><ul class="case__list" id="list"></ul><div class="case__toolbar"><span class="case__action" id="append">添加行</span></div><div class="case__console" id="console"><textarea class="case__textarea" id="log"></textarea></div></div><div class="case__usage"><pre class="case__pre"><code class="case__code">&lt;ul id="list" class="case__list"&gt;&lt;/ul&gt;
 &lt;script src="lib/delegate.min.js"&gt;&lt;/script&gt;
 &lt;script&gt;
 const $list = document.querySelector('#list')
 const $emitter = delegate($list)
 
 // 通过 on() 方法绑定代理事件
-$emitter.on('.item', 'click', logClick)
+$emitter.on('.case__item', 'click', logClick)
 // 通过 mouseenter() 方法绑定 mouseenter 代理事件
-$emitter.mouseenter('.item', logMouseEnter)
+$emitter.mouseenter('.case__item', logMouseEnter)
 // 通过 click() 方法绑定 click 代理事件
 $emitter.click('.remove', remove)
 
@@ -124,26 +21,747 @@ $emitter.purge('mouseenter')
 $emitter.destroy()
 
 // 绑定 log 自定义事件
-$emitter.on('.item','log', logTrigger)
+$emitter.on('.case__item','log', logTrigger)
 // 使用 trigger() 方法手动触发自定义的事件
 $emitter.trigger('log', '.item:nth-child(2)')
 
-$provider.focusin('.textarea', typeHandler)
-$provider.keyup('.textarea', keyboardHandler)
-&lt;/script&gt;</code></pre>
-      </div>
-    </div>
-    <h2 class="section-title">License</h2>
-    <section class="usage">
-      <p>Licensed under MIT License.</p>
-    </section>
-  </article>
-</main>
-<footer class="footer">
-  <p>Copyright &copy; 2008-2023 <a href="http://www.yaohaixiao.com/">Yaohaixiao</a>, all right reserved.
-  </p>
-</footer>
-<script src="lib/delegate.min.js"></script>
-<script src="js/docs.js"></script>
-</body>
-</html>
+$provider.focusin('.case__textarea', typeHandler)
+$provider.keyup('.case__textarea', keyboardHandler)
+&lt;/script&gt;</code></pre></div></div></section><section class="section" id="options"><header class="section__header"><h2 class="section__title">Options</h2></header><div class="section" id="option-el"><header class="section__header"><h3 class="section__h3">el</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">HTMLElement|String</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">''</dd></dl><p>必须，要添加事件代理的 DOM 元素或者 DOM 元素的选择器。</p><h4 class="section__h4">Usage</h4><h5 class="section__h5">使用 DOM 节点选择器</h5><pre class="section__pre"><code class="section__code">delegate('#list')</code></pre><h5 class="section__h5">使用 DOM 节点</h5><pre class="section__pre"><code class="section__code">const $list = document.getElementById('list')
+
+delegate($list)</code></pre></div></div></section><section class="section" id="properties"><header class="section__header"><h2 class="section__title">Properties</h2></header><div class="section" id="property-el"><header class="section__header"><h3 class="section__h3">$el</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">HTMLElement</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">''</dd></dl><p>添加事件代理的 DOM 元素。</p><h4 class="section__h4">Usage</h4><pre class="section__pre"><code class="section__code">const $emitter = delegate('#list')
+
+$emitter.$el
+// => 获取到 list 列表 DOM 元素</code></pre></div></div></section><section class="section" id="methods"><header class="section__header"><h2 class="section__title">Methods</h2></header><section class="section" id="method-on"><header class="section__header"><h3 class="section__h3">on(selector, type, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>on() 方法用来绑定事件代理处理器。</p><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+}
+
+const $emitter = delegate('.list')
+
+// 类选择器
+$emitter.on('.item', 'click', handler)
+
+// 标签选择择器
+$emitter.on('li', 'click', handler)
+
+// 子类选择器
+$emitter.on('li > span', 'click', handler)</code></pre><h5 class="section__h4">type</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）type 用以设置触发的事件类型。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><pre class="section__pre"><code class="section__code">const handler = function(evt, data) {
+  console.log('data', data)
+  // => { user: 'Robert' }
+}
+
+// 使用 DOM 节点选择器
+const $emitter = delegate('#list')
+
+$emitter.on('li', 'click', handler, { user: 'Robert' })</code></pre><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p></div></section><section class="section" id="method-once"><header class="section__header"><h3 class="section__h3">once(selector, type, fn[, data, context])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>once() 方法用来绑定事件代理处理器，仅触发一次。</p><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+}
+
+const $emitter = delegate('.list')
+
+// 类选择器
+$emitter.once('.item', 'click', handler)
+
+// 标签选择择器
+$emitter.once('li', 'click', handler)
+
+// 子类选择器
+$emitter.once('li > span', 'click', handler)</code></pre><h5 class="section__h4">type</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）type 用以设置触发的事件类型。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p></div></section><section class="section" id="method-off"><header class="section__header"><h3 class="section__h3">off(type[, fn])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>off() 方法用来接触绑定的事件代理处理器。</p><h4 class="section__h4">Parameters</h4><h5 class="section__h4">type</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）type 指定需要接触绑定的事件类型，不指定则解绑 $el 上绑定的所有事件处理器。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+}
+
+const callback = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你双击的 li 节点的 id 为 ${$li.id}`)
+}
+
+const fn = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你鼠标划过的 li 节点的 id 为 ${$li.id}`)
+}
+
+const $emitter = delegate('#list')
+
+// 绑定了
+$emitter.on('.item', 'click', handler)
+$emitter.on('.item', 'click', fn)
+$emitter.on('.item', 'dbclick', callback)
+$emitter.on('.item', 'mouserenter', fn)
+
+// 解除 click 事件绑定的 handler 事件处理器
+$emitter.off($list, 'click', callback)
+
+// 解除 #list 绑定的所有事件处理器
+$emitter.off($list)</code></pre><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（可选）fn 指定需要接触绑定的事件处理器回调函数，如果不指定则接触 $el 绑定的所有指定 type 的事件处理器。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+}
+
+const callback = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你双击的 li 节点的 id 为 ${$li.id}`)
+}
+
+const fn = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你鼠标划过的 li 节点的 id 为 ${$li.id}`)
+}
+
+const $emitter = delegate('#list')
+
+// 绑定了
+$emitter.on('.item', 'click', handler)
+$emitter.on('.item', 'click', fn)
+$emitter.on('.item', 'click', callback)
+
+// 解除 click 事件绑定的 handler 事件处理器
+$emitter.off($list, 'click', callback)
+
+// 解除所有 click 事件处理器
+$emitter.off($list, 'click')</code></pre><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p></div></section><section class="section" id="method-click"><header class="section__header"><h3 class="section__h3">click(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 click 代理事件，其调用方法和 on() 类似。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.4.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.delegateTarget
+  console.log(`触发事件的 delegateTarget DOM 元素的 id 是：${$target.id}`)
+}
+
+const $emitter = delegate('#list')
+
+// 绑定 click 代理事件
+$emitter.click('.item', handler)</code></pre></div></section><section class="section" id="method-dbclick"><header class="section__header"><h3 class="section__h3">dbclick(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 dbclick 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.delegateTarget
+  console.log(`触发事件的 delegateTarget DOM 元素的 id 是：${$target.id}`)
+}
+
+const $emitter = delegate('#list')
+
+// 绑定 click 代理事件
+$emitter.dbclick('.item', handler)</code></pre></div></section><section class="section" id="method-mouseenter"><header class="section__header"><h3 class="section__h3">mouseenter(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 mouseenter。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.4.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.relatedTarget
+  console.log(`当前事件的 relatedTarget 是：${$target}`)
+}
+
+const $emitter = delegate('#list')
+
+// 类选择器
+$emitter.mouseenter('.item', handler)</code></pre></div></section><section class="section" id="method-mouseleave"><header class="section__header"><h3 class="section__h3">mouseleave(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 mouseleave 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.4.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.relatedTarget
+  console.log(`当前事件的 relatedTarget 是：${$target}`)
+}
+
+const $emitter = delegate('#list')
+
+// 类选择器
+$emitter.mouseleave('.item', handler)</code></pre></div></section><section class="section" id="method-mousedown"><header class="section__header"><h3 class="section__h3">mousedown(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 mousedown 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.relatedTarget
+  console.log(`当前事件的 relatedTarget 是：${$target}`)
+}
+
+const $emitter = delegate('#list')
+
+// 类选择器
+$emitter.mousedown('.item', handler)</code></pre></div></section><section class="section" id="method-mouseup"><header class="section__header"><h3 class="section__h3">mouseup(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 mouseup 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.relatedTarget
+  console.log(`当前事件的 relatedTarget 是：${$target}`)
+}
+
+const $emitter = delegate('#list')
+
+// 类选择器
+$emitter.mouseup('.item', handler)</code></pre></div></section><section class="section" id="method-mouseover"><header class="section__header"><h3 class="section__h3">mouseover(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 mouseover 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.relatedTarget
+  console.log(`当前事件的 relatedTarget 是：${$target}`)
+}
+
+const $emitter = delegate('#list')
+
+// 类选择器
+$emitter.mouseover('.item', handler)</code></pre></div></section><section class="section" id="method-mouseover"><header class="section__header"><h3 class="section__h3">mouseover(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 mouseover 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.relatedTarget
+  console.log(`当前事件的 relatedTarget 是：${$target}`)
+}
+
+const $emitter = delegate('#list')
+
+// 类选择器
+$emitter.mouseover('.item', handler)</code></pre></div></section><section class="section" id="method-mouseout"><header class="section__header"><h3 class="section__h3">mouseout(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 mouseout 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.relatedTarget
+  console.log(`当前事件的 relatedTarget 是：${$target}`)
+}
+
+const $emitter = delegate('#list')
+
+// 类选择器
+$emitter.mouseout('.item', handler)</code></pre></div></section><section class="section" id="method-drag"><header class="section__header"><h3 class="section__h3">drag(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 drag 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.relatedTarget
+  console.log(`当前事件的 relatedTarget 是：${$target}`)
+}
+
+const $emitter = delegate('#list')
+
+// 类选择器
+$emitter.drag('.item', handler)</code></pre></div></section><section class="section" id="method-dragend"><header class="section__header"><h3 class="section__h3">dragend(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 dragend 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.relatedTarget
+  console.log(`当前事件的 relatedTarget 是：${$target}`)
+}
+
+const $emitter = delegate('#list')
+
+// 类选择器
+$emitter.dragend('.item', handler)</code></pre></div></section><section class="section" id="method-dragenter"><header class="section__header"><h3 class="section__h3">dragenter(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 dragenter 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.relatedTarget
+  console.log(`当前事件的 relatedTarget 是：${$target}`)
+}
+
+const $emitter = delegate('#list')
+
+// 类选择器
+$emitter.dragenter('.item', handler)</code></pre></div></section><section class="section" id="method-dragleave"><header class="section__header"><h3 class="section__h3">dragleave(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 dragleave 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.relatedTarget
+  console.log(`当前事件的 relatedTarget 是：${$target}`)
+}
+
+const $emitter = delegate('#list')
+
+// 类选择器
+$emitter.dragleave('.item', handler)</code></pre></div></section><section class="section" id="method-dragover"><header class="section__header"><h3 class="section__h3">dragover(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 dragover 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.relatedTarget
+  console.log(`当前事件的 relatedTarget 是：${$target}`)
+}
+
+const $emitter = delegate('#list')
+
+// 类选择器
+$emitter.dragover('.item', handler)</code></pre></div></section><section class="section" id="method-dragstart"><header class="section__header"><h3 class="section__h3">dragstart(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 dragstart 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.relatedTarget
+  console.log(`当前事件的 relatedTarget 是：${$target}`)
+}
+
+const $emitter = delegate('#list')
+
+// 类选择器
+$emitter.dragstart('.item', handler)</code></pre></div></section><section class="section" id="method-drop"><header class="section__header"><h3 class="section__h3">drop(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 drop 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.4.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.relatedTarget
+  console.log(`当前事件的 relatedTarget 是：${$target}`)
+}
+
+const $emitter = delegate('#list')
+
+// 类选择器
+$emitter.drop('.item', handler)</code></pre></div></section><section class="section" id="method-wheel"><header class="section__header"><h3 class="section__h3">wheel(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 wheel 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.relatedTarget
+  console.log(`当前事件的 relatedTarget 是：${$target}`)
+}
+
+const $emitter = delegate('#list')
+
+// 类选择器
+$emitter.wheel('.item', handler)</code></pre></div></section><section class="section" id="method-contextmenu"><header class="section__header"><h3 class="section__h3">contextmenu(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 contextmenu 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.relatedTarget
+  console.log(`当前事件的 relatedTarget 是：${$target}`)
+}
+
+const $emitter = delegate('#list')
+
+// 类选择器
+$emitter.contextmenu('.item', handler)</code></pre></div></section><section class="section" id="method-focusin"><header class="section__header"><h3 class="section__h3">focusin(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>focusin() 方法用来绑定 focusin（IE） 或者 focus（其它） 代理事件处理器。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.4.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $input = evt.delegateTarget
+  console.log(`输入框当前值为：${$input.value}`)
+}
+
+const $emitter = delegate('.options-input')
+
+// 类选择器
+$emitter.focusin('.options-input__inner', handler)</code></pre></div></section><section class="section" id="method-focusout"><header class="section__header"><h3 class="section__h3">focusout(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>focusout() 方法用来绑定 focusout（IE） 或者 blur（其它） 代理事件处理器。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.4.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $input = evt.delegateTarget
+  console.log(`输入框当前值为：${$input.value}`)
+}
+
+const $emitter = delegate('.options-input')
+
+// 类选择器
+$emitter.focusout('.options-input__inner', handler)</code></pre></div></section><section class="section" id="method-change"><header class="section__header"><h3 class="section__h3">change(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 change 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.delegateTarget
+  console.log(`触发事件的 delegateTarget DOM 元素的 id 是：${$target.id}`)
+}
+
+const $emitter = delegate('#form')
+
+// 绑定 change 代理事件
+$emitter.change('.input', handler)</code></pre></div></section><section class="section" id="method-input"><header class="section__header"><h3 class="section__h3">input(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 input 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.delegateTarget
+  console.log(`触发事件的 delegateTarget DOM 元素的 id 是：${$target.id}`)
+}
+
+const $emitter = delegate('#form')
+
+// 绑定 input 代理事件
+$emitter.input('.input', handler)</code></pre></div></section><section class="section" id="method-compositionstart"><header class="section__header"><h3 class="section__h3">compositionstart(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 compositionstart 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.delegateTarget
+  console.log(`触发事件的 delegateTarget DOM 元素的 id 是：${$target.id}`)
+}
+
+const $emitter = delegate('#form')
+
+// 绑定 compositionstart 代理事件
+$emitter.compositionstart('.input', handler)</code></pre></div></section><section class="section" id="method-compositionupdate"><header class="section__header"><h3 class="section__h3">compositionupdate(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 compositionupdate 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.delegateTarget
+  console.log(`触发事件的 delegateTarget DOM 元素的 id 是：${$target.id}`)
+}
+
+const $emitter = delegate('#form')
+
+// 绑定 contextmenu 代理事件
+$emitter.compositionupdate('.input', handler)</code></pre></div></section><section class="section" id="method-compositionend"><header class="section__header"><h3 class="section__h3">compositionend(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 compositionend 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.delegateTarget
+  console.log(`触发事件的 delegateTarget DOM 元素的 id 是：${$target.id}`)
+}
+
+const $emitter = delegate('#form')
+
+// 绑定 compositionend 代理事件
+$emitter.compositionend('.input', handler)</code></pre></div></section><section class="section" id="method-paste"><header class="section__header"><h3 class="section__h3">paste(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 paste 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.delegateTarget
+  console.log(`触发事件的 delegateTarget DOM 元素的 id 是：${$target.id}`)
+}
+
+const $emitter = delegate('#form')
+
+// 绑定 paste 代理事件
+$emitter.paste('.input', handler)</code></pre></div></section><section class="section" id="method-copy"><header class="section__header"><h3 class="section__h3">copy(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 copy 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.delegateTarget
+  console.log(`触发事件的 delegateTarget DOM 元素的 id 是：${$target.id}`)
+}
+
+const $emitter = delegate('#list')
+
+// 绑定 copy 代理事件
+$emitter.copy('.item', handler)</code></pre></div></section><section class="section" id="method-cut"><header class="section__header"><h3 class="section__h3">cut(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 cut 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.delegateTarget
+  console.log(`触发事件的 delegateTarget DOM 元素的 id 是：${$target.id}`)
+}
+
+const $emitter = delegate('#form')
+
+// 绑定 cut 代理事件
+$emitter.cut('.textarea', handler)</code></pre></div></section><section class="section" id="method-keydown"><header class="section__header"><h3 class="section__h3">keydown(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 keydown 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.delegateTarget
+  console.log(`触发事件的 delegateTarget DOM 元素的 id 是：${$target.id}`)
+}
+
+const $emitter = delegate('#form')
+
+// 绑定 keydown 代理事件
+$emitter.keydown('.input', handler)</code></pre></div></section><section class="section" id="method-keyup"><header class="section__header"><h3 class="section__h3">keyup(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 keyup 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.delegateTarget
+  console.log(`触发事件的 delegateTarget DOM 元素的 id 是：${$target.id}`)
+}
+
+const $emitter = delegate('#form')
+
+// 绑定 keyup 代理事件
+$emitter.keyup('.input', handler)</code></pre></div></section><section class="section" id="method-error"><header class="section__header"><h3 class="section__h3">error(selector, fn[, data, context, once = false])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>绑定 error 代理事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.7.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h5 class="section__h4">fn</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Function</dd></dl><p>（必须）fn 为事件处理器回调函数。</p><h5 class="section__h4">data</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><p>（可选）给事件处理器回调函数传递的数据。</p><h5 class="section__h4">context</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object|Boolean</dd></dl><p>（可选）事件处理器回调函数的 this 上下文指向：</p><ul><li>当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；</li><li>如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；</li></ul><h5 class="section__h4">once</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）once 指定事件处理器回调函数是否仅执行一次。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter 对象。</dd></dl><p>Emitter 对象。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $target = evt.delegateTarget
+  console.log(`触发事件的 delegateTarget DOM 元素的 id 是：${$target.id}`)
+}
+
+const $emitter = delegate('#albums')
+
+// 绑定 error 代理事件
+$emitter.error('.image', handler)</code></pre></div></section><section class="section" id="method-createEvent"><header class="section__header"><h3 class="section__h3">createEvent(type[, detail = null, bubbles = true, cancelable = true])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>创建自定义事件（CustomerEvent）。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.8.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">type</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）事件类型（名称）。</p><h5 class="section__h4">detail</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Object</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">null</dd></dl><p>（可选）传递给自定义事件的数据，默认为 null。</p><h5 class="section__h4">bubbles</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">true</dd></dl><p>（可选）是否支持冒泡，默认为 true。</p><h5 class="section__h4">cancelable</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">true</dd></dl><p>（可选）是否可以取消，默认为 true。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">CustomerEvent。</dd></dl><p>CustomerEvent 实例。</p><pre class="section__pre"><code class="section__code">&lt;div id="nav" class="nav"&gt;
+  &lt;a id="service" class="anchor" href="https://www.yaohaixiao.com/serivce"&gt;Service&lt;/a&gt;
+  &lt;a id="help" class="anchor" href="https://www.yaohaixiao.com/help"&gt;Help&lt;/a&gt;
+&lt;/div&gt;
+
+const $nav = document.querySelector('#nav')
+const $service = document.querySelector('#serivce')
+const $emitter = delegate($nav)
+const logEvent = $emitter.createEvent('log', {
+  name: 'Yao',
+  hi() {
+    console.log('hi！！！')
+  }
+})
+
+const logHandler = function(evt) {
+  console.log('detail', evt.detail)
+  console.log('type', evt.type)
+}
+
+// 或者
+$service.dispatchEvent(logEvent)</code></pre></div></section><section class="section" id="method-trigger"><header class="section__header"><h3 class="section__h3">trigger(type, selector)</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>trigger() 方法用作手动触（自定义）事件。 trigger() 方法也可以用来手动触发内置的事件，例如 click, mouseenter 等事件，不过通常使用 trigger() 来手动触发用户自定义事件。</p><p>另外，选择器 selector 的匹配使用 document.querySelector() 方法，因此仅事件触发一次。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.6.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">type</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）事件类型（名称）。</p><h5 class="section__h4">selector</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter。</dd></dl><p>返回 Emitter 对象（实例）。</p><pre class="section__pre"><code class="section__code">&lt;ul id="list" class="list"&gt;
+  &lt;li class="item"&gt;
+    &lt;a href="/home" class="nav"&gt;Home&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class="item"&gt;
+    &lt;a href="/support" class="nav"&gt;Support&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class="item"&gt;
+    &lt;a href="/faqs" class="nav"&gt;FAQs&lt;/a&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+const $list = document.querySelector('#list')
+const $emitter = delegate($list)
+const itemHandler = function(evt) {
+  // 其它逻辑
+  console.log(evt.type + ':' + evt.delegateTarget)
+}
+
+const navHandler = function(evt) {
+  // 其它逻辑
+  $emitter.stopEvent(evt)
+  console.log(evt.type + ':' + evt.delegateTarget)
+}
+
+// 绑定 alert 自定义事件
+$emitter.on('.item', 'alert', itemHandler)
+$emitter.on('.nav', 'log', navHandler)
+
+// 触发 $list 下匹配 '.item' 元素手动触发 alert 自定义事件
+$emitter.trigger('alert', '.item')
+// 可以使用伪类选择器，更精确的匹配元素
+$emitter.trigger('alert', '.item:last-child')
+
+// 触发 $list 下匹配 '.remove' 元素手动触发 alert 自定义事件
+$emitter.trigger('alert', '.nav')
+$emitter.trigger('alert', '.nav:nth-child(1)')</code></pre></div></section><section class="section" id="method-purge"><header class="section__header"><h3 class="section__h3">purge(type[, recurse])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>清除 DOM 元素（$el）全部或者指定 type 类型的事件处理器。</p><h4 class="section__h4">Parameters</h4><h5 class="section__h4">type</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（必须）事件类型（名称）。</p><h5 class="section__h4">recurse</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean</dd></dl><dl class="section__dl"><dt class="section__dt">Default：</dt><dd class="section__dd">false</dd></dl><p>（可选）是否递归清理 DOM 元素下所有子节点绑定的事件处理器，默认值：false - 仅清理当前 DOM 元素的事件处理器，true - 同事递归清理 DOM 元素下所有子节点绑定的事件处理器。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter。</dd></dl><p>返回 Emitter 对象（实例）。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $li = evt.delegateTarget
+  const $textarea = document.querySelector('#log-textarea')
+
+  $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
+}
+
+const $emitter = delegate('#list')
+
+// 绑定事件
+$emitter.on('li', 'click', handler)
+
+// 获取已绑定的所有类型的事件处理器
+$emitter.getListeners()
+
+// 获取所有 click 事件处理器
+$emitter.getListeners('click')
+// => [{
+// options,
+// selector,
+// type,
+// fn,
+// data,
+// context,
+// capture
+// }]
+
+// 清除绑定的所有 click 事件处理器
+$emitter.purge('click')
+
+// 清除 $options 元素所有 click 事件处理器
+// 同时也清除其子节点绑定的所有类型事件处理器
+$emitter.purge('click', true)</code></pre></div></section><section class="section" id="method-destroy"><header class="section__header"><h3 class="section__h3">destroy()</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>解除 DOM 元素（$el）全部包括子元素的所有事件处理器。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter。</dd></dl><p>返回 Emitter 对象（实例）。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $li = evt.delegateTarget
+  const $textarea = document.querySelector('#log-textarea')
+
+  $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
+}
+
+const $emitter = delegate('#list')
+
+// 解除所有绑定事件
+$emitter.destroy()
+// => 点击 li 元素将不会执行 handler 事件处理器</code></pre></div></section><section class="section" id="method-preventDefault"><header class="section__header"><h3 class="section__h3">preventDefault(evt)</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>阻止触发绑定事件 DOM 元素的默认行为。</p><h4 class="section__h4">Parameters</h4><h5 class="section__h4">evt</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Event</dd></dl><p>（必须）事件对象。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter。</dd></dl><p>返回 Emitter 对象（实例）。</p><pre class="section__pre"><code class="section__code">&lt;ul id="list" class="list"&gt;
+  &lt;li class="item"&gt;
+    &lt;a href="/home" class="nav"&gt;Home&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class="item"&gt;
+    &lt;a href="/support" class="nav"&gt;Support&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class="item"&gt;
+    &lt;a href="/faqs" class="nav"&gt;FAQs&lt;/a&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+const handler = function(evt) {
+  const $link = evt.delegateTarget
+  const $textarea = document.querySelector('#log-textarea')
+
+  // preventDefault() 方法会阻止点击链接后默认跳转页面的行为发生
+  $emitter.preventDefault(evt)
+
+  $textarea.value += `你点击了导航菜单 ${$link.innerHTML},但它不会跳转到${$link.href}页面\r`
+}
+
+const $emitter = delegate('#list')
+
+// 点击导航菜单，不会跳转页面
+$emitter.on('a.nav', 'click', handler)
+// => 点击 li 元素将不会执行 handler 事件处理器</code></pre></div></section><section class="section" id="method-stopPropagation"><header class="section__header"><h3 class="section__h3">stopPropagation(evt)</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>终止事件在传播过程的捕获或冒泡的事件流。</p><h4 class="section__h4">Parameters</h4><h5 class="section__h4">evt</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Event</dd></dl><p>（必须）事件对象。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter。</dd></dl><p>返回 Emitter 对象（实例）。</p><pre class="section__pre"><code class="section__code">&lt;ul id="list" class="list"&gt;
+  &lt;li class="item" id="item-home"&gt;
+    &lt;span&gt;Home&lt;/span&gt;
+    &lt;span class="item-remove" data-id="home"&gt;删除&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class="item" id="item-support"&gt;
+    &lt;span&gt;Support&lt;/span&gt;
+    &lt;span class="item-remove" data-id="support"&gt;删除&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class="item" id="item-faqs"&gt;
+    &lt;span&gt;FAQs&lt;/span&gt;
+    &lt;span class="item-remove" data-id="faqs"&gt;删除&lt;/a&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+const $emitter = delegate('#list')
+const removeItem = function (evt) {
+  const $removeButton = evt.delegateTarget
+  const id = parseInt($removeButton.getAttribute('data-id'), 10)
+  const $textarea = document.querySelector('#log-textarea')
+
+  // 阻止事件冒泡，不触发执行 showLog() 回调函数
+  $emitter.stopPropagation(evt)
+
+  // ...省略删除的逻辑
+
+  $textarea.value += `你删除的 li 节点的 id 为 item-${id}\r`
+}
+const showLog = function (evt) {
+  const $li = evt.delegateTarget
+  const $textarea = document.querySelector('#log-textarea')
+
+  $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
+}
+
+// 点击删除，只会删除点击行，但不会触发事件冒泡，触发点击 .item 的事件处理函数执行
+$emitter.on('.item-remove', 'click', removeItem)
+$emitter.on('.item', 'click', showLog)</code></pre></div></section><section class="section" id="method-stopEvent"><header class="section__header"><h3 class="section__h3">stopEvent(evt)</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>停止事件（阻止默认行为和阻止事件的捕获或冒泡）。</p><h4 class="section__h4">Parameters</h4><h5 class="section__h4">evt</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Event</dd></dl><p>（必须）事件对象。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter。</dd></dl><p>返回 Emitter 对象（实例）。</p><pre class="section__pre"><code class="section__code">&lt;ul id="list" class="list"&gt;
+  &lt;li class="item" id="item-home"&gt;
+    &lt;span&gt;Home&lt;/span&gt;
+    &lt;span class="item-remove" data-id="home"&gt;删除&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class="item" id="item-support"&gt;
+    &lt;span&gt;Support&lt;/span&gt;
+    &lt;span class="item-remove" data-id="support"&gt;删除&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class="item" id="item-faqs"&gt;
+    &lt;span&gt;FAQs&lt;/span&gt;
+    &lt;span class="item-remove" data-id="faqs"&gt;删除&lt;/a&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+const $emitter = delegate('#list')
+const removeItem = function (evt) {
+  const $removeButton = evt.delegateTarget
+  const id = $removeButton.getAttribute('data-id')
+  const $textarea = document.querySelector('#log-textarea')
+
+  // 阻止事件冒泡，不触发执行 showLog() 回调函数
+  // 同时阻止点击链接跳转到 /sitemap 页面
+  $emitter.stopEvent(evt)
+
+  // ...省略删除的逻辑
+
+  $textarea.value += `你删除的 li 节点的 id 为 item-${id}\r`
+}
+const showLog = function (evt) {
+  const $li = evt.delegateTarget
+  const $textarea = document.querySelector('#log-textarea')
+
+  $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
+}
+
+// 点击删除，只会删除行，不会跳转页面，也不会触发事件冒泡，触发执行 showLog() 回调函数
+$emitter.on('.item-remove', 'click', removeItem)
+$emitter.on('.item', 'click', showLog)</code></pre></div></section><section class="section" id="method-stopImmediate"><header class="section__header"><h3 class="section__h3">stopImmediate(evt)</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>阻止监听同一事件的其他事件监听器被调用，并且阻止默认行为和事件冒泡。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.8.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">evt</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Event</dd></dl><p>（必须）事件对象。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Emitter。</dd></dl><p>返回 Emitter 对象（实例）。</p><pre class="section__pre"><code class="section__code">&lt;ul id="list" class="list"&gt;
+  &lt;li class="item" id="item-home"&gt;
+    &lt;span&gt;Home&lt;/span&gt;
+    &lt;span class="item-remove" data-id="home"&gt;删除&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class="item" id="item-support"&gt;
+    &lt;span&gt;Support&lt;/span&gt;
+    &lt;span class="item-remove" data-id="support"&gt;删除&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class="item" id="item-faqs"&gt;
+    &lt;span&gt;FAQs&lt;/span&gt;
+    &lt;span class="item-remove" data-id="faqs"&gt;删除&lt;/a&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+let logged = false
+let styled = false
+const $list = document.querySelector('#list')
+const $support = document.querySelector('#item-support')
+const $link = document.querySelector('a[data-id="support"]')
+const $emitter = delegate($support)
+const logHandler = function(evt) {
+  logged = true
+  console.log(evt.target)
+}
+const styleHandler = function(evt) {
+  styled = true
+  $list.classList.add('checked')
+}
+const serviceHandler = function(evt) {
+  alert(evt.target)
+  $emitter.stopImmediate(evt)
+}
+const removeHandler = function(evt) {
+  const $target = evt.target
+
+  $target.parentNode.removeChild($target)
+}
+
+$list.addEventListener('click', logHandler)
+$list.addEventListener('click', styleHandler)
+
+$emitter.on('.remove', 'click', serviceHandler)
+$emitter.on('.remove', 'click', removeHandler)
+
+// 不会触发 removeHandler，不会删除一行
+// 不会冒泡触发父节点 $list 上绑定的 click 事件
+trigger('click', '.remove')
+// -> logged = false
+// -> styled = false
+// document.querySelectorAll('.item').length = 3</code></pre></div></section><section class="section" id="method-getListeners"><header class="section__header"><h3 class="section__h3">getListeners([type])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>获取 DOM 元素（$el）全部或者指定 type 类型的事件处理器相关的（数组）数据。</p><h4 class="section__h4">Parameters</h4><h5 class="section__h4">type</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（可选）设置 type 时获取特定的事件类型（type），默认获取所有类型的事件处理器。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Array。</dd></dl><p>返回已绑定的事件类型的数组（去除名称重复的事件）。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $li = evt.delegateTarget
+  const $textarea = document.querySelector('#log-textarea')
+
+  $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
+}
+
+const $emitter = delegate('#list')
+
+// 绑定事件
+$emitter.click('li', handler)
+
+// 获取已绑定的所有类型的事件处理器
+$emitter.getListeners('click')
+// => [
+//   {
+//     options,
+//     selector,
+//     type,
+//     fn,
+//     data,
+//     context,
+//     capture
+//   }
+// ]</code></pre></div></section><section class="section" id="method-getTypes"><header class="section__header"><h3 class="section__h3">getTypes()</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>返回已绑定的事件类型的数组（去除名称重复的事件）。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.5.0</dd></dl><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Array。</dd></dl><p>返回已绑定事件类型的数组。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $li = evt.delegateTarget
+  const $textarea = document.querySelector('#log-textarea')
+
+  $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
+}
+
+const $emitter = delegate('#list')
+
+// 绑定事件
+$emitter.on('item', 'click', handler)
+$emitter.click('.remove', handler)
+$emitter.mouseenter('.item', handler)
+
+const types = $emitter.getTypes()
+
+console.log(type)
+// 会去除重复的 click 事件
+// => ['click', 'mouseenter']</code></pre></div></section><section class="section" id="method-hasEvent"><header class="section__header"><h3 class="section__h3">hasEvent([type])</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>判断是否已经（指定类型的）绑定事件。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.4.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">type</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">String</dd></dl><p>（可选）事件名称:</p><ul><li>指定 type，则判断是否绑定 type 类型事件；</li><li>未指定 type，则判断是否绑定任意类型的事件；</li></ul><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Boolean。</dd></dl><p>返回是否绑定（type类型的）事件处理器。</p><pre class="section__pre"><code class="section__code">const handler = function(evt) {
+  const $li = evt.delegateTarget
+  const $textarea = document.querySelector('#log-textarea')
+
+  $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
+}
+
+const $emitter = delegate('#list')
+
+// 绑定事件
+$emitter.on('li', 'click', handler)
+
+$emitter.hasEvent()
+// -> true
+
+$emitter.hasEvent('focus')
+// => false</code></pre></div></section><section class="section" id="method-getPageX"><header class="section__header"><h3 class="section__h3">getPageX(evt)</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>获取事件触发时的 pageX 值。</p><h4 class="section__h4">Parameters</h4><h5 class="section__h4">evt</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Event</dd></dl><p>（必须）事件对象。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Number。</dd></dl><p>返回事件触发时的 pageX 值。</p><pre class="section__pre"><code class="section__code">const $emitter = delegate('#list')
+const showLog = function (evt) {
+  const pageX = $emitter.getPageX(evt)
+
+  console.log(`pageX 为：${pageX}`)
+}
+
+$emitter.on('.item', 'click', showLog)</code></pre></div></section><section class="section" id="method-getPageY"><header class="section__header"><h3 class="section__h3">getPageY(evt)</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>获取事件触发时的 pageY 值。</p><h4 class="section__h4">Parameters</h4><h5 class="section__h4">evt</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Event</dd></dl><p>（必须）事件对象。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Number。</dd></dl><p>返回事件触发时的 pageY 值。</p><pre class="section__pre"><code class="section__code">const $emitter = delegate('#list')
+const showLog = function (evt) {
+  const pageY = $emitter.getPageY(evt)
+
+  console.log(`pageY 为：${pageY}`)
+}
+
+$emitter.on('.item', 'click', showLog)</code></pre></div></section><section class="section" id="method-getPageXY"><header class="section__header"><h3 class="section__h3">getPageXY(evt)</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>获取事件触发时的 pageX 和 pageY 数组数据。</p><h4 class="section__h4">Parameters</h4><h5 class="section__h4">evt</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Event</dd></dl><p>（必须）事件对象。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Array。</dd></dl><p>返回事件触发时的数组数据：[pageX, pageY]。</p><pre class="section__pre"><code class="section__code">const $emitter = delegate('#list')
+const showLog = function (evt) {
+  const pageXY = $emitter.getPageXY(evt)
+
+  console.log(`pageX 为：${pageXY[0]}`)
+  console.log(`pageY 为：${pageXY[1]}`)
+}
+
+$emitter.on('.item', 'click', showLog)</code></pre></div></section><section class="section" id="method-getCharCode"><header class="section__header"><h3 class="section__h3">getCharCode(evt)</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>返回触发事件的 charCode。</p><h4 class="section__h4">Parameters</h4><h5 class="section__h4">evt</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Event</dd></dl><p>（必须）事件对象。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Number。</dd></dl><p>返回事件的 charCode。</p><pre class="section__pre"><code class="section__code">&lt;form id="form" name="form" class="form"&gt;
+  &lt;div class="field"&gt;
+    &lt;label for="user"&gt;用户名：&lt;/label&gt;
+    &lt;input id="user" name="user" type="text" class="input" /&gt;
+  &lt;/div&gt;
+  &lt;div class="field"&gt;
+    &lt;label for="password"&gt;密 码：&lt;/label&gt;
+    &lt;input id="password" name="password" type="password" class="input" /&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+
+const $emitter = delegate('#form')
+const showLog = function (evt) {
+  const charCode = $emitter.getCharCode(evt)
+
+  console.log(`当前按键的 charCode 为：${charCode}`)
+}
+
+$emitter.on('.input', 'keydown', showLog)</code></pre></div></section><section class="section" id="method-getRelatedTarget"><header class="section__header"><h3 class="section__h3">getRelatedTarget(evt)</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>返回触发事件的 relatedTarget DOM 元素。</p><p>说明：MouseEvent.relatedTarget 只读属性是鼠标事件的次要目标（如果有）。相关的鼠标事件有：</p><ul><li>mouseenter</li><li>mouseleave</li><li>mouseover</li><li>mouseout</li><li>dragenter</li><li>dragleave</li></ul><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.1.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">evt</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Event</dd></dl><p>（必须）事件对象。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">HTMLElement。</dd></dl><p>Event 对象的 relatedTarget DOM 元素。</p><pre class="section__pre"><code class="section__code">&lt;ul id="list" class="list"&gt;
+  &lt;li class="item" id="item-home"&gt;
+    &lt;span&gt;Home&lt;/span&gt;
+    &lt;a href="/sitemap#home" class="remove" data-id="home"&gt;删除&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class="item" id="item-support"&gt;
+    &lt;span&gt;Support&lt;/span&gt;
+    &lt;a href="/sitemap#support" class="remove" data-id="support"&gt;删除&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class="item" id="item-faqs"&gt;
+    &lt;span&gt;FAQs&lt;/span&gt;
+    &lt;a href="/sitemap#support" class="remove" data-id="faqs"&gt;删除&lt;/a&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+const $emitter = delegate('#list')
+const showLog = function (evt) {
+  const relatedTarget = $emitter.getRelatedTarget(evt)
+
+  console.log(`当前触发事件的 relatedTarget 为：${relatedTarget}`)
+}
+
+$emitter.on('.remove', 'mouseenter', showLog)</code></pre></div></section><section class="section" id="method-getTarget"><header class="section__header"><h3 class="section__h3">getTarget(evt)</h3></header><div class="section__content"><h4 class="section__h4">Description</h4><p>返回触发事件的 target DOM 元素。</p><dl class="section__dl"><dt class="section__dt">Since：</dt><dd class="section__dd">1.1.0</dd></dl><h4 class="section__h4">Parameters</h4><h5 class="section__h4">evt</h5><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">Event</dd></dl><p>（必须）事件对象。</p><h4 class="section__h4">Returns</h4><dl class="section__dl"><dt class="section__dt">Type：</dt><dd class="section__dd">HTMLElement。</dd></dl><p>Event 对象的 target DOM 元素。</p><pre class="section__pre"><code class="section__code">&lt;ul id="list" class="list"&gt;
+  &lt;li class="item" id="item-home"&gt;
+    &lt;span&gt;Home&lt;/span&gt;
+    &lt;a href="/sitemap#home" class="remove" data-id="home"&gt;删除&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class="item" id="item-support"&gt;
+    &lt;span&gt;Support&lt;/span&gt;
+    &lt;a href="/sitemap#support" class="remove" data-id="support"&gt;删除&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class="item" id="item-faqs"&gt;
+    &lt;span&gt;FAQs&lt;/span&gt;
+    &lt;a href="/sitemap#support" class="remove" data-id="faqs"&gt;删除&lt;/a&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+const $emitter = delegate('#list')
+const showLog = function (evt) {
+  const target = $emitter.getTarget(evt)
+
+  console.log(`当前触发事件的 target 为：${target}`)
+}
+
+$emitter.on('.remove', 'click', showLog)</code></pre></div></section></section><div class="main__footer" id="footer"><p>Copyright &copy; 2023 <a href="https://github.com/yaohaixiao">Robert Yao</a>, all right reserved.</p><p>Code licensed under&nbsp;<a href="http://opensource.org/licenses/mit-license.html">MIT License</a> · Documentation licensed under
+<a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></p><p><a href="https://github.com/yaohaixiao/autoc.js">View on GitHub</a> ·
+<a href="https://github.com/yaohaixiao/autoc.js/issues">Issues</a></p></div></main></div><script src="lib/delegate.min.js"></script><script src="js/docs.js"></script></body></html>

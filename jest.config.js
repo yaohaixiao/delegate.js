@@ -22,7 +22,7 @@ module.exports = {
       './node_modules/jest-html-reporter',
       {
         pageTitle: 'delegate.js 单测报告',
-        outputPath: 'report/unit-test/index.html',
+        outputPath: 'report/unit-test/demo.html',
         includeFailureMsg: true
       }
     ]

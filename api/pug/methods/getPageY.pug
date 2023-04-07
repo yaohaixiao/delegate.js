@@ -1,0 +1,27 @@
+section#method-getPageY.section
+  header.section__header
+    h3.section__h3 getPageY(evt)
+  div.section__content
+    h4.section__h4 Description
+    p 获取事件触发时的 pageY 值。
+    h4.section__h4 Parameters
+    h5.section__h4 evt
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd Event
+    p （必须）事件对象。
+    h4.section__h4 Returns
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd Number。
+    p 返回事件触发时的 pageY 值。
+    pre.section__pre
+      code.section__code.
+        const $emitter = delegate('#list')
+        const showLog = function (evt) {
+          const pageY = $emitter.getPageY(evt)
+
+          console.log(`pageY 为：${pageY}`)
+        }
+
+        $emitter.on('.item', 'click', showLog)

@@ -21,7 +21,7 @@ describe('getParentOrHost() 方法', () => {
     '  </li>\n' +
     '</ul>'
 
-  it('el.host 存在，返回： el.host', () => {
+  it('options.host 存在，返回： options.host', () => {
     const $faqs = document.querySelector('#item-faqs')
     const $parent = getParentOrHost($faqs)
 
@@ -30,7 +30,7 @@ describe('getParentOrHost() 方法', () => {
     expect(getParentOrHost($parent)).toEqual(document.body)
   })
 
-  it('el.host 不存在，返回： el.parentNode', () => {
+  it('options.host 不存在，返回： options.parentNode', () => {
     const $faqs = document.querySelector('#item-faqs')
     const $parent = getParentOrHost($faqs)
     const $linkFaqs = document.querySelector('a[data-id="faqs"]')

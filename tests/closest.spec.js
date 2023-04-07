@@ -23,11 +23,11 @@ describe('closest() 方法', () => {
 
   const $list = document.querySelector('#list')
 
-  describe('基础调用：closest(el, selector)', () => {
+  describe('基础调用：closest(options, selector)', () => {
     const $support = document.querySelector('#item-support')
     const $match = closest($support, '.item-support')
 
-    it('el 不存在，返回： null', () => {
+    it('options 不存在，返回： null', () => {
       const $notFound = document.querySelector('#not-found')
 
       expect(closest($notFound, '.item-support')).toEqual(null)
@@ -39,7 +39,7 @@ describe('closest() 方法', () => {
     })
   })
 
-  it('指定 ctx：closest(el, selector, ctx)', () => {
+  it('指定 ctx：closest(options, selector, ctx)', () => {
     const $support = document.querySelector('#item-support')
     let $match = closest($support, '> .item-support', $list)
 
@@ -51,7 +51,7 @@ describe('closest() 方法', () => {
     expect($match).toEqual(undefined)
   })
 
-  it('指定 includeCTX：closest(el, selector, ctx, includeCTX)', () => {
+  it('指定 includeCTX：closest(options, selector, ctx, includeCTX)', () => {
     const $support = document.querySelector('#item-support')
     const $match = closest($support, '> .item-support', $support, true)
 

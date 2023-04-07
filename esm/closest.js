@@ -2,7 +2,7 @@ import matches from './matches'
 import getParentOrHost from './getParentOrHost'
 
 /**
- * 获取 el 元素父元素最近的包含 selector 选择器的元素
+ * 获取 options 元素父元素最近的包含 selector 选择器的元素
  * ========================================================================
  * @method closest
  * @param {HTMLElement} el - （必须）DOM 元素

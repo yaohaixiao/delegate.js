@@ -56,7 +56,7 @@ describe('on() 方法', () => {
     $context = this
   }
 
-  it('基础调用：on(el, selector, type, fn)', () => {
+  it('基础调用：on(options, selector, type, fn)', () => {
     const $remove = document.querySelector('a[data-id*="home"]')
     let items
 
@@ -69,7 +69,7 @@ describe('on() 方法', () => {
     expect(items.length).toEqual(4)
   })
 
-  it('传递 data 参数：on(el, selector, type, fn, data)', () => {
+  it('传递 data 参数：on(options, selector, type, fn, data)', () => {
     const $remove = document.querySelector('a[data-id*="support"]')
     let items
 
@@ -84,7 +84,7 @@ describe('on() 方法', () => {
     expect(data.author).toEqual('Robert')
   })
 
-  it('传递 context 参数：on(el, selector, type, fn, data, context)', () => {
+  it('传递 context 参数：on(options, selector, type, fn, data, context)', () => {
     const $remove = document.querySelector('a[data-id*="faqs"]')
     let items
 
@@ -113,7 +113,7 @@ describe('on() 方法', () => {
     expect($context.author).toEqual(data.author)
   })
 
-  it('传递 once 参数：on(el, selector, type, fn, data, context, once)', () => {
+  it('传递 once 参数：on(options, selector, type, fn, data, context, once)', () => {
     const $remove = document.querySelector('a[data-id*="exit"]')
     let items
 

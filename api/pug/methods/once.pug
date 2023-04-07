@@ -1,0 +1,57 @@
+section#method-once.section
+  header.section__header
+    h3.section__h3 once(selector, type, fn[, data, context])
+  div.section__content
+    h4.section__h4 Description
+    p once() 方法用来绑定事件代理处理器，仅触发一次。
+    h4.section__h4 Parameters
+    h5.section__h4 selector
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd String
+    p （必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。
+    pre.section__pre
+      code.section__code.
+        const handler = function(evt) {
+          const $li = evt.delegateTarget
+          console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+        }
+
+        const $emitter = delegate('.list')
+
+        // 类选择器
+        $emitter.once('.item', 'click', handler)
+
+        // 标签选择择器
+        $emitter.once('li', 'click', handler)
+
+        // 子类选择器
+        $emitter.once('li > span', 'click', handler)
+    h5.section__h4 type
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd String
+    p （必须）type 用以设置触发的事件类型。
+    h5.section__h4 fn
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd Function
+    p （必须）fn 为事件处理器回调函数。
+    h5.section__h4 data
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd Object
+    p （可选）给事件处理器回调函数传递的数据。
+    h5.section__h4 context
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd Object|Boolean
+    p （可选）事件处理器回调函数的 this 上下文指向：
+    ul
+      li 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；
+      li 如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；
+    h4.section__h4 Returns
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd Emitter 对象。
+    p Emitter 对象。

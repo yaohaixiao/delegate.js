@@ -1,0 +1,23 @@
+div#option-el.section
+  header.section__header
+    h3.section__h3 el
+  div.section__content
+    h4.section__h4 Description
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd HTMLElement|String
+    dl.section__dl
+      dt.section__dt Default：
+      dd.section__dd ''
+    p 必须，要添加事件代理的 DOM 元素或者 DOM 元素的选择器。
+    h4.section__h4 Usage
+    h5.section__h5 使用 DOM 节点选择器
+    pre.section__pre
+      code.section__code.
+        delegate('#list')
+    h5.section__h5 使用 DOM 节点
+    pre.section__pre
+      code.section__code.
+        const $list = document.getElementById('list')
+
+        delegate($list)

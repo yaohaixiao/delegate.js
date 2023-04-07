@@ -126,7 +126,7 @@ var getParentOrHost = function getParentOrHost(el) {
 };
 
 /**
- * 获取 el 节点下匹配 selector 选择器的 DOM 节点
+ * 获取 options 节点下匹配 selector 选择器的 DOM 节点
  * ========================================================================
  * Element.matches() 方法可以用来判断 DOM 元素是否与给定的选择器匹配，事件代理判断是
  * 否触发绑定的代理事件回调函数，关键就是使用 Element.matches() 辨别当前事件触发的目
@@ -156,7 +156,7 @@ var matches = function matches(el) {
 };
 
 /**
- * 获取 el 元素父元素最近的包含 selector 选择器的元素
+ * 获取 options 元素父元素最近的包含 selector 选择器的元素
  * =============================================================
  * @method closest
  * @param {HTMLElement} el - （必须）DOM 元素
@@ -548,7 +548,7 @@ var _delete = function _delete(el, type, fn) {
 /**
  * 取消 type 类型的代理事件绑定
  * ========================================================================
- * 如果没有设置 handler，则销毁 this.$el 绑定的所有符合 type 事件类型的事件绑定
+ * 如果没有设置 handler，则销毁 this.$options 绑定的所有符合 type 事件类型的事件绑定
  * ========================================================================
  * @method off
  * @param {HTMLElement} el - （必须）取消事件绑定的 DOM 元素
@@ -558,7 +558,7 @@ var _delete = function _delete(el, type, fn) {
 var _off = function off(el, type, fn) {
   var capture = CAPTURE_EVENTS.indexOf(type) > -1;
 
-  // 如果不设置 fn 参数，默认清除 el 元素上绑定的所有事件处理器
+  // 如果不设置 fn 参数，默认清除 options 元素上绑定的所有事件处理器
   if (!isFunction(fn)) {
     return purgeElement(el, type);
   }
@@ -614,7 +614,7 @@ var _on = function on(el, selector, type, fn, data, context) {
     el._listeners = [];
   }
 
-  // 缓存 el 元素绑定的事件处理器
+  // 缓存 options 元素绑定的事件处理器
   el._listeners.push({
     el: el,
     selector: selector,
@@ -877,7 +877,6 @@ var _stopImmediate = function stopImmediate(evt) {
 /**
  * Emitter 类 - JavaScript 事件代理对象
  * ========================================================================
- * @class
  */
 var Emitter = /*#__PURE__*/function () {
   /**
@@ -1093,7 +1092,7 @@ var Emitter = /*#__PURE__*/function () {
     /**
      * 取消 type 类型的代理事件绑定
      * ========================================================================
-     * 如果没有设置 handler，则销毁 this.$el 绑定的所有符合 type 事件类型的事件绑定
+     * 如果没有设置 handler，则销毁 this.$options 绑定的所有符合 type 事件类型的事件绑定
      * ========================================================================
      * @method off
      * @param {String} type - （必须）事件类型

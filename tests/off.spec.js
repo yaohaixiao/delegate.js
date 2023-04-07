@@ -45,7 +45,7 @@ describe('closest() 方法', () => {
     count += 1
   }
 
-  it('基础调用：of(el, type, fn)', () => {
+  it('基础调用：of(options, type, fn)', () => {
     const $home = document.querySelector('a[data-id="home"]')
     const $faqs = document.querySelector('#item-faqs')
 
@@ -87,7 +87,7 @@ describe('closest() 方法', () => {
     expect(allListeners.length).toEqual(0)
   })
 
-  it('不传递 fn 参数：off(el, type)', () => {
+  it('不传递 fn 参数：off(options, type)', () => {
     const $support = document.querySelector('a[data-id="support"]')
     const $faqs = document.querySelector('#item-faqs')
     let allListeners = []

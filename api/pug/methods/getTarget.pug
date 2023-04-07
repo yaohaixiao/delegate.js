@@ -1,0 +1,45 @@
+section#method-getTarget.section
+  header.section__header
+    h3.section__h3 getTarget(evt)
+  div.section__content
+    h4.section__h4 Description
+    p 返回触发事件的 target DOM 元素。
+    dl.section__dl
+      dt.section__dt Since：
+      dd.section__dd 1.1.0
+    h4.section__h4 Parameters
+    h5.section__h4 evt
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd Event
+    p （必须）事件对象。
+    h4.section__h4 Returns
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd HTMLElement。
+    p Event 对象的 target DOM 元素。
+    pre.section__pre
+      code.section__code.
+        &lt;ul id="list" class="list"&gt;
+          &lt;li class="item" id="item-home"&gt;
+            &lt;span&gt;Home&lt;/span&gt;
+            &lt;a href="/sitemap#home" class="remove" data-id="home"&gt;删除&lt;/a&gt;
+          &lt;/li&gt;
+          &lt;li class="item" id="item-support"&gt;
+            &lt;span&gt;Support&lt;/span&gt;
+            &lt;a href="/sitemap#support" class="remove" data-id="support"&gt;删除&lt;/a&gt;
+          &lt;/li&gt;
+          &lt;li class="item" id="item-faqs"&gt;
+            &lt;span&gt;FAQs&lt;/span&gt;
+            &lt;a href="/sitemap#support" class="remove" data-id="faqs"&gt;删除&lt;/a&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+
+        const $emitter = delegate('#list')
+        const showLog = function (evt) {
+          const target = $emitter.getTarget(evt)
+
+          console.log(`当前触发事件的 target 为：${target}`)
+        }
+
+        $emitter.on('.remove', 'click', showLog)

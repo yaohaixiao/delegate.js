@@ -1,0 +1,44 @@
+section#method-getListeners.section
+  header.section__header
+    h3.section__h3 getListeners([type])
+  div.section__content
+    h4.section__h4 Description
+    p 获取 DOM 元素（$el）全部或者指定 type 类型的事件处理器相关的（数组）数据。
+    h4.section__h4 Parameters
+    h5.section__h4 type
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd String
+    p （可选）设置 type 时获取特定的事件类型（type），默认获取所有类型的事件处理器。
+    h4.section__h4 Returns
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd Array。
+    p 返回已绑定的事件类型的数组（去除名称重复的事件）。
+    pre.section__pre
+      code.section__code.
+        const handler = function(evt) {
+          const $li = evt.delegateTarget
+          const $textarea = document.querySelector('#log-textarea')
+
+          $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
+        }
+
+        const $emitter = delegate('#list')
+
+        // 绑定事件
+        $emitter.click('li', handler)
+
+        // 获取已绑定的所有类型的事件处理器
+        $emitter.getListeners('click')
+        // => [
+        //   {
+        //     options,
+        //     selector,
+        //     type,
+        //     fn,
+        //     data,
+        //     context,
+        //     capture
+        //   }
+        // ]

@@ -59,9 +59,9 @@
     options.forEach((option) => {
       const id = option.id
       const name = encodeURIComponent(option.text)
-      const item = `<li id="${'item-' + id}" class="item">` +
-        `<span class="label">${name}</span>` +
-        `<a href="#list?id=${id}&amp;name=${name}" class="remove" data-id="${id}">删除</a>` +
+      const item = `<li id="${'item-' + id}" class="case__item">` +
+        `<span class="case__label">${name}</span>` +
+        `<a href="#list?id=${id}&amp;name=${name}" class="case__remove" data-id="${id}">删除</a>` +
         `</li>`
 
       items.push(item)
@@ -124,7 +124,7 @@
     const $target = evt.delegateTarget
     const type = evt.type
 
-    $log.value += `$emitter.trigger('log', '.item:nth-child(2)') 触发自定义 ${type} 事件\r`
+    $log.value += `$emitter.trigger('log', '.case__item:nth-child(2)') 触发自定义 ${type} 事件\r`
     $log.value += `事件的 delegateTarget 为节点的 id 为：'${$target.id}'\r`
 
     scroll()
@@ -134,12 +134,12 @@
     isRemoveOn = !isRemoveOn
 
     if (isRemoveOn) {
-      $log.value += `已恢复 .remove 事件代理绑定\r`
-      $remove.innerHTML = '解除 .remove 绑定'
-      $emitter.click('.remove', remove)
+      $log.value += `已恢复 .case__remove 事件代理绑定\r`
+      $remove.innerHTML = '解除 .case__remove 绑定'
+      $emitter.click('.case__remove', remove)
     } else {
-      $log.value += `已解除 .remove 事件代理绑定\r`
-      $remove.innerHTML = '恢复 .remove 绑定'
+      $log.value += `已解除 .case__remove 事件代理绑定\r`
+      $remove.innerHTML = '恢复 .case__remove 绑定'
       $emitter.off('click', remove)
     }
 
@@ -150,13 +150,13 @@
     isItemOn = !isItemOn
 
     if (isItemOn) {
-      $log.value += `已恢复 .item 事件代理绑定\r`
-      $item.innerHTML = '解除 .item 绑定'
-      $emitter.mouseenter('.item', logMouseEnter)
-      $emitter.on('.item', 'click', logClick)
+      $log.value += `已恢复 .case__item 事件代理绑定\r`
+      $item.innerHTML = '解除 .case__item 绑定'
+      $emitter.mouseenter('.case__item', logMouseEnter)
+      $emitter.on('.case__item', 'click', logClick)
     } else {
-      $log.value += `已解除 .item 事件代理绑定\r`
-      $item.innerHTML = '恢复 .item 绑定'
+      $log.value += `已解除 .case__item 事件代理绑定\r`
+      $item.innerHTML = '恢复 .case__item 绑定'
       $emitter.purge('mouseenter')
       $emitter.off('click', logClick)
     }
@@ -190,7 +190,7 @@
 
     $emitter.stopImmediate(evt)
 
-    $log.value += `$emitter.trigger('alert', '.item:last-child') 触发自定义 ${type} 事件\r`
+    $log.value += `$emitter.trigger('alert', '.case__item:last-child') 触发自定义 ${type} 事件\r`
     $log.value += `事件的 delegateTarget 为节点的 id 为：'${$target.id}'\r`
 
     scroll()
@@ -214,13 +214,13 @@
     $remove.addEventListener('click', toggleRemove)
 
     // 绑定不同元素的代理事件
-    $emitter.mouseenter('.item', logMouseEnter)
-    $emitter.click('.remove', remove)
-    $emitter.on('.item','click', logClick)
-    $emitter.on('.item','log', logTrigger)
+    $emitter.mouseenter('.case__item', logMouseEnter)
+    $emitter.click('.case__remove', remove)
+    $emitter.on('.case__item','click', logClick)
+    $emitter.on('.case__item','log', logTrigger)
 
-    $emitter.on('.item','alert', lastItemHandler)
-    $emitter.on('.item','alert', typeHandler)
+    $emitter.on('.case__item','alert', lastItemHandler)
+    $emitter.on('.case__item','alert', typeHandler)
 
     // 动态创建列表项
     $append.addEventListener('click', append)
@@ -229,11 +229,11 @@
 
     $log.value += `getTypes() 获取 $emitter 绑定事件：'${types}'\r`
 
-    $emitter.trigger('log', '.item:nth-child(2)')
-    $emitter.trigger('alert', '.item:last-child')
+    $emitter.trigger('log', '.case__item:nth-child(2)')
+    $emitter.trigger('alert', '.case__item:last-child')
 
-    $provider.focusin('.textarea', typeHandler)
-    $provider.keyup('.textarea', keyboardHandler)
+    $provider.focusin('.case__textarea', typeHandler)
+    $provider.keyup('.case__textarea', keyboardHandler)
 
     types = $provider.getTypes()
 

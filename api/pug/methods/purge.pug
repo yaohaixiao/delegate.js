@@ -1,0 +1,60 @@
+section#method-purge.section
+  header.section__header
+    h3.section__h3 purge(type[, recurse])
+  div.section__content
+    h4.section__h4 Description
+    p 清除 DOM 元素（$el）全部或者指定 type 类型的事件处理器。
+    h4.section__h4 Parameters
+    h5.section__h4 type
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd String
+    p （必须）事件类型（名称）。
+    h5.section__h4 recurse
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd Boolean
+    dl.section__dl
+      dt.section__dt Default：
+      dd.section__dd false
+    p （可选）是否递归清理 DOM 元素下所有子节点绑定的事件处理器，默认值：false - 仅清理当前 DOM 元素的事件处理器，true - 同事递归清理 DOM 元素下所有子节点绑定的事件处理器。
+    h4.section__h4 Returns
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd Emitter。
+    p 返回 Emitter 对象（实例）。
+    pre.section__pre
+      code.section__code.
+        const handler = function(evt) {
+          const $li = evt.delegateTarget
+          const $textarea = document.querySelector('#log-textarea')
+
+          $textarea.value += `你点击的 li 节点的 id 为 ${$li.id}\r`
+        }
+
+        const $emitter = delegate('#list')
+
+        // 绑定事件
+        $emitter.on('li', 'click', handler)
+
+        // 获取已绑定的所有类型的事件处理器
+        $emitter.getListeners()
+
+        // 获取所有 click 事件处理器
+        $emitter.getListeners('click')
+        // => [{
+        // options,
+        // selector,
+        // type,
+        // fn,
+        // data,
+        // context,
+        // capture
+        // }]
+
+        // 清除绑定的所有 click 事件处理器
+        $emitter.purge('click')
+
+        // 清除 $options 元素所有 click 事件处理器
+        // 同时也清除其子节点绑定的所有类型事件处理器
+        $emitter.purge('click', true)

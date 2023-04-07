@@ -42,7 +42,7 @@ describe('closest() 方法', () => {
     count += 1
   }
 
-  it('基础调用：purgeElement(el, type)', () => {
+  it('基础调用：purgeElement(options, type)', () => {
     let allListeners = []
     let clickListeners = []
     let dbclickListeners = []
@@ -77,7 +77,7 @@ describe('closest() 方法', () => {
     expect(allListeners.length).toEqual(0)
   })
 
-  it('传递 recurse 参数：purgeElement(el, type, recurse = true)', () => {
+  it('传递 recurse 参数：purgeElement(options, type, recurse = true)', () => {
     let allListeners = []
     const $home = document.querySelector('#text-home')
 
@@ -108,7 +108,7 @@ describe('closest() 方法', () => {
     expect(count).toEqual(1)
   })
 
-  it('仅传递 el 参数：purgeElement(el)', () => {
+  it('仅传递 options 参数：purgeElement(options)', () => {
     purgeElement($list)
 
     expect(getListeners($list).length).toEqual(0)

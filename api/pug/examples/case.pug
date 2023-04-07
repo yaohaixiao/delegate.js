@@ -1,0 +1,43 @@
+div.case
+  div.case__preview
+    div.case__toolbar
+      span#action-item.case__action 解除 .case__item 绑定
+      span#action-remove.case__action 解除 .case__remove 绑定
+    ul#list.case__list
+    div.case__toolbar
+      span#append.case__action 添加行
+    div#console.case__console
+      textarea#log.case__textarea
+  div.case__usage
+    pre.case__pre
+      code.case__code.
+        &lt;ul id="list" class="case__list"&gt;&lt;/ul&gt;
+        &lt;script src="lib/delegate.min.js"&gt;&lt;/script&gt;
+        &lt;script&gt;
+        const $list = document.querySelector('#list')
+        const $emitter = delegate($list)
+
+        // 通过 on() 方法绑定代理事件
+        $emitter.on('.case__item', 'click', logClick)
+        // 通过 mouseenter() 方法绑定 mouseenter 代理事件
+        $emitter.mouseenter('.case__item', logMouseEnter)
+        // 通过 click() 方法绑定 click 代理事件
+        $emitter.click('.remove', remove)
+
+        // 通过 off() 方法解除已绑定的代理事件
+        $emitter.off('click', log)
+        $emitter.off('click', remove)
+        // 也可以通过 purge() 方法，解除所有 mouseenter 类型事件绑定
+        $emitter.purge('mouseenter')
+
+        // 解除所有事件绑定
+        $emitter.destroy()
+
+        // 绑定 log 自定义事件
+        $emitter.on('.case__item','log', logTrigger)
+        // 使用 trigger() 方法手动触发自定义的事件
+        $emitter.trigger('log', '.item:nth-child(2)')
+
+        $provider.focusin('.case__textarea', typeHandler)
+        $provider.keyup('.case__textarea', keyboardHandler)
+        &lt;/script&gt;

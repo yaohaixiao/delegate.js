@@ -1,0 +1,81 @@
+section#method-off.section
+  header.section__header
+    h3.section__h3 off(type[, fn])
+  div.section__content
+    h4.section__h4 Description
+    p off() 方法用来接触绑定的事件代理处理器。
+    h4.section__h4 Parameters
+    h5.section__h4 type
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd String
+    p （必须）type 指定需要接触绑定的事件类型，不指定则解绑 $el 上绑定的所有事件处理器。
+    pre.section__pre
+      code.section__code.
+        const handler = function(evt) {
+          const $li = evt.delegateTarget
+          console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+        }
+
+        const callback = function(evt) {
+          const $li = evt.delegateTarget
+          console.log(`你双击的 li 节点的 id 为 ${$li.id}`)
+        }
+
+        const fn = function(evt) {
+          const $li = evt.delegateTarget
+          console.log(`你鼠标划过的 li 节点的 id 为 ${$li.id}`)
+        }
+
+        const $emitter = delegate('#list')
+
+        // 绑定了
+        $emitter.on('.item', 'click', handler)
+        $emitter.on('.item', 'click', fn)
+        $emitter.on('.item', 'dbclick', callback)
+        $emitter.on('.item', 'mouserenter', fn)
+
+        // 解除 click 事件绑定的 handler 事件处理器
+        $emitter.off($list, 'click', callback)
+
+        // 解除 #list 绑定的所有事件处理器
+        $emitter.off($list)
+    h5.section__h4 fn
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd Function
+    p （可选）fn 指定需要接触绑定的事件处理器回调函数，如果不指定则接触 $el 绑定的所有指定 type 的事件处理器。
+    pre.section__pre
+      code.section__code.
+        const handler = function(evt) {
+          const $li = evt.delegateTarget
+          console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+        }
+
+        const callback = function(evt) {
+          const $li = evt.delegateTarget
+          console.log(`你双击的 li 节点的 id 为 ${$li.id}`)
+        }
+
+        const fn = function(evt) {
+          const $li = evt.delegateTarget
+          console.log(`你鼠标划过的 li 节点的 id 为 ${$li.id}`)
+        }
+
+        const $emitter = delegate('#list')
+
+        // 绑定了
+        $emitter.on('.item', 'click', handler)
+        $emitter.on('.item', 'click', fn)
+        $emitter.on('.item', 'click', callback)
+
+        // 解除 click 事件绑定的 handler 事件处理器
+        $emitter.off($list, 'click', callback)
+
+        // 解除所有 click 事件处理器
+        $emitter.off($list, 'click')
+    h4.section__h4 Returns
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd Emitter 对象。
+    p Emitter 对象。

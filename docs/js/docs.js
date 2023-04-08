@@ -103,6 +103,10 @@
   const logMouseEnter = function(evt) {
     const $target = $emitter.getRelatedTarget(evt)
 
+    if (!$target) {
+      return false
+    }
+
     $log.value += `mouseenter 事件触发，事件的 relatedTarget 为：'${$target}'\r`
 
     scroll()
@@ -112,6 +116,10 @@
     const pageX = $emitter.getPageX(evt)
     const pageY = $emitter.getPageY(evt)
     const $target = evt.delegateTarget
+
+    if (!$target) {
+      return false
+    }
 
     $log.value += `click 事件触发，当前点击的 li 节点的 id 为：'${$target.id}'\r`
     $log.value += `getPageX() 获取点击处的 pageX 为：'${pageX}'\r`
@@ -123,6 +131,10 @@
   const logTrigger = function (evt) {
     const $target = evt.delegateTarget
     const type = evt.type
+
+    if (!$target) {
+      return false
+    }
 
     $log.value += `$emitter.trigger('log', '.case__item:nth-child(2)') 触发自定义 ${type} 事件\r`
     $log.value += `事件的 delegateTarget 为节点的 id 为：'${$target.id}'\r`
@@ -168,6 +180,10 @@
     const type = evt.type
     const $target = evt.target
 
+    if (!$target) {
+      return false
+    }
+
     $log.value += `${$target} 触发 ${type} 事件\r`
 
     scroll()
@@ -178,6 +194,10 @@
     const $target = evt.target
     const charCode = $provider.getCharCode(evt)
 
+    if (!$target) {
+      return false
+    }
+
     $log.value += `\r${$target} 触发 ${type} 事件\r`
     $log.value += `事件的 charCode 是：${charCode}\r`
 
@@ -187,6 +207,10 @@
   const lastItemHandler = function(evt) {
     const type = evt.type
     const $target = evt.target
+
+    if (!$target) {
+      return false
+    }
 
     $emitter.stopImmediate(evt)
 

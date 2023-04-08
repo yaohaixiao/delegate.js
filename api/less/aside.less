@@ -1,6 +1,8 @@
 @import 'colors';
 
 .aside {
+  font-family: "Source Code Pro", Consolas, Georgia, Monaco, monospace, Arial, sans-serif;
+
   &__header {
     margin: 0 auto;
     flex-shrink: 0;
@@ -43,13 +45,13 @@
     font-size: 14px;
     overflow: hidden;
 
-
+    &.active,
     &:hover {
       background-color: @secondary_text_color;
     }
 
     &.active {
-      background-color: @secondary_text_color;
+      border-left: 3px solid @white;
     }
   }
 

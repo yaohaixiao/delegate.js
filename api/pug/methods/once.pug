@@ -1,6 +1,6 @@
-section#method-once.section
+section.section
   header.section__header
-    h3.section__h3 once(selector, type, fn[, data, context])
+    h3#method-once.section__h3 once(selector, type, fn[, data, context])
   div.section__content
     h4.section__h4 Description
     p once() 方法用来绑定事件代理处理器，仅触发一次。
@@ -45,7 +45,7 @@ section#method-once.section
     h5.section__h4 context
     dl.section__dl
       dt.section__dt Type：
-      dd.section__dd Object|Boolean
+      dd.section__dd Object | Boolean
     p （可选）事件处理器回调函数的 this 上下文指向：
     ul
       li 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；

@@ -150,7 +150,6 @@ const minifyStyle = () => {
 }
 
 const buildDocs = gulp.series(buildPug, buildStyle, minifyStyle, buildScript)
-const docs = gulp.series(cleanDocs, buildDocs)
 
 /* ==================== 检测源代码变更相关的 gulp 任务 ==================== */
 const watchSource = () => {
@@ -164,23 +163,16 @@ const watchSource = () => {
     .pipe(reload())
 }
 
-const watchAPI = () => {
-  return watch(
-    'api/**/*.*',
-    docs()
-  )
-    .pipe(reload())
-}
-
 const watchDocs = () => {
   return watch('docs/**/*.*')
     .pipe(reload())
 }
 
-const watchAll = gulp.parallel(watchSource, watchAPI, watchDocs)
+const watchAll = gulp.parallel(watchSource, watchDocs)
 const test = gulp.series(lint, check)
-const start = gulp.series(docs, test, buildScript, connectDocs, watchAll, openDocs)
 const build = gulp.series(test, cleanDist, buildScript)
+const docs = gulp.series(cleanDocs, buildDocs)
+const start = gulp.series(test, docs, connectDocs, openDocs)
 
 module.exports.start = start
 module.exports.docs = docs

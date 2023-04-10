@@ -88,16 +88,9 @@
   const scrollToAnchor = function(evt) {
     const $target = evt.delegateTarget
     const id = $target.href.split('#')[1]
-    const $item = $target.parentNode
     const $method = document.querySelector(`#${id}`)
 
     scrollTo($method.offsetTop, 50)
-
-    if ($active) {
-      $active.classList.remove('active')
-    }
-    $item.classList.add('active')
-    $active = $item
 
     evt.stopPropagation()
     evt.preventDefault()
@@ -112,12 +105,10 @@
   }
 
   const syncNav = () => {
-    let currentMethod = ''
     const Observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if(entry.intersectionRatio>0){
           const id = entry.target.getAttribute('id')
-          console.log('id', id)
           const $anchor = document.querySelector(`.aside__anchor[href="#${id}"]`)
           const $item = $anchor.parentNode
 
@@ -128,6 +119,10 @@
           $active = $item
         }
       })
+    }, {
+      root: $main,
+      rootMargin: '0px',
+      threshold: 1.0
     })
 
     $main.querySelectorAll('.section__h3').forEach((section) => {

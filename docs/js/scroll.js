@@ -38,12 +38,6 @@
     }
   }
 
-  const updateReading = debounce(function() {
-    const scrollTop = $main.scrollTop
-
-    updateButtons(scrollTop)
-  })
-
   const scrollTo = (top, speed = 100) => {
     let scrollTop = $main.scrollTop
     const distance = top - scrollTop
@@ -107,7 +101,7 @@
   const syncNav = () => {
     const Observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if(entry.intersectionRatio>0){
+        if (entry.intersectionRatio > 0) {
           const id = entry.target.getAttribute('id')
           const $anchor = document.querySelector(`.aside__anchor[href="#${id}"]`)
           const $item = $anchor.parentNode
@@ -120,9 +114,7 @@
         }
       })
     }, {
-      root: $main,
-      rootMargin: '0px',
-      threshold: 1.0
+      root: $main
     })
 
     $main.querySelectorAll('.section__h3').forEach((section) => {
@@ -139,7 +131,6 @@
 
     $emitter.click('.aside__anchor', scrollToAnchor)
 
-    $main.addEventListener('wheel', updateReading)
     $up.addEventListener('click', scrollToTop)
     $down.addEventListener('click', scrollToBottom)
   }

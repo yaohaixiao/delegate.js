@@ -13,6 +13,7 @@ const less = require('gulp-less')
 const LessAutoPrefix = require('less-plugin-autoprefix')
 const autoprefixer = new LessAutoPrefix({ browsers: ['last 2 versions'] })
 const cssmin = require('gulp-cssmin')
+const concat = require('gulp-concat')
 const rename = require('gulp-rename')
 const sourcemaps = require('gulp-sourcemaps')
 const umd = require('gulp-umd')
@@ -86,39 +87,6 @@ const check = () => {
 }
 
 /* ==================== 编译 JavaScript 代码的 gulp 任务 ==================== */
-const buildFullScript = () => {
-  return gulp
-    .src('./src/delegate.js')
-    .pipe(plumber())
-    .pipe(babel())
-    .pipe(
-      umd({
-        exports: function () {
-          return 'delegate'
-        },
-        namespace: function () {
-          return 'delegate'
-        }
-      })
-    )
-    .pipe(gulp.dest('./'))
-    .pipe(gulp.dest('./docs/lib'))
-    .pipe(uglify())
-    .pipe(
-      sourcemaps.init({
-        loadMaps: true
-      })
-    )
-    .pipe(
-      rename({
-        suffix: '.min'
-      })
-    )
-    .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./'))
-    .pipe(gulp.dest('docs/lib'))
-}
-
 const buildCoreScript = () => {
   return gulp
     .src('./src/delegate.core.js')
@@ -135,7 +103,6 @@ const buildCoreScript = () => {
       })
     )
     .pipe(gulp.dest('./'))
-    .pipe(gulp.dest('./docs/lib'))
     .pipe(uglify())
     .pipe(
       sourcemaps.init({
@@ -149,7 +116,49 @@ const buildCoreScript = () => {
     )
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./'))
-    .pipe(gulp.dest('docs/lib'))
+}
+
+const buildFullScript = () => {
+  return gulp
+    .src('./src/delegate.js')
+    .pipe(plumber())
+    .pipe(babel())
+    .pipe(
+      umd({
+        exports: function () {
+          return 'delegate'
+        },
+        namespace: function () {
+          return 'delegate'
+        }
+      })
+    )
+    .pipe(gulp.dest('./'))
+    .pipe(uglify())
+    .pipe(
+      sourcemaps.init({
+        loadMaps: true
+      })
+    )
+    .pipe(
+      rename({
+        suffix: '.min'
+      })
+    )
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('./'))
+}
+
+const buildDocsScript = () => {
+  return gulp
+    .src([
+      './delegate.min.js',
+      './api/js/docs.js',
+      './api/js/scroll.js'
+    ])
+    .pipe(concat('docs.min.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('./docs/js'))
 }
 
 const buildPug = () => {
@@ -188,10 +197,11 @@ const minifyStyle = () => {
 }
 
 const buildDocs = gulp.series(
-  buildPug,
   buildStyle,
   minifyStyle,
-  buildFullScript
+  buildFullScript,
+  buildDocsScript,
+  buildPug
 )
 
 /* ==================== 检测源代码变更相关的 gulp 任务 ==================== */
@@ -212,7 +222,7 @@ const watchDocs = () => {
 const watchAll = gulp.parallel(watchSource, watchDocs)
 const test = gulp.series(lint, check)
 const build = gulp.series(test, cleanDist, buildCoreScript, buildFullScript)
-const docs = gulp.series(cleanDocs, buildDocs)
+const docs = gulp.series(cleanDocs, buildDocs, watchAll)
 const start = gulp.series(test, docs, connectDocs, openDocs)
 
 module.exports.start = start

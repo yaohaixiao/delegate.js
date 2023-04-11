@@ -49,12 +49,14 @@ npm i -S @yaohaixiao/delegate.js --registry=https://npm.pkg.github.com
 
 ```html
 <script src="https://cdn.jsdelivr.net/gh/yaohaixiao/delegate.js/delegate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/yaohaixiao/delegate.js/delegate.core.min.js"></script>
 ```
 
 #### 本地调用 JS 文件
 
 ```html
 <script src="/path/to/delegate.min.js"></script>
+<script src="/path/to/delegate.core.min.js"></script>
 ```
 
 ### Node.js 中调用
@@ -68,9 +70,13 @@ const delegate = require('@yaohaixiao/delegate.js')
 ```js
 // 调用 delegate 实例对象
 import delegate from '@yaohaixiao/esm/delegate'
+// 或者调用 core 版本
+import delegate from '@yaohaixiao/esm/delegate.core'
 
 // 调用 Emitter 构造函数
-import Emitter from '@yaohaixiao/delegate.js/esm/Emitter'
+import Emitter from '@yaohaixiao/delegate.js/esm/emitter'
+// 或者调用 Emitter Core 版本
+import Emitter from '@yaohaixiao/delegate.js/esm/emitter.core'
 
 // 调用单个（on/once/off）方法
 import on from '@yaohaixiao/delegate.js/esm/on'

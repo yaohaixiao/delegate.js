@@ -86,9 +86,42 @@ const check = () => {
 }
 
 /* ==================== 编译 JavaScript 代码的 gulp 任务 ==================== */
-const buildScript = () => {
+const buildFullScript = () => {
   return gulp
     .src('./src/delegate.js')
+    .pipe(plumber())
+    .pipe(babel())
+    .pipe(
+      umd({
+        exports: function () {
+          return 'delegate'
+        },
+        namespace: function () {
+          return 'delegate'
+        }
+      })
+    )
+    .pipe(gulp.dest('./'))
+    .pipe(gulp.dest('./docs/lib'))
+    .pipe(uglify())
+    .pipe(
+      sourcemaps.init({
+        loadMaps: true
+      })
+    )
+    .pipe(
+      rename({
+        suffix: '.min'
+      })
+    )
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('./'))
+    .pipe(gulp.dest('docs/lib'))
+}
+
+const buildCoreScript = () => {
+  return gulp
+    .src('./src/delegate.core.js')
     .pipe(plumber())
     .pipe(babel())
     .pipe(
@@ -149,7 +182,7 @@ const minifyStyle = () => {
     .pipe(gulp.dest('./docs'));
 }
 
-const buildDocs = gulp.series(buildPug, buildStyle, minifyStyle, buildScript)
+const buildDocs = gulp.series(buildPug, buildStyle, minifyStyle, buildFullScript)
 
 /* ==================== 检测源代码变更相关的 gulp 任务 ==================== */
 const watchSource = () => {
@@ -158,7 +191,7 @@ const watchSource = () => {
     {
       ignoreInitial: false
     },
-    gulp.series(lint, buildScript)
+    gulp.series(lint, buildFullScript)
   )
     .pipe(reload())
 }
@@ -170,7 +203,7 @@ const watchDocs = () => {
 
 const watchAll = gulp.parallel(watchSource, watchDocs)
 const test = gulp.series(lint, check)
-const build = gulp.series(test, cleanDist, buildScript)
+const build = gulp.series(test, cleanDist, buildCoreScript, buildFullScript)
 const docs = gulp.series(cleanDocs, buildDocs)
 const start = gulp.series(test, docs, connectDocs, openDocs)
 

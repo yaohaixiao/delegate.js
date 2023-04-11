@@ -153,7 +153,8 @@ const buildCoreScript = () => {
 }
 
 const buildPug = () => {
-  return gulp.src('api/pug/index.pug')
+  return gulp
+    .src('api/pug/index.pug')
     .pipe(
       pug({
         verbose: true
@@ -163,26 +164,35 @@ const buildPug = () => {
 }
 
 const buildStyle = () => {
-  return gulp.src('./api/less/docs.less')
+  return gulp
+    .src('./api/less/docs.less')
     .pipe(sourcemaps.init())
-    .pipe(less({
-      paths: [ path.join(__dirname, 'less', 'includes') ],
-      plugins: [autoprefixer]
-    }))
+    .pipe(
+      less({
+        paths: [path.join(__dirname, 'less', 'includes')],
+        plugins: [autoprefixer]
+      })
+    )
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('./docs/css'))
 }
 
 const minifyStyle = () => {
-  return gulp.src('./docs/**/*.css')
+  return gulp
+    .src('./docs/**/*.css')
     .pipe(sourcemaps.init())
     .pipe(cssmin())
     .pipe(rename({ suffix: '.min' }))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./docs'));
+    .pipe(gulp.dest('./docs'))
 }
 
-const buildDocs = gulp.series(buildPug, buildStyle, minifyStyle, buildFullScript)
+const buildDocs = gulp.series(
+  buildPug,
+  buildStyle,
+  minifyStyle,
+  buildFullScript
+)
 
 /* ==================== 检测源代码变更相关的 gulp 任务 ==================== */
 const watchSource = () => {
@@ -192,13 +202,11 @@ const watchSource = () => {
       ignoreInitial: false
     },
     gulp.series(lint, buildFullScript)
-  )
-    .pipe(reload())
+  ).pipe(reload())
 }
 
 const watchDocs = () => {
-  return watch('docs/**/*.*')
-    .pipe(reload())
+  return watch('docs/**/*.*').pipe(reload())
 }
 
 const watchAll = gulp.parallel(watchSource, watchDocs)

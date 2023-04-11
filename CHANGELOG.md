@@ -1,3 +1,12 @@
+# [1.9.0](https://github.com/yaohaixiao/delegate.js/compare/1.8.2...1.9.0) (2023-04-11)
+
+
+### Features
+
+* 添加 delegate.js 的 core 版本，仅提供 on()\once()\off()\purge()\destroy() 5个核心方法； ([7d78da7](https://github.com/yaohaixiao/delegate.js/commit/7d78da7907b60d08e0b766fd6f9a75da8ff0e02b))
+
+
+
 ## [1.8.2](https://github.com/yaohaixiao/delegate.js/compare/1.8.1...1.8.2) (2023-03-31)
 
 

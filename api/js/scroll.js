@@ -124,9 +124,8 @@
 
   const setup = () => {
     const $emitter = delegate($aside)
-    const scrollTop = $main.scrollTop
 
-    updateButtons(scrollTop)
+    updateButtons($main.scrollTop)
     syncNav()
 
     $emitter.click('.aside__anchor', scrollToAnchor)

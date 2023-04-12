@@ -222,7 +222,7 @@ const watchDocs = () => {
 const watchAll = gulp.parallel(watchSource, watchDocs)
 const test = gulp.series(lint, check)
 const build = gulp.series(test, cleanDist, buildCoreScript, buildFullScript)
-const docs = gulp.series(cleanDocs, buildDocs, watchAll)
+const docs = gulp.series(cleanDocs, buildDocs)
 const start = gulp.series(test, docs, connectDocs, openDocs)
 
 module.exports.start = start

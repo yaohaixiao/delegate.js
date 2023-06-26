@@ -1,3 +1,12 @@
+## [1.9.1](https://github.com/yaohaixiao/delegate.js/compare/1.9.0...1.9.1) (2023-06-26)
+
+
+### Bug Fixes
+
+* 处理 off() 和 purgeElement() 方法，esm 模块循环调用的问题 ([53fcd82](https://github.com/yaohaixiao/delegate.js/commit/53fcd82ded9241ecf2fbe8e6a5328048701e2abb))
+
+
+
 # [1.9.0](https://github.com/yaohaixiao/delegate.js/compare/1.8.2...1.9.0) (2023-04-11)
 
 

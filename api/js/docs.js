@@ -1,4 +1,4 @@
-(function() {
+;(function () {
   let options = [
     {
       id: 1,
@@ -48,9 +48,11 @@
   const $item = document.querySelector('#action-item')
   const $append = document.querySelector('#append')
   const $list = document.querySelector('#list')
+  // eslint-disable-next-line no-undef
   const $emitter = delegate($list)
   const $console = document.querySelector('#console')
   const $log = document.querySelector('#log')
+  // eslint-disable-next-line no-undef
   const $provider = delegate($console)
 
   const draw = () => {
@@ -59,7 +61,8 @@
     options.forEach((option) => {
       const id = option.id
       const name = encodeURIComponent(option.text)
-      const item = `<li id="${'item-' + id}" class="case__item">` +
+      const item =
+        `<li id="${'item-' + id}" class="case__item">` +
         `<span class="case__label">${name}</span>` +
         `<a href="#list?id=${id}&amp;name=${name}" class="case__remove" data-id="${id}">删除</a>` +
         `</li>`
@@ -100,7 +103,7 @@
     scroll()
   }
 
-  const logMouseEnter = function(evt) {
+  const logMouseEnter = function (evt) {
     const $target = $emitter.getRelatedTarget(evt)
 
     if (!$target) {
@@ -176,7 +179,7 @@
     scroll()
   }
 
-  const typeHandler = function(evt) {
+  const typeHandler = function (evt) {
     const type = evt.type
     const $target = evt.target
 
@@ -189,7 +192,7 @@
     scroll()
   }
 
-  const keyboardHandler = function(evt) {
+  const keyboardHandler = function (evt) {
     const type = evt.type
     const $target = evt.target
     const charCode = $provider.getCharCode(evt)
@@ -204,7 +207,7 @@
     scroll()
   }
 
-  const lastItemHandler = function(evt) {
+  const lastItemHandler = function (evt) {
     const type = evt.type
     const $target = evt.target
 
@@ -240,11 +243,11 @@
     // 绑定不同元素的代理事件
     $emitter.mouseenter('.case__item', logMouseEnter)
     $emitter.click('.case__remove', remove)
-    $emitter.on('.case__item','click', logClick)
-    $emitter.on('.case__item','log', logTrigger)
+    $emitter.on('.case__item', 'click', logClick)
+    $emitter.on('.case__item', 'log', logTrigger)
 
-    $emitter.on('.case__item','alert', lastItemHandler)
-    $emitter.on('.case__item','alert', typeHandler)
+    $emitter.on('.case__item', 'alert', lastItemHandler)
+    $emitter.on('.case__item', 'alert', typeHandler)
 
     // 动态创建列表项
     $append.addEventListener('click', append)
@@ -265,4 +268,4 @@
   }
 
   setup()
-})();
+})()

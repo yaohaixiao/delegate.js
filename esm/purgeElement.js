@@ -1,7 +1,7 @@
 import isString from './isString'
 import isElement from './isElement'
 import getListeners from './getListeners'
-import off from './off'
+import _off from './_off'
 
 /**
  * 销毁（type 类型的）代理事件绑定
@@ -20,7 +20,7 @@ const purgeElement = function (el, type, recurse = false) {
   const listeners = getListeners($element, type)
 
   listeners.forEach((listener) => {
-    off($element, listener.type, listener.fn)
+    _off($element, listener.type, listener.fn)
   })
 
   if (

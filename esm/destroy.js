@@ -14,8 +14,6 @@ const destroy = (el) => {
   types.forEach((type) => {
     purgeElement(el, type, true)
   })
-
-  return this
 }
 
 export default destroy

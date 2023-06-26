@@ -1,7 +1,6 @@
 import purgeElement from './purgeElement'
 import isFunction from './isFunction'
-import _delete from './_delete'
-import { CAPTURE_EVENTS } from './enum'
+import _off from './_off'
 
 /**
  * 取消 type 类型的代理事件绑定
@@ -14,23 +13,12 @@ import { CAPTURE_EVENTS } from './enum'
  * @param {Function} [fn] - （可选）事件处理器回调函数
  */
 const off = (el, type, fn) => {
-  const capture = CAPTURE_EVENTS.indexOf(type) > -1
-
-  // 如果不设置 fn 参数，默认清除 options 元素上绑定的所有事件处理器
+  // 如果不设置 fn 参数，默认清除 el 元素上绑定的所有事件处理器
   if (!isFunction(fn)) {
     return purgeElement(el, type)
   }
 
-  /* istanbul ignore else */
-  if (fn._delegateListener) {
-    fn = fn._delegateListener
-    delete fn._delegateListener
-  }
-
-  // 移除缓存的 _listeners 数据
-  _delete(el, type, fn)
-
-  el.removeEventListener(type, fn, capture)
+  _off(el, type, fn)
 }
 
 export default off

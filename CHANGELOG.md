@@ -1,3 +1,12 @@
+## [1.9.3](https://github.com/yaohaixiao/delegate.js/compare/1.9.2...1.9.3) (2023-06-27)
+
+
+### Bug Fixes
+
+* 修改 README.md 中的 import 示例的路径错误 ([41491e7](https://github.com/yaohaixiao/delegate.js/commit/41491e7a2c6f49910993bdc35c08264e4e10c17a))
+
+
+
 ## [1.9.2](https://github.com/yaohaixiao/delegate.js/compare/1.9.1...1.9.2) (2023-06-27)
 
 

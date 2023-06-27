@@ -1,3 +1,12 @@
+## [1.9.2](https://github.com/yaohaixiao/delegate.js/compare/1.9.1...1.9.2) (2023-06-27)
+
+
+### Bug Fixes
+
+* 修复 API 文档中错误的 cdn 调用地址 ([3eda32b](https://github.com/yaohaixiao/delegate.js/commit/3eda32bfb62523536f090fec92f6f3bc7955b06a))
+
+
+
 ## [1.9.1](https://github.com/yaohaixiao/delegate.js/compare/1.9.0...1.9.1) (2023-06-26)
 
 

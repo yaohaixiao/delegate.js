@@ -71,6 +71,12 @@ const delegate = require('@yaohaixiao/delegate.js')
 // 调用 delegate 实例对象
 import delegate from '@yaohaixiao/esm/delegate'
 // 或者调用 core 版本
+// core 版本仅提供以下几个方法：
+// on()
+// once()
+// off()
+// purge()
+// destroy()
 import delegate from '@yaohaixiao/esm/delegate.core'
 
 // 调用 Emitter 构造函数

@@ -69,7 +69,7 @@ const delegate = require('@yaohaixiao/delegate.js')
 
 ```js
 // 调用 delegate 实例对象
-import delegate from '@yaohaixiao/esm/delegate'
+import delegate from '@yaohaixiao/delegate.js/esm/delegate'
 // 或者调用 core 版本
 // core 版本仅提供以下几个方法：
 // on()
@@ -77,7 +77,7 @@ import delegate from '@yaohaixiao/esm/delegate'
 // off()
 // purge()
 // destroy()
-import delegate from '@yaohaixiao/esm/delegate.core'
+import delegate from '@yaohaixiao/delegate.js/esm/delegate.core'
 
 // 调用 Emitter 构造函数
 import Emitter from '@yaohaixiao/delegate.js/esm/emitter'

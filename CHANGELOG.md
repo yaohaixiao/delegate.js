@@ -1,3 +1,12 @@
+# [2.0.0](https://github.com/yaohaixiao/delegate.js/compare/1.9.3...2.0.0) (2023-07-03)
+
+
+### Features
+
+* core 版本添加 click()、mouseenter()、mouseleave()、change()、createEvent() 和 trigger() 方法 ([7c59c3b](https://github.com/yaohaixiao/delegate.js/commit/7c59c3bad06d521de1074c6cb1f4589660173887))
+
+
+
 ## [1.9.3](https://github.com/yaohaixiao/delegate.js/compare/1.9.2...1.9.3) (2023-06-27)
 
 

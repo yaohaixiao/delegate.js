@@ -1,8 +1,8 @@
 /**
  * @jest-environment jsdom
  */
-import on from 'esm/on'
-import off from 'esm/off'
+import on from '../on'
+import off from '../off'
 
 describe('on() 方法', () => {
   // Set up our document body

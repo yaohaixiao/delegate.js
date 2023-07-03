@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import closest from 'esm/closest'
+import closest from '../closest'
 
 describe('closest() 方法', () => {
   // Set up our document body

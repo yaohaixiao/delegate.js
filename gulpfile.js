@@ -11,10 +11,8 @@ const less = require('gulp-less')
 const LessAutoPrefix = require('less-plugin-autoprefix')
 const autoprefixer = new LessAutoPrefix({ browsers: ['last 2 versions'] })
 const cssmin = require('gulp-cssmin')
-const concat = require('gulp-concat')
 const rename = require('gulp-rename')
 const sourcemaps = require('gulp-sourcemaps')
-const uglify = require('gulp-uglify')
 const run = require('gulp-run')
 const watch = require('gulp-watch')
 
@@ -22,15 +20,21 @@ const SOURCE_PATH = [ 'esm/**/*.js']
 
 /* ==================== 清理相关 gulp 任务 ==================== */
 const cleanHtml = () => {
-  return gulp.src('docs/**/index.html').pipe(clean())
+  return gulp.src('docs/**/index.html', {
+    allowEmpty: true
+  }).pipe(clean())
 }
 
 const cleanStyle = () => {
-  return gulp.src('docs/css/*.css').pipe(clean())
+  return gulp.src('docs/css/*.css', {
+    allowEmpty: true
+  }).pipe(clean())
 }
 
 const cleanScript = () => {
-  return gulp.src('docs/js/*.js').pipe(clean())
+  return gulp.src('docs/js/*.js', {
+    allowEmpty: true
+  }).pipe(clean())
 }
 
 const cleanDocs = gulp.parallel(cleanHtml, cleanStyle, cleanScript)
@@ -91,11 +95,7 @@ const buildSource = () => {
 }
 
 const buildScript = () => {
-  return gulp
-    .src(['delegate.min.js', 'api/js/docs.js', 'api/js/scroll.js'])
-    .pipe(concat('docs.min.js'))
-    .pipe(uglify())
-    .pipe(gulp.dest('docs/js'))
+  return run('npm run build:api').exec()
 }
 
 const buildDocs = gulp.series(
@@ -144,7 +144,7 @@ const start = gulp.series(build, connectDocs, openDocs)
 
 /* ==================== 检测变更相关的 gulp 任务 ==================== */
 const watchSource = () => {
-  return watch('esm/**/*.js', gulp.series(lint, buildSource))
+  return watch('./*.js', gulp.series(lint, buildSource))
 }
 
 const watchApi = () => {

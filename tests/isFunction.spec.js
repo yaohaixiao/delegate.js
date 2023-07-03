@@ -1,4 +1,4 @@
-import isFunction from 'esm/isFunction'
+import isFunction from '../isFunction'
 
 describe('isFunction() 方法', () => {
   it('isFunction(()=>{)), 返回：true', () => {

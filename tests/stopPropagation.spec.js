@@ -1,8 +1,8 @@
 /**
  * @jest-environment jsdom
  */
-import stopPropagation from 'esm/stopPropagation'
-import getCharCode from 'esm/getCharCode'
+import stopPropagation from '../stopPropagation'
+import getCharCode from '../getCharCode'
 
 describe('stopPropagation() 方法', () => {
   document.body.innerHTML =

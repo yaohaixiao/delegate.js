@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import getScroll from 'esm/getScroll'
+import getScroll from '../getScroll'
 describe('getScroll() 方法', () => {
   Object.defineProperty(
     document,

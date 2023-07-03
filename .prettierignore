@@ -26,5 +26,4 @@ screenshot
 .eslintcache
 
 .husky
-/delegate.core.min.js
-/delegate.min.js
+/*.min.js

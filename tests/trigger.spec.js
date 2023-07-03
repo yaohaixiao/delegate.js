@@ -1,10 +1,10 @@
 /**
  * @jest-environment jsdom
  */
-import trigger from 'esm/trigger'
-import on from 'esm/on'
-import off from 'esm/off'
-import stopEvent from 'esm/stopEvent'
+import trigger from '../trigger'
+import on from '../on'
+import off from '../off'
+import stopEvent from '../stopEvent'
 
 describe('trigger() 方法', () => {
   // Set up our document body

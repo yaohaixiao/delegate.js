@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import getCharCode from 'esm/getCharCode'
+import getCharCode from '../getCharCode'
 
 describe('getCharCode() 方法', () => {
   Object.defineProperty(

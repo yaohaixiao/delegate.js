@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import matches from 'esm/matches'
+import matches from '../matches'
 
 describe('matches() 方法', () => {
   // Set up our document body

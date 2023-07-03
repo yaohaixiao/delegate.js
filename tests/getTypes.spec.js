@@ -1,12 +1,12 @@
 /**
  * @jest-environment jsdom
  */
-import getTypes from 'esm/getTypes'
-import hasEvent from 'esm/hasEvent'
-import on from 'esm/on'
-import off from 'esm/off'
-import destroy from 'esm/destroy'
-import _delete from 'esm/_delete'
+import getTypes from '../getTypes'
+import hasEvent from '../hasEvent'
+import on from '../on'
+import off from '../off'
+import destroy from '../destroy'
+import _delete from '../_delete'
 
 describe('getTypes() 方法', () => {
   // Set up our document body

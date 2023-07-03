@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import getParentOrHost from 'esm/getParentOrHost'
+import getParentOrHost from '../getParentOrHost'
 
 describe('getParentOrHost() 方法', () => {
   // Set up our document body

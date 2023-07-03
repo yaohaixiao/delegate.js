@@ -1,8 +1,8 @@
 /**
  * @jest-environment jsdom
  */
-import on from 'esm/on'
-import getListeners from 'esm/getListeners'
+import on from '../on'
+import getListeners from '../getListeners'
 
 describe('getListeners() 方法', () => {
   // Set up our document body

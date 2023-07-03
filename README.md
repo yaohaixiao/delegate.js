@@ -69,25 +69,31 @@ const delegate = require('@yaohaixiao/delegate.js')
 
 ```js
 // 调用 delegate 实例对象
-import delegate from '@yaohaixiao/delegate.js/esm/delegate'
+import delegate from '@yaohaixiao/delegate.js/delegate'
 // 或者调用 core 版本
 // core 版本仅提供以下几个方法：
 // on()
 // once()
 // off()
+// click()
+// mouseenter()
+// mouseleave()
+// change()
+// createEvent()
+// trigger()
 // purge()
 // destroy()
-import delegate from '@yaohaixiao/delegate.js/esm/delegate.core'
+import delegate from '@yaohaixiao/delegate.js/delegate.core'
 
 // 调用 Emitter 构造函数
-import Emitter from '@yaohaixiao/delegate.js/esm/emitter'
+import Emitter from '@yaohaixiao/delegate.js/emitter'
 // 或者调用 Emitter Core 版本
-import Emitter from '@yaohaixiao/delegate.js/esm/emitter.core'
+import Emitter from '@yaohaixiao/delegate.js/emitter.core'
 
 // 调用单个（on/once/off）方法
-import on from '@yaohaixiao/delegate.js/esm/on'
-import once from '@yaohaixiao/delegate.js/esm/once'
-import off from '@yaohaixiao/delegate.js/esm/off'
+import on from '@yaohaixiao/delegate.js/on'
+import once from '@yaohaixiao/delegate.js/once'
+import off from '@yaohaixiao/delegate.js/off'
 ```
 
 ## API 文档

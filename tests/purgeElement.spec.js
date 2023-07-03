@@ -1,9 +1,9 @@
 /**
  * @jest-environment jsdom
  */
-import purgeElement from 'esm/purgeElement'
-import on from 'esm/on'
-import getListeners from 'esm/getListeners'
+import purgeElement from '../purgeElement'
+import on from '../on'
+import getListeners from '../getListeners'
 
 describe('closest() 方法', () => {
   // Set up our document body

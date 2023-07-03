@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import isAppleSafari from 'esm/isAppleSafari'
+import isAppleSafari from '../isAppleSafari'
 
 describe('isAppleSafari() 方法', () => {
   Object.defineProperty(

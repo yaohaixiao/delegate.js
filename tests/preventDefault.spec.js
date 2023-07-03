@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import preventDefault from 'esm/preventDefault'
+import preventDefault from '../preventDefault'
 
 describe('preventDefault() 方法', () => {
   const mockResponse = jest.fn()

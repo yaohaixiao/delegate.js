@@ -13,7 +13,7 @@ const PLUGIN_CONFIG = [
 export default [
   // For full functions module
   {
-    input: 'esm/delegate.js',
+    input: './delegate.js',
     output: {
       name: 'delegate',
       file: './delegate.min.js',
@@ -23,7 +23,18 @@ export default [
     plugins: PLUGIN_CONFIG
   },
   {
-    input: 'esm/delegate.core.js',
+    input: './delegate.js',
+    output: {
+      name: 'delegate',
+      file: 'docs/js/delegate.min.js',
+      format: 'umd',
+      sourcemap: true
+    },
+    plugins: PLUGIN_CONFIG
+  },
+  // For core functions module
+  {
+    input: './delegate.core.js',
     output: {
       name: 'delegate',
       file: './delegate.core.min.js',

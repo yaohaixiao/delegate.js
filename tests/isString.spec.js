@@ -1,4 +1,4 @@
-import isString from '../esm/isString'
+import isString from '../isString'
 
 describe('isString() 方法', () => {
   it("isString('ok'), 返回：true", () => {

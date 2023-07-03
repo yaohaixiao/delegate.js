@@ -1,10 +1,10 @@
 /**
  * @jest-environment jsdom
  */
-import off from 'esm/off'
-import on from 'esm/on'
-import getListeners from 'esm/getListeners'
-import stopImmediate from 'esm/stopImmediate'
+import off from '../off'
+import on from '../on'
+import getListeners from '../getListeners'
+import stopImmediate from '../stopImmediate'
 
 describe('closest() 方法', () => {
   // Set up our document body

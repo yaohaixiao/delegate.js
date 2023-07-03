@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import getPageX from 'esm/getPageX'
+import getPageX from '../getPageX'
 
 describe('getPageX() 方法', () => {
   Object.defineProperty(

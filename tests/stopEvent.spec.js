@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import stopEvent from '../esm/stopEvent'
+import stopEvent from '../stopEvent'
 
 describe('stopEvent() 方法', () => {
   Object.defineProperty(window, 'location', {

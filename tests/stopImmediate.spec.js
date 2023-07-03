@@ -1,8 +1,8 @@
 /**
  * @jest-environment jsdom
  */
-import stopImmediate from 'esm/stopImmediate'
-import on from 'esm/on'
+import stopImmediate from '../stopImmediate'
+import on from '../on'
 
 describe('stopImmediate() 方法', () => {
   document.body.innerHTML =

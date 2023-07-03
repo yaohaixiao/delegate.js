@@ -22,16 +22,6 @@ export default [
     },
     plugins: PLUGIN_CONFIG
   },
-  {
-    input: './delegate.js',
-    output: {
-      name: 'delegate',
-      file: 'docs/js/delegate.min.js',
-      format: 'umd',
-      sourcemap: true
-    },
-    plugins: PLUGIN_CONFIG
-  },
   // For core functions module
   {
     input: './delegate.core.js',

@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import isIE from '../isIE'
+import isIE from '../utils/isIE'
 
 describe('isIE() 方法', () => {
   Object.defineProperty(

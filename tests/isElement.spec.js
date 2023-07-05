@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import isElement from '../isElement'
+import isElement from '../utils/isElement'
 
 describe('isElement() 方法', () => {
   // Set up our document body

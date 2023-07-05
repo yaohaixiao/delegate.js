@@ -1,5 +1,5 @@
 import getScrollLeft from './getScrollLeft'
-import isIE from './isIE'
+import isIE from './utils/isIE'
 
 /**
  * 获取事件触发时的 pageX 值

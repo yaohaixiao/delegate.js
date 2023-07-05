@@ -1,4 +1,4 @@
-import isString from '../isString'
+import isString from '../utils/isString'
 
 describe('isString() 方法', () => {
   it("isString('ok'), 返回：true", () => {

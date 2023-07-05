@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import resolveTextNode from '../resolveTextNode'
-import isElement from '../isElement'
+import isElement from '../utils/isElement'
 
 describe('resolveTextNode() 方法', () => {
   // Set up our document body

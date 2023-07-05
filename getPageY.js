@@ -1,5 +1,5 @@
 import getScrollTop from './getScrollTop'
-import isIE from './isIE'
+import isIE from './utils/isIE'
 
 /**
  * 获取事件触发时的 pageY 值

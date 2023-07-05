@@ -1,4 +1,4 @@
-import _typeof from '../_typeof'
+import _typeof from '../utils/_typeof'
 
 describe('_typeof() 方法', () => {
   it("_typeof('ok'), 返回：[object String]", () => {

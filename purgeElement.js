@@ -1,5 +1,5 @@
-import isString from './isString'
-import isElement from './isElement'
+import isString from './utils/isString'
+import isElement from './utils/isElement'
 import getListeners from './getListeners'
 import _off from './_off'
 

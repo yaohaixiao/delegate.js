@@ -1,5 +1,5 @@
 import delegate from '../../delegate'
-import $observer from './observer'
+import $observer from '@yaohaixiao/subscribers.js/subscribers.core'
 
 const $aside = document.querySelector('#aside')
 let $active = null

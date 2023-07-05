@@ -1,4 +1,4 @@
-import isAppleSafari from './isAppleSafari'
+import isAppleSafari from './utils/isAppleSafari'
 
 /**
  * 返回触发事件的 charCode

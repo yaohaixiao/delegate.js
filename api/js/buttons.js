@@ -1,5 +1,5 @@
 import delegate from '../../delegate'
-import $observer from './observer'
+import $observer from '@yaohaixiao/subscribers.js/subscribers.core'
 
 const $buttons = document.querySelector('#buttons')
 

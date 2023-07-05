@@ -1,4 +1,4 @@
-import isFunction from '../isFunction'
+import isFunction from '../utils/isFunction'
 
 describe('isFunction() 方法', () => {
   it('isFunction(()=>{)), 返回：true', () => {

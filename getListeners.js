@@ -1,4 +1,4 @@
-import isString from './isString'
+import isString from './utils/isString'
 
 /**
  * 获取 DOM 元素（type 事件类型）事件绑定信息

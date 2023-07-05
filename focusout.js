@@ -1,4 +1,4 @@
-import isIE from './isIE'
+import isIE from './utils/isIE'
 import on from './on'
 
 /**

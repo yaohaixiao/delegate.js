@@ -1,5 +1,5 @@
 import purgeElement from './purgeElement'
-import isFunction from './isFunction'
+import isFunction from './utils/isFunction'
 import _off from './_off'
 
 /**

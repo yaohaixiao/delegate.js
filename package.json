@@ -1,6 +1,6 @@
 {
   "name": "@yaohaixiao/delegate.js",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "delegate.js 一个轻量级的 JavaScript 事件委托库。",
   "main": "delegate.min.js",
   "scripts": {

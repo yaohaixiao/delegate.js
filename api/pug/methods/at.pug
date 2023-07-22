@@ -1,0 +1,61 @@
+section.section
+  header.section__header
+    h3#method-at.section__h3 at(type, fn[, data, context, once = false])
+  div.section__content
+    h4.section__h4 Description
+    p at() 方法用来绑定事件处理器。
+    h4.section__h4 Parameters
+    h5.section__h4 type
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd String
+    p （必须）type 用以设置触发的事件类型。
+    h5.section__h4 fn
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd Function
+    p （必须）fn 为事件处理器回调函数。
+    h5.section__h4 data
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd Object
+    p （可选）给事件处理器回调函数传递的数据。
+    h5.section__h4 context
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd Object | Boolean
+    p （可选）事件处理器回调函数的 this 上下文指向：
+    ul
+      li 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；
+      li 如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；
+    h5.section__h4 once
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd Boolean
+    dl.section__dl
+      dt.section__dt Default：
+      dd.section__dd false
+    p （可选）once 指定事件处理器回调函数是否仅执行一次。
+    h4.section__h4 Returns
+    dl.section__dl
+      dt.section__dt Type：
+      dd.section__dd Emitter 对象。
+    p Emitter 对象。
+    pre.section__pre
+      code.section__code.
+        const handler = function(evt, data) {
+          console.log('data', data)
+          // => { user: 'Robert' }
+        }
+
+        // 使用 DOM 节点选择器
+        const $emitter = delegate('#list')
+
+        // 传递数据
+        $emitter.at('click', handler, { user: 'Robert' })
+
+        // 传递数据并指定 this
+        $emitter.at('click', handler, { user: 'Robert' }, this)
+
+        // 仅指定 this
+        $emitter.at('click', handler, this, true)

@@ -13,38 +13,46 @@ import createEvent from './createEvent'
  * @see https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/dispatchEvent
  * @param {HTMLElement} el - （必须）绑定代理事件的 DOM 元素
  * @param {String} type - （必须）事件类型
- * @param {String} selector - （必须）选择器
+ * @param {String} [selector] - （可选）选择器，没有选择器，则直接触发 el 元素上的自定义事件
  *
  * @example
  * const $list = document.querySelector('#list')
+ *
  * // 绑定 alert 自定义事件
  * on($list, '.item', 'alert', itemHandler)
  * on($list, '.remove', 'alert', removeHandler)
  *
  * // 触发 $list 下匹配 '.item' 元素手动触发 alert 自定义事件
- * trigger('alert', '.item')
+ * trigger($list, 'alert', '.item')
  *
  * // 可以使用伪类选择器，更精确的匹配元素
- * trigger('alert', '.item:last-child')
+ * trigger($list, 'alert', '.item:last-child')
  *
  * // 触发 $list 下匹配 '.remove' 元素手动触发 alert 自定义事件
- * trigger('alert', '.remove')
- * trigger('alert', '.remove:nth-child(2)')
+ * trigger($list, 'alert', '.remove')
+ * trigger($list, 'alert', '.remove:nth-child(2)')
+ *
+ * // 没有选择器，则直接触发 el 元素上的自定义事件
+ * trigger($list, 'alert')
  */
 const trigger = (el, type, selector) => {
-  let $child
+  let $element
 
-  if (!type || !selector) {
+  if (!type) {
     return false
   }
 
-  $child = el.querySelector(selector)
+  if (selector) {
+    $element = el.querySelector(selector)
+  } else {
+    $element = el
+  }
 
-  if (!$child) {
+  if (!$element) {
     return false
   }
 
-  $child.dispatchEvent(createEvent(type))
+  $element.dispatchEvent(createEvent(type))
 }
 
 export default trigger

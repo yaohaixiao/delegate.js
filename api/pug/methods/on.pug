@@ -61,6 +61,21 @@ section.section
     ul
       li 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；
       li 如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；
+    pre.section__pre
+      code.section__code.
+        const handler = function(evt, data) {
+          console.log('data', data)
+          // => { user: 'Robert' }
+        }
+
+        // 使用 DOM 节点选择器
+        const $emitter = delegate('#list')
+
+        // 传递数据并指定 this
+        $emitter.on('li', 'click', handler, { user: 'Robert' }, this)
+
+        // 仅指定 this
+        $emitter.on('li', 'click', handler, this, true)
     h5.section__h4 once
     dl.section__dl
       dt.section__dt Type：

@@ -1,5 +1,7 @@
 import off from './off'
+import at from './at'
 import on from './on'
+import only from './only'
 import once from './once'
 import isElement from './utils/isElement'
 import isString from './utils/isString'
@@ -28,8 +30,6 @@ class Emitter {
         this.$el = document.querySelector(el)
       }
     }
-
-    return this
   }
 
   /**
@@ -79,6 +79,24 @@ class Emitter {
   }
 
   /**
+   * 绑定事件
+   * ========================================================================
+   * @method at
+   * @param {String|Function} type - （必须）事件类型或者事件处理器回调函数
+   * @param {Function|Object} fn - （必须） 事件处理器回调函数或者传递给事件处理器回调函数的数据对象
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象或者事件处理器回调函数的 this 上下文指向，
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向，或者是否仅触发一次
+   * 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象
+   * @param {Boolean} once - （可选）是否仅触发一次
+   * @returns {Emitter} - Emitter 对象
+   */
+  at(type, fn, data, context, once = false) {
+    at(this.$el, type, fn, data, context, once)
+
+    return this
+  }
+
+  /**
    * 绑定代理事件
    * ========================================================================
    * @method on
@@ -94,6 +112,22 @@ class Emitter {
    */
   on(selector, type, handler, data, context, once = false) {
     on(this.$el, selector, type, handler, data, context || this, once)
+
+    return this
+  }
+
+  /**
+   * 绑定仅触发一次的事件
+   * ========================================================================
+   * @method only
+   * @param {String} type - （必须）事件类型
+   * @param {Function} handler - （必须） 事件处理器回调函数
+   * @param {Object} [data] - （可选）传递给事件处理器回调函数的数据对象
+   * @param {Object|Boolean} [context] - （可选）事件处理器回调函数的 this 上下文指向
+   * @returns {Emitter} - Emitter 对象
+   */
+  only(type, handler, data, context) {
+    only(this.$el, type, handler, data, context)
 
     return this
   }

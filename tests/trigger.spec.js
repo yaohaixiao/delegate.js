@@ -107,7 +107,7 @@ describe('trigger() 方法', () => {
 
       expect(id).toEqual('home')
       expect(items.length).toEqual(3)
-      expect(result).toBe(false)
+      expect(result).toBe(undefined)
 
       result = trigger($list)
 

@@ -1,3 +1,12 @@
+# [2.1.0](https://github.com/yaohaixiao/delegate.js/compare/2.0.0...2.1.0) (2023-07-22)
+
+
+### Features
+
+* 添加 at() 和 only() 方法；调整 trigger() 方法，支持 at() 绑定的自定义事件； ([6951f4c](https://github.com/yaohaixiao/delegate.js/commit/6951f4c68b1364ca812dbf1d56b092fe803cf749))
+
+
+
 # [2.0.0](https://github.com/yaohaixiao/delegate.js/compare/1.9.3...2.0.0) (2023-07-03)
 
 

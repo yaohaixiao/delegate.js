@@ -9,9 +9,13 @@
 
 delegate.js 一个轻量级的 JavaScript 事件委托库。
 
+
+
 ## 项目初衷
 
-编写 delegate.js 的主要是为初学 JavaScript 的朋友了解事件委托的实现机制而开发。当然，delegate.js 也可以应用到实际的产品开发中。
+编写 delegate.js 的主要是为初学 JavaScript 的朋友了解 [JavaScript 中的事件委托](http://www.yaohaixiao.com/blog/javascript-event-delegate/) 实现机制而开发。当然，delegate.js 也可以应用到实际的产品开发中。
+
+
 
 ## 特点
 
@@ -21,11 +25,15 @@ delegate.js 一个轻量级的 JavaScript 事件委托库。
 - 采用 jQuery 链式调用语法，调用语法简洁方便；
 - 文件体积小(Gzip：3KB)，加载速度快；
 
+
+
 ## Browsers support
 
 | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](https://github.com/yaohaixiao/delegate.js/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](https://github.com/yaohaixiao/delegate.js/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](https://github.com/yaohaixiao/delegate.js/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](https://github.com/yaohaixiao/delegate.js/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](https://github.com/yaohaixiao/delegate.js/)</br>Opera |
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | IE11, Edge                                                                                                                                                                                               | last 10 versions                                                                                                                                                                                           | last 10 versions                                                                                                                                                                                       | last 10 versions                                                                                                                                                                                       | last 10 versions                                                                                                                                                                                   |
+
+
 
 ## 安装说明
 
@@ -96,9 +104,13 @@ import once from '@yaohaixiao/delegate.js/once'
 import off from '@yaohaixiao/delegate.js/off'
 ```
 
+
+
 ## API 文档
 
 delegate.js 中封装了：on()、once()、off() 等事件侦听相关的常用方法。delegate.js 的 API 借鉴了 jQuery 的链式调用模式，掉起来非常方便。
+
+
 
 ## Options
 
@@ -135,9 +147,98 @@ const $emitter = delegate('#list')
 $emitter.$el // => 获取到 list 列表 DOM 元素
 ```
 
+
 ## methods
 
 delegate.js 体积虽然小（Gzip 压缩后仅 3KB），却提供了十分丰富的事件代理相关的操作方法：
+
+
+
+### at(type, fn[, data, context, once = false])
+
+#### Description
+
+at() 方法用来绑定事件处理器。
+
+#### Parameters
+
+##### type
+
+Type: `String`
+
+Default: ``
+
+（必须）type 用以设置触发的事件类型。
+
+##### fn
+
+Type: `Function`
+
+Default: ``
+
+（必须）fn 为事件处理器回调函数。
+
+##### data
+
+Type: `Object`
+
+Default: ``
+
+（可选）给事件处理器回调函数传递的数据。
+
+```js
+const handler = function(evt, data) {
+  console.log('data', data)
+  // => { user: 'Robert' }
+}
+
+// 使用 DOM 节点选择器
+const $emitter = delegate('#list')
+
+$emitter.at('click', handler, { user: 'Robert' })
+```
+
+##### context
+
+Type: `Object|Boolean`
+
+Default: ``
+
+（可选）事件处理器回调函数的 this 上下文指向：
+
+- 当设置为 true 时，则事件处理器回调函数的 this 上下文指向为 data 对象；
+- 如未指定 context，则事件处理器回调函数的 this 上下文指向为 Emitter 对象；
+
+##### once
+
+Type: `Boolean`
+
+Default: `false`
+
+（可选）once 指定事件处理器回调函数是否仅执行一次。
+
+```js
+const handler = function(evt) {
+  const $li = evt.delegateTarget
+  console.log(`你点击的 li 节点的 id 为 ${$li.id}`)
+}
+
+const $emitter = delegate('#list')
+
+// once 属性为 true，点击事件处理器仅触发一次
+$emitter.at('click', handler, true)
+
+// 默认每次点击都会触发执行点击事件处理器
+$emitter.at('click', handler)
+```
+
+#### Returns
+
+Type: `Emitter`
+
+返回 Emitter 对象（实例）。
+
+
 
 ### on(selector, type, fn[, data, context, once = false])
 
@@ -249,6 +350,8 @@ Type: `Emitter`
 
 返回 Emitter 对象（实例）。
 
+
+
 ### once(selector, type, fn[, data, context])
 
 #### Description
@@ -327,12 +430,13 @@ Default: ``
 
 （可选）事件处理器回调函数的 this 上下文指向，具体介绍请参考 on() 方法的 context 参数说明；
 
-
 #### Returns
 
 Type: `Emitter`
 
 返回 Emitter 对象（实例）。
+
+
 
 ### off(type[, fn])
 
@@ -419,6 +523,8 @@ $emitter.off($list, 'click', callback)
 $emitter.off($list, 'click')
 ```
 
+
+
 ### click(selector, fn[, data, context, once = false])
 
 #### Description
@@ -488,6 +594,8 @@ const $emitter = delegate('#list')
 // 绑定 click 代理事件
 $emitter.click('.item', handler)
 ```
+
+
 
 ### dbclick(selector, fn[, data, context, once = false])
 
@@ -559,6 +667,8 @@ const $emitter = delegate('#list')
 $emitter.dbclick('.item', handler)
 ```
 
+
+
 ### mouseenter(selector, fn[, data, context, once = false])
 
 #### Description
@@ -628,6 +738,8 @@ const $emitter = delegate('#list')
 // 类选择器
 $emitter.mouseenter('.item', handler)
 ```
+
+
 
 ### mouseleave(selector, fn[, data, context, once = false])
 
@@ -699,6 +811,8 @@ const $emitter = delegate('#list')
 $emitter.mouseleave('.item', handler)
 ```
 
+
+
 ### mousedown(selector, fn[, data, context, once = false])
 
 #### Description
@@ -768,6 +882,8 @@ const $emitter = delegate('#list')
 // 绑定 mousedown 代理事件
 $emitter.mousedown('.item', handler)
 ```
+
+
 
 ### mouseup(selector, fn[, data, context, once = false])
 
@@ -839,6 +955,8 @@ const $emitter = delegate('#list')
 $emitter.mouseup('.item', handler)
 ```
 
+
+
 ### mouseover(selector, fn[, data, context, once = false])
 
 #### Description
@@ -908,6 +1026,8 @@ const $emitter = delegate('#list')
 // 绑定 mouseover 代理事件
 $emitter.mouseover('.item', handler)
 ```
+
+
 
 ### mousemove(selector, fn[, data, context, once = false])
 
@@ -979,6 +1099,8 @@ const $emitter = delegate('#list')
 $emitter.mousemove('.item', handler)
 ```
 
+
+
 ### mouseout(selector, fn[, data, context, once = false])
 
 #### Description
@@ -1048,6 +1170,8 @@ const $emitter = delegate('#list')
 // 绑定 mouseout 代理事件
 $emitter.mouseout('.item', handler)
 ```
+
+
 
 ### drag(selector, fn[, data, context, once = false])
 
@@ -1119,6 +1243,8 @@ const $emitter = delegate('#list')
 $emitter.drag('.item', handler)
 ```
 
+
+
 ### dragend(selector, fn[, data, context, once = false])
 
 #### Description
@@ -1188,6 +1314,8 @@ const $emitter = delegate('#list')
 // 绑定 dragend 代理事件
 $emitter.dragend('.item', handler)
 ```
+
+
 
 ### dragenter(selector, fn[, data, context, once = false])
 
@@ -1259,6 +1387,8 @@ const $emitter = delegate('#list')
 $emitter.dragenter('.item', handler)
 ```
 
+
+
 ### dragleave(selector, fn[, data, context, once = false])
 
 #### Description
@@ -1328,6 +1458,8 @@ const $emitter = delegate('#list')
 // 绑定 dragleave 代理事件
 $emitter.dragleave('.item', handler)
 ```
+
+
 
 ### dragover(selector, fn[, data, context, once = false])
 
@@ -1399,6 +1531,8 @@ const $emitter = delegate('#list')
 $emitter.dragover('.item', handler)
 ```
 
+
+
 ### dragstart(selector, fn[, data, context, once = false])
 
 #### Description
@@ -1468,6 +1602,8 @@ const $emitter = delegate('#list')
 // 绑定 dragstart 代理事件
 $emitter.dragstart('.item', handler)
 ```
+
+
 
 ### drop(selector, fn[, data, context, once = false])
 
@@ -1539,6 +1675,8 @@ const $emitter = delegate('#list')
 $emitter.drop('.item', handler)
 ```
 
+
+
 ### wheel(selector, fn[, data, context, once = false])
 
 #### Description
@@ -1608,6 +1746,8 @@ const $emitter = delegate('#list')
 // 绑定 wheel 代理事件
 $emitter.wheel('.item', handler)
 ```
+
+
 
 ### contextmenu(selector, fn[, data, context, once = false])
 
@@ -1679,6 +1819,8 @@ const $emitter = delegate('#list')
 $emitter.contextmenu('.item', handler)
 ```
 
+
+
 ### focusin(selector, fn[, data, context, once = false])
 
 #### Description
@@ -1748,6 +1890,8 @@ const $emitter = delegate('.options-input')
 // 类选择器
 $emitter.focusin('.options-input__inner', handler)
 ```
+
+
 
 ### focusout(selector, fn[, data, context, once = false])
 
@@ -1819,6 +1963,8 @@ const $emitter = delegate('.options-input')
 $emitter.focusout('.options-input__inner', handler)
 ```
 
+
+
 ### change(selector, fn[, data, context, once = false])
 
 #### Description
@@ -1888,6 +2034,8 @@ const $emitter = delegate('#form')
 // 绑定 change 代理事件
 $emitter.change('.input', handler)
 ```
+
+
 
 ### input(selector, fn[, data, context, once = false])
 
@@ -1959,6 +2107,8 @@ const $emitter = delegate('#form')
 $emitter.input('.input', handler)
 ```
 
+
+
 ### compositionstart(selector, fn[, data, context, once = false])
 
 #### Description
@@ -2028,6 +2178,8 @@ const $emitter = delegate('#form')
 // 绑定 compositionstart 代理事件
 $emitter.compositionstart('.input', handler)
 ```
+
+
 
 ### compositionupdate(selector, fn[, data, context, once = false])
 
@@ -2099,6 +2251,8 @@ const $emitter = delegate('#form')
 $emitter.compositionupdate('.input', handler)
 ```
 
+
+
 ### compositionend(selector, fn[, data, context, once = false])
 
 #### Description
@@ -2168,6 +2322,8 @@ const $emitter = delegate('#form')
 // 绑定 compositionend 代理事件
 $emitter.compositionend('.input', handler)
 ```
+
+
 
 ### paste(selector, fn[, data, context, once = false])
 
@@ -2239,6 +2395,8 @@ const $emitter = delegate('#form')
 $emitter.paste('.input', handler)
 ```
 
+
+
 ### copy(selector, fn[, data, context, once = false])
 
 #### Description
@@ -2308,6 +2466,8 @@ const $emitter = delegate('#list')
 // 绑定 copy 代理事件
 $emitter.copy('.item', handler)
 ```
+
+
 
 ### cut(selector, fn[, data, context, once = false])
 
@@ -2379,6 +2539,8 @@ const $emitter = delegate('#form')
 $emitter.cut('.textarea', handler)
 ```
 
+
+
 ### keydown(selector, fn[, data, context, once = false])
 
 #### Description
@@ -2448,6 +2610,8 @@ const $emitter = delegate('#form')
 // 绑定 keydown 代理事件
 $emitter.keydown('.input', handler)
 ```
+
+
 
 ### keyup(selector, fn[, data, context, once = false])
 
@@ -2519,6 +2683,8 @@ const $emitter = delegate('#form')
 $emitter.keyup('.input', handler)
 ```
 
+
+
 ### error(selector, fn[, data, context, once = false])
 
 #### Description
@@ -2588,6 +2754,8 @@ const $emitter = delegate('#albums')
 // 绑定 error 代理事件
 $emitter.error('.image', handler)
 ```
+
+
 
 ### createEvent(type[, detail = null, bubbles = true, cancelable = true])
 
@@ -2666,7 +2834,9 @@ const logHandler = function(evt) {
 $service.dispatchEvent(logEvent)
 ```
 
-### trigger(type, selector)
+
+
+### trigger(type[, selector])
 
 #### Description
 
@@ -2694,7 +2864,7 @@ Type: `String`
 
 Default: ``
 
-（必须）通过 selector 选择器判定是否触发指定事件类型的事件处理器。
+（可选）通过 selector 选择器判定是否触发指定事件类型的事件处理器。没有选择器，则直接触发 el 元素上的自定义事件
 
 
 #### Returns
@@ -2735,6 +2905,9 @@ const navHandler = function(evt) {
 $emitter.on('.item', 'alert', itemHandler)
 $emitter.on('.nav', 'log', navHandler)
 
+// 直接给 $list 绑定 alert 事件
+$emitter.at('alert', itemHandler)
+
 // 触发 $list 下匹配 '.item' 元素手动触发 alert 自定义事件
 $emitter.trigger('alert', '.item')
 // 可以使用伪类选择器，更精确的匹配元素
@@ -2743,7 +2916,12 @@ $emitter.trigger('alert', '.item:last-child')
 // 触发 $list 下匹配 '.remove' 元素手动触发 alert 自定义事件
 $emitter.trigger('alert', '.nav')
 $emitter.trigger('alert', '.nav:nth-child(1)')
+
+// 触发 $list 绑定的 alert 事件
+$emitter.trigger('alert')
 ```
+
+
 
 ### purge(type[, recurse])
 
@@ -2811,6 +2989,8 @@ $emitter.purge('click')
 $emitter.purge('click', true)
 ```
 
+
+
 ### destroy()
 
 #### Description
@@ -2838,6 +3018,8 @@ const $emitter = delegate('#list')
 $emitter.destroy()
 // => 点击 li 元素将不会执行 handler 事件处理器
 ```
+
+
 
 ### preventDefault(evt)
 
@@ -2892,6 +3074,8 @@ const $emitter = delegate('#list')
 $emitter.on('a.nav', 'click', handler)
 // => 点击 li 元素将不会执行 handler 事件处理器
 ```
+
+
 
 ### stopPropagation(evt)
 
@@ -2958,6 +3142,8 @@ $emitter.on('.item-remove', 'click', removeItem)
 $emitter.on('.item', 'click', showLog)
 ```
 
+
+
 ### stopEvent(evt)
 
 #### Description
@@ -3023,6 +3209,8 @@ const showLog = function (evt) {
 $emitter.on('.item-remove', 'click', removeItem)
 $emitter.on('.item', 'click', showLog)
 ```
+
+
 
 ### stopImmediate(evt)
 
@@ -3106,6 +3294,8 @@ trigger('click', '.remove')
 // document.querySelectorAll('.item').length = 3
 ```
 
+
+
 ### getListeners([type])
 
 #### Description
@@ -3158,6 +3348,8 @@ $emitter.getListeners('click')
 // ]
 ```
 
+
+
 ### getTypes()
 
 #### Description
@@ -3197,6 +3389,8 @@ console.log(type)
 // 会去除重复的 click 事件
 // => ['click', 'mouseenter']
 ```
+
+
 
 ### hasEvent([type])
 
@@ -3249,6 +3443,8 @@ $emitter.hasEvent('focus')
 // => false
 ```
 
+
+
 ### getPageX(evt)
 
 #### Description
@@ -3281,6 +3477,8 @@ const showLog = function (evt) {
 
 $emitter.on('.item', 'click', showLog)
 ```
+
+
 
 ### getPageY(evt)
 
@@ -3315,6 +3513,8 @@ const showLog = function (evt) {
 $emitter.on('.item', 'click', showLog)
 ```
 
+
+
 ### getPageXY(evt)
 
 #### Description
@@ -3348,6 +3548,8 @@ const showLog = function (evt) {
 
 $emitter.on('.item', 'click', showLog)
 ```
+
+
 
 ### getCharCode(evt)
 
@@ -3394,6 +3596,8 @@ const showLog = function (evt) {
 
 $emitter.on('.input', 'keydown', showLog)
 ```
+
+
 
 ### getRelatedTarget(evt)
 
@@ -3459,6 +3663,8 @@ const showLog = function (evt) {
 $emitter.on('.remove', 'mouseenter', showLog)
 ```
 
+
+
 ### getTarget(evt)
 
 #### Description
@@ -3513,9 +3719,13 @@ const showLog = function (evt) {
 $emitter.on('.remove', 'click', showLog)
 ```
 
+
+
 ## Example
 
 https://yaohaixiao.github.io/delegate.js/#example
+
+
 
 ## License
 

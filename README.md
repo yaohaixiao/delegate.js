@@ -7,21 +7,21 @@
 [![npm downloads](https://img.shields.io/npm/dt/@yaohaixiao/delegate.js)](https://npmcharts.com/compare/@yaohaixiao/delegate.js?minimal=true)
 [![MIT License](https://img.shields.io/github/license/yaohaixiao/delegate.js.svg)](https://github.com/yaohaixiao/delegate.js/blob/master/LICENSE)
 
-delegate.js 一个轻量级的 JavaScript 事件委托库。
+delegate.js - 一个轻量级的 JavaScript 事件委托库。
 
 
 
 ## 项目初衷
 
-编写 delegate.js 的主要是为初学 JavaScript 的朋友了解 [JavaScript 中的事件委托](http://www.yaohaixiao.com/blog/javascript-event-delegate/) 实现机制而开发。当然，delegate.js 也可以应用到实际的产品开发中。
+编写 delegate.js 的主要是为初学 JavaScript 的朋友了解 [JavaScript 中的事件委托](https://juejin.cn/post/7387801635328983049) 实现机制而开发。当然，delegate.js 也可以应用到实际的产品开发中。
 
 
 
 ## 特点
 
+- 原生 JavaScript 编写，无任何依赖；
 - 支持 UMD 规范，同时也提供 ES6 模块调用；
 - 支持创建和绑定自定义事件，并且可以手动触发自定义事件；
-- 原生 JavaScript 编写，无任何依赖；
 - 采用 jQuery 链式调用语法，调用语法简洁方便；
 - 文件体积小(Gzip：3KB)，加载速度快；
 
